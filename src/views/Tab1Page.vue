@@ -13,11 +13,18 @@
       </ion-header>
 
       <ExploreContainer name="Tab 1 page" />
+      <ion-button expand="full" @click="onCheckMe">Check Server Property Inrormat</ion-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonButton  } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
+import {getPropertyInformation} from "@/services/auth-service"
+const onCheckMe = async ()=>{
+   const {data,error} =await getPropertyInformation("SR2021-0001")
+
+   console.log(data)
+}
 </script>
