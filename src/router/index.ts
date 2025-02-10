@@ -4,15 +4,20 @@ import TabsPage from '../views/TabsPage.vue'
 import SelectWorkspace from '@/SelectWorkspace.vue'
 import AddWorkspace from '@/AddWorkspace.vue';
 import Home from '@/views/Home.vue';
-
+import { useAuth } from '@/hooks/useAuth';
+const ctrl = useAuth();
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/select-workspace'
+    redirect: '/home'
   },
   {
-    path: "/select-workspace",
+    path: "/select-workspace/",
     component: SelectWorkspace
+  },
+  {
+    path: "/add-workspace/:property_code",
+    component: AddWorkspace
   },
   {
     path: "/add-workspace",
@@ -20,7 +25,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/home",
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
 
   {
@@ -51,5 +57,19 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
+
+router.beforeEach(async (to, from, next) => {
+  
+  if (to.meta.requiresAuth && !ctrl.isAuthenticated.value) {
+    next("/select-workspace");
+  } else {
+    
+      next();
+   
+    
+  }
+});
+
 
 export default router

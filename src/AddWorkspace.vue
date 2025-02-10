@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref ,onMounted } from "vue"
 
 import { IonPage, IonContent, IonInput, IonSpinner, 
     loadingController, toastController, alertController,
@@ -27,7 +27,9 @@ import { IonPage, IonContent, IonInput, IonSpinner,
   
 import { getPropertyInformation } from "@/services/auth-service"
 import { setFrappeAppUrl } from "@/services/api-service"
-
+import { useRoute } from 'vue-router';
+import { showWarning } from "@/helpers/utils";
+const route = useRoute();
 
 import { useAuth } from "@/hooks/useAuth";
 const ionRouter = useIonRouter();
@@ -39,8 +41,24 @@ const formData = ref({
     username: "Administrator",
     password: "123456"
 })
-
+ 
 async function onSaveWorkspace() {
+
+    if(!formData.value.property_code){
+        showWarning("Please enter property code");
+        return
+    }
+    if(!formData.value.username){
+        showWarning("Please enter username");
+        return
+    }
+    
+    if(!formData.value.password){
+        showWarning("Please enter password");
+        return
+    }
+
+
     const loading = await loadingController.create({
         message: 'Checking property code',
     });
@@ -82,10 +100,12 @@ async function onSaveWorkspace() {
 
 
  
-
-    const loginResponse = await login({...formData.value,api_url: response.data.app_url});
+    const loginResponse = await login({...formData.value,api_url: response.data.app_url,property_name:checkPropertyCodeResponse.data.property_name});
+    
+  
+    
     if (loginResponse.error){
-        await loading.dismiss();
+        await loadingLogin.dismiss();
         return;
     }
 
@@ -138,6 +158,23 @@ function updatePropertyToStorage(data:any){
 
     window.storageService.setItem("properties",JSON.stringify(properties));
 }
+
+onMounted(() => {
+    const { property_code } = route.params;
+    
+    const strProperties = window.storageService.getItem("properties");
+    if(strProperties){
+        const properties = JSON.parse(strProperties)
+        const property = properties.find((r:any)=> r.property_code==property_code);
+        if(property){
+            formData.value = {
+                property_code:property.property_code,
+                username:property.username,
+                password:property.password
+            }
+        }
+    }
+});
 
 
 </script>

@@ -2,10 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import { storageService } from '@/services/storage-service';
-import { setFrappeAppUrl } from '@/services/api-service';
+import { useAuth } from '@/hooks/useAuth';
 
 
-import { IonicVue } from '@ionic/vue';
+
+import { IonicVue,useIonRouter } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -36,34 +37,28 @@ import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+ 
 
-const app = createApp(App)
-  .use(IonicVue)
-  .use(router);
 
 
 // attach service to window easy to call it later
 window.storageService = storageService;
-
-
+ 
+const  {checkUserLogin} = useAuth(router);
+const app = createApp(App)
+.use(IonicVue)
 async function init() {
-
+  
   // check if have current login user then login
-
+ 
+  await checkUserLogin();
   // set frappe app
-  const strCurrentProperty = window.storageService.getItem("current_property")
-  if(strCurrentProperty){
-    const property = JSON.parse(strCurrentProperty);
 
-    const strCurrentUser = window.storageService.getItem("current_user");
-    if(strCurrentUser){
-      const user = JSON.parse(strCurrentUser);
-      setFrappeAppUrl(property.api_url);
-    }
-    
-  }
-    
+ 
+  app.use(router);
+  
   await router.isReady();
+  
   app.mount("#app");
 }
 

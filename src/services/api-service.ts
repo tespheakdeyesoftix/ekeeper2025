@@ -42,3 +42,17 @@ export function getDocList(DocType: string, param: any = null) {
         });
 }
 
+
+export function getApi(api_url: string, param: any = null) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const call = frappe.call();
+      return call.get(api_url,param)
+      .then((r: any) => ({ data: r.message, error: null }))
+      .catch((error) => {
+        handleErrorMessage(error);
+        return { data: null, error }
+    });
+}
+
