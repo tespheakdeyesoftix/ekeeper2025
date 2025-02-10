@@ -1,0 +1,144 @@
+<template>
+    <ion-page>
+        <ion-content :fullscreen="true">
+            <ion-text color="primary">
+                <h1>Add Workspace</h1>
+            </ion-text>
+
+            <ion-input v-model="formData.property_code" label="Property Code" label-placement="floating" fill="outline"
+                placeholder="Property Code" class="ion-margin-bottom"></ion-input>
+            <ion-input v-model="formData.username" label="Username" label-placement="floating" fill="outline"
+                placeholder="Username" class="ion-margin-bottom"></ion-input>
+            <ion-input v-model="formData.password" label="Password" label-placement="floating" fill="outline"
+                placeholder="Password" class="ion-margin-bottom"></ion-input>
+            <ion-button expand="full" @click="onSaveWorkspace">
+
+                Save workspace</ion-button>
+        </ion-content>
+    </ion-page>
+</template>
+
+<script setup lang="ts">
+import { ref } from "vue"
+
+import { IonPage, IonContent, IonInput, IonSpinner, 
+    loadingController, toastController, alertController,
+    useIonRouter  } from '@ionic/vue';
+  
+import { getPropertyInformation } from "@/services/auth-service"
+import { setFrappeAppUrl } from "@/services/api-service"
+
+
+import { useAuth } from "@/hooks/useAuth";
+const ionRouter = useIonRouter();
+
+const {login,checkPropertyCode} = useAuth()
+
+const formData = ref({
+    property_code: "SR2021-0001",
+    username: "Administrator",
+    password: "123456"
+})
+
+async function onSaveWorkspace() {
+    const loading = await loadingController.create({
+        message: 'Checking property code',
+    });
+
+    loading.present();
+
+    const response = await getPropertyInformation(formData.value.property_code);
+    await loading.dismiss();
+    if (response.error) {
+        await loading.dismiss();
+        const alert = await alertController.create({
+            header: 'Check property code',
+            message: `Property ${formData.value.property_code} does not exist.`,
+        
+            buttons: ['OK'],
+        });
+        await alert.present();
+
+        return
+
+    }
+
+    // get api url 
+    const checkPropertyCodeResponse = await checkPropertyCode(response.data.app_url, formData.value.property_code);
+   if(checkPropertyCodeResponse.error){
+    await loading.dismiss();
+    return;
+   }
+
+    
+    // assign to frappe app
+    // login
+    // save current current property and username, password to local storage
+     
+    const loadingLogin = await loadingController.create({
+        message: 'Loging In...',
+    });
+    await loadingLogin.present();
+
+
+ 
+
+    const loginResponse = await login({...formData.value,api_url: response.data.app_url});
+    if (loginResponse.error){
+        await loading.dismiss();
+        return;
+    }
+
+    // show current property
+    const property = {
+        ...checkPropertyCodeResponse.data, 
+        username:formData.value.username,
+        password:formData.value.password,
+        api_url:response.data.app_url
+    }
+    updatePropertyToStorage(property);
+
+    // save current property to local storage 
+    window.storageService.setItem("current_property",JSON.stringify(property))
+    // save current login user to local storage
+
+    window.storageService.setItem("current_user",JSON.stringify(loginResponse.data));
+
+    setFrappeAppUrl(response.data.app_url);
+    
+    await loadingLogin.dismiss();
+
+    // naviage to home page
+   
+ 
+    ionRouter.navigate('/home', 'forward', 'replace');
+}
+
+
+function updatePropertyToStorage(data:any){
+    let properties = window.storageService.getItem("properties");
+    if(properties){
+        properties = JSON.parse(properties);
+        let property = properties.find((r:any)=>r.property_code ==data.property_code);
+        if(property){
+            property.property_name = data.property_name;
+            property.photo = data.photo
+            property.username = data.username
+            property.password = data.password,
+            property.api_url = data.api_url
+        } else 
+        {
+            properties.push(data);
+        }
+    }else {
+        properties = []
+
+        properties.push(data);
+    }
+
+    window.storageService.setItem("properties",JSON.stringify(properties));
+}
+
+
+</script>
+ 

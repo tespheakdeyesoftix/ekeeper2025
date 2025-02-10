@@ -1,6 +1,7 @@
 
 import supabase  from "@/services/supabase-client";
 
+
 export async function getPropertyInformation(propertyCode:string) {
     
     const { data, error } = await supabase
@@ -17,3 +18,5 @@ export async function getPropertyInformation(propertyCode:string) {
 
     return { data, error:null };
 }
+
+  

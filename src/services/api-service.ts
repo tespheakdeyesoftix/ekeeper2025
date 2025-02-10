@@ -1,0 +1,44 @@
+import { handleErrorMessage } from '@/helpers/error-message';
+import { FrappeApp } from 'frappe-js-sdk';
+
+let frappe: FrappeApp | null = null;
+ 
+
+
+export function setFrappeAppUrl(url:string){
+    
+    frappe = new FrappeApp(url,{
+        useToken: true,
+        token: getToken,
+        type: "token"
+    });
+ 
+}
+
+function getToken(){
+    const strCurrentUser = window.storageService.getItem("current_user");
+    if(strCurrentUser){
+        const userObject = JSON.parse(strCurrentUser);
+        const token = JSON.stringify(atob(userObject.token))
+       
+        return token.replaceAll('"',"") 
+
+        
+    }
+    return "" ;
+   
+}
+
+export function getDocList(DocType: string, param: any = null) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db();
+    return db.getDocList(DocType, param)
+        .then((r: any) => ({ data: r, error: null }))
+        .catch((error) => {
+            handleErrorMessage(error);
+            return { data: null, error }
+        });
+}
+

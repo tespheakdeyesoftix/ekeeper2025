@@ -1,12 +1,28 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabsPage from '../views/TabsPage.vue'
+import SelectWorkspace from '@/SelectWorkspace.vue'
+import AddWorkspace from '@/AddWorkspace.vue';
+import Home from '@/views/Home.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/select-workspace'
   },
+  {
+    path: "/select-workspace",
+    component: SelectWorkspace
+  },
+  {
+    path: "/add-workspace",
+    component: AddWorkspace
+  },
+  {
+    path: "/home",
+    component: Home
+  },
+
   {
     path: '/tabs/',
     component: TabsPage,
