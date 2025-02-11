@@ -1,32 +1,60 @@
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <ion-text color="primary">
-        <h1>Select Workspace</h1>
-        <ion-button router-link="/add-workspace">Add Workspace</ion-button>
+   <ion-page>
+    <ion-content class="home-content">
+      <!-- Branding Section -->
+      <div class="branding">
+        <ion-img src="/assets/logo.svg" alt="App Logo" class="app-logo"></ion-img>
+        <ion-text class="app-name">eKeeper</ion-text>
+         
+      </div>
+
+      <!-- Add Workspace Button -->
+      <ion-button expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >Add Workspace</ion-button>
+
+      <!-- Workspace List -->
+      <ion-list class="workspace-list">
+        <ion-card
+  v-for="p in properties"
+  :key="p.property_code"
+  @click="onLogin(p)"
+  class="ripple-card" 
+ 
+>
+  <ion-card-header>
+    <div class="workspace-header">
+      <!-- Workspace Avatar -->
+      <ion-avatar class="workspace-logo">
+        <ion-img :src="imageUrl(p.photo)" alt="Workspace Logo"></ion-img>
+      </ion-avatar>
+
+      <!-- Workspace Info (Two Lines) -->
+      <div class="workspace-info">
+        <ion-text class="workspace-name">{{ p.property_name }}</ion-text>
+        <ion-text class="user-name">{{ p.username }}</ion-text>
+      </div>
+
+      <!-- Vertical Ellipsis Menu Button -->
+      <ion-button fill="clear" @click.stop="onOpenMenu(p)">
+        <ion-icon :icon="ellipsisVertical"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-card-header>
+</ion-card>
 
 
-
-        <ion-card v-for="(p, index) in properties" :key="index" >
-
-          <ion-card-header>
-            <ion-item lines="none">
-              <ion-avatar slot="start">
-                <img :src="imageUrl(p.photo, p.api_url)" :alt="p.property_name" />
-              </ion-avatar>
-              <ion-label>
-                <ion-card-title>{{ p.property_name }}</ion-card-title>
-                <ion-card-subtitle>{{ p.property_code }}</ion-card-subtitle>
-              </ion-label>
-<ion-button @click="onLogin(p)">Login</ion-button>
-              <ion-icon :icon="ellipsisVertical" color="primary" @click="onEdit(p)"></ion-icon>
-            </ion-item>
-          </ion-card-header>
-        </ion-card>
-
-
-      </ion-text>
+      </ion-list>
     </ion-content>
+
+    <!-- Footer -->
+    <ion-footer class="footer">
+  <ion-toolbar class="no-shadow">
+    <div class="footer-text">
+      <ion-text class="powered-by">eKeeper by eDoor Front Desk</ion-text>
+      <ion-text class="app-version">Version 1.0.0</ion-text>
+    </div>
+  </ion-toolbar>
+</ion-footer>
+
   </ion-page>
 </template>
 
@@ -71,7 +99,7 @@ async function onLogin(p: any) {
   
 }
 
-async function onEdit(p: any) {
+async function onOpenMenu(p: any) {
   const actionSheet = await actionSheetController.create({
     header: 'Action Menu',
     buttons: [
@@ -84,7 +112,7 @@ async function onEdit(p: any) {
       },
       {
         text: 'Remove Property',
-
+        cssClass: 'remove-property-btn',
         handler: async () => {
 
           const alert = await alertController.create({
@@ -130,13 +158,102 @@ onMounted(() => {
 
 </script>
 
-<style>
-button.alert-button.alert-button-confirm {
-  background-color: var(--ion-color-danger);
-  color: var(--ion-color-danger-contrast);
+ 
+<style scoped>
+/* Branding Section with Gradient Background */
+.branding {
+  height: 30vh;
+  background: rgb(189,229,244);
+background: radial-gradient(circle, rgba(189,229,244,1) 0%, rgba(157,201,240,1) 51%, rgba(101,167,244,1) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.md button.alert-button.alert-button-confirm {
-  border-radius: 4px;
+.app-logo {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 12px;
 }
+
+.app-name {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* Add Workspace Button */
+.add-workspace {
+  margin: 16px;
+}
+.workspace-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.workspace-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.workspace-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+  flex: 1;
+}
+
+.workspace-name {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: normal;
+}
+
+
+.user-name {
+  font-size: 14px;
+  color: gray;
+}
+
+.ripple-card {
+  --ripple-color: rgba(0, 123, 255, 0.2);  /* Optional: Customize ripple color */
+}
+
+
+.footer {
+  --background: transparent; /* No background */
+  box-shadow: none;           /* No shadow */
+}
+
+.no-shadow {
+  --box-shadow: none;        /* Remove shadow from ion-toolbar */
+  --background: transparent; /* Transparent background for toolbar */
+}
+
+.footer-text {
+  text-align: center; /* Center the text */
+  width: 100%;        /* Ensure the div takes the full width */
+}
+
+.powered-by {
+  display: block;     /* Make the text block to go to the next line */
+  font-weight: bold;  /* Make the "Powered by" text stand out */
+}
+
+.app-version {
+  display: block;     /* Ensure this is on a new line */
+  font-size: 14px;     /* Smaller font size for the version */
+  color: gray;        /* Slightly gray to differentiate from the title */
+}
+.remove-property-btn {
+  color: red;  /* Makes the text red */
+}
+
 </style>
