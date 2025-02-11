@@ -1,29 +1,63 @@
 <template>
     <ion-page>
-        <ion-content :fullscreen="true">
-            <ion-text color="primary">
-                <h1>Add Workspace</h1>
-            </ion-text>
-
-            <ion-input v-model="formData.property_code" label="Property Code" label-placement="floating" fill="outline"
-                placeholder="Property Code" class="ion-margin-bottom"></ion-input>
-            <ion-input v-model="formData.username" label="Username" label-placement="floating" fill="outline"
-                placeholder="Username" class="ion-margin-bottom"></ion-input>
-            <ion-input v-model="formData.password" label="Password" label-placement="floating" fill="outline"
-                placeholder="Password" class="ion-margin-bottom"></ion-input>
-            <ion-button expand="full" @click="onSaveWorkspace">
-
-                Save workspace</ion-button>
-        </ion-content>
+      <!-- App Bar -->
+      <ion-header>
+        <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Add Workspace</ion-title>
+    </ion-toolbar>
+      </ion-header>
+  
+      <ion-content :fullscreen="true" class="ion-padding">
+        <div class="form-container">
+          <ion-text color="primary" style="margin: 20px;">
+            <p>Please enter your property code, username and password</p>
+          </ion-text>
+  
+          <ion-input
+            v-model="formData.property_code"
+            label="Property Code"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Property Code"
+            class="ion-margin-bottom"
+          ></ion-input>
+  
+          <ion-input
+            v-model="formData.username"
+            label="Username"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Username"
+            class="ion-margin-bottom"
+          ></ion-input>
+  
+          <ion-input
+            v-model="formData.password"
+            label="Password"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Password"
+            type="password"
+            class="ion-margin-bottom"
+          ></ion-input>
+  
+          <ion-button shape="round" size="large" expand="full" @click="onSaveWorkspace" class="save-button">
+            Save Workspace
+          </ion-button>
+        </div>
+      </ion-content>
     </ion-page>
-</template>
+  </template>
 
 <script setup lang="ts">
 import { ref ,onMounted } from "vue"
 
 import { IonPage, IonContent, IonInput, IonSpinner, 
     loadingController, toastController, alertController,
-    useIonRouter  } from '@ionic/vue';
+    useIonRouter ,IonBackButton,IonButton,IonText } from '@ionic/vue';
   
 import { getPropertyInformation } from "@/services/auth-service"
 import { setFrappeAppUrl } from "@/services/api-service"
