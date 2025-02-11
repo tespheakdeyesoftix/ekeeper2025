@@ -62,4 +62,25 @@
 	--ion-color-dark-shade: #292929;
 	--ion-color-dark-tint: #444444;
 
+
+	--ion-toolbar-height: 80px; /* Customize the height */
+	--ion-toolbar-background: #c6d6f8; /* Customize the background color */
+	--ion-title-font-size: 24px; /* Customize the font size for titles */
+	--ion-title-color: #e0e3ea; /* Customize the font size for titles */
+
+
 }
+
+ion-toolbar {
+  height: var(--ion-toolbar-height);
+  
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+
+ion-title {
+	font-size: var(--ion-title-font-size);
+	 
+  }

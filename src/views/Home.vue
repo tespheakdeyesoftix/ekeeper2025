@@ -2,26 +2,97 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
+          <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
           <ion-title>Home</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <ion-header collapse="condense">
-          <ion-toolbar>
-            <ion-title size="large">Home</ion-title>
-          </ion-toolbar>
-        </ion-header>
+         
   
         <ion-text>
-            This is home page
-            {{ ctrl.data }}
-
-            {{ currentProperty }}
-            <hr>
-            {{ currentWorkingDate }}
-            <hr>
-            {{ data }}
-            <ion-button @click="getData">Click me</ion-button>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
+          <p>Hello workd this is my rand tom text</p>
             <ion-button @click="onLogout">Logout</ion-button>
         </ion-text>
     </ion-content>
@@ -30,7 +101,7 @@
   
   <script setup lang="ts">
   import {ref} from "vue"
-  import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonText,IonButton,useIonRouter } from '@ionic/vue';
+  import {IonMenuButton, IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonText,IonButton,useIonRouter } from '@ionic/vue';
 
   import { useHome } from "@/hooks/useHome";
 

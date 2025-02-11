@@ -4,6 +4,7 @@ import TabsPage from '../views/TabsPage.vue'
 import SelectWorkspace from '@/SelectWorkspace.vue'
 import AddWorkspace from '@/AddWorkspace.vue';
 import Home from '@/views/Home.vue';
+import Room from '@/views/rooms/Room.vue';
 import { useAuth } from '@/hooks/useAuth';
 const ctrl = useAuth();
 const routes: Array<RouteRecordRaw> = [
@@ -28,6 +29,13 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     meta: { requiresAuth: true }
   },
+  
+  {
+    path: "/room",
+    component: Room,
+    meta: { requiresAuth: true }
+  },
+
 
   {
     path: '/tabs/',

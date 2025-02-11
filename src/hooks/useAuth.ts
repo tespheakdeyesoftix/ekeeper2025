@@ -128,12 +128,21 @@ export function useAuth(router:any = null) {
             window.storageService.removeItem("current_user");
             router.push('/select-workspance')
         }else {
+          
+         if(checkResponse.data){
           isAuthenticated.value = true;
           appCtrl.currentWorkingDate.value = checkResponse.data.working_day.date_working_day;
           appCtrl.currentWorkingDay.value = checkResponse.data.working_day;
           appCtrl.currentProperty.value = property;
           setFrappeAppUrl(property.api_url);
           router.push('/home')
+         }else {
+          // session is expored 
+          window.storageService.removeItem("current_user");
+          isAuthenticated.value = false;
+          router.push('/select-workspace')
+         }
+          
         }
         
       }
@@ -157,10 +166,14 @@ export function useAuth(router:any = null) {
           'Authorization': 'token ' + token.replaceAll('"',""),  
         },
       });
-      
+ 
+    
       
       if (!response.ok) {
+
+        
         const errorResponse = await response.json(); // Parse the error response
+        
       const errorMessage = errorResponse.message || 'An error occurred';
         handleErrorMessage(errorResponse)
       throw new Error(errorMessage);
@@ -168,8 +181,9 @@ export function useAuth(router:any = null) {
   
       const result = await response.json();
     //   set current login user
+ 
 
-
+      
       return { data: result.message, error: null };
     } catch (error) {
         if (error?.toString().includes("Failed to parse URL from")) {
@@ -192,6 +206,7 @@ export function useAuth(router:any = null) {
     logout,
     login,
     checkPropertyCode ,
-    setCurrentLoginUser
+    setCurrentLoginUser,
+    currentUser
   };
 }
