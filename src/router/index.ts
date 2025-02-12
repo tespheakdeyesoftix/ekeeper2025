@@ -5,7 +5,11 @@ import SelectWorkspace from '@/SelectWorkspace.vue'
 import AddWorkspace from '@/AddWorkspace.vue';
 import Home from '@/views/Home.vue';
 import Room from '@/views/rooms/Room.vue';
+import MyProfile from '@/views/pages/MyProfile.vue';
+import Help from '@/views/pages/Help.vue';
 import { useAuth } from '@/hooks/useAuth';
+import BlankLayout from '@/views/layouts/BlankLayout.vue';
+import MainLayout from '@/views/layouts/MainLayout.vue';
 const ctrl = useAuth();
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,7 +18,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/select-workspace/",
-    component: SelectWorkspace
+    component: SelectWorkspace,
+    meta: { layout: BlankLayout }
   },
   {
     path: "/add-workspace/:property_code",
@@ -22,20 +27,31 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/add-workspace",
-    component: AddWorkspace
+    component: AddWorkspace,
+    meta: { layout: BlankLayout }
   },
   {
     path: "/home",
     component: Home,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true,title:"Home", layout: MainLayout }
   },
   
   {
     path: "/room",
     component: Room,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true,title:"Room", layout: MainLayout }
   },
-
+  {
+    path: "/my-profile",
+    component: MyProfile,
+    meta: { requiresAuth: true,title:"My Profile", layout: MainLayout }
+  },
+  
+  {
+    path: "/help",
+    component: Help,
+    meta: { requiresAuth: true,title:"Help", layout: MainLayout }
+  },
 
   {
     path: '/tabs/',

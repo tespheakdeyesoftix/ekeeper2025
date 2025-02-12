@@ -4,7 +4,7 @@ import {handleErrorMessage} from "@/helpers/error-message"
 import {  alertController,useIonRouter,loadingController } from '@ionic/vue';
 import { setFrappeAppUrl } from '@/services/api-service';
 import { useApp } from "./useApp";
-
+import {logoutApi} from "@/services/api-service"
 const isAuthenticated = ref(false);  
 const currentUser = ref()
  
@@ -53,11 +53,17 @@ export function useAuth(router:any = null) {
   }
 
 
-  function logout() {
+  async function logout() {
+    const loading = await loadingController.create({
+      message: 'Logout...',
+  });
+  await loading.present();
+    await logoutApi();
     window.storageService.removeItem("current_user");
     isAuthenticated.value = false;
     currentUser.value = {}
-  
+    await loading.dismiss();
+    
   }
 
   function setCurrentLoginUser(data:any){
@@ -135,7 +141,7 @@ export function useAuth(router:any = null) {
           appCtrl.currentWorkingDay.value = checkResponse.data.working_day;
           appCtrl.currentProperty.value = property;
           setFrappeAppUrl(property.api_url);
-          router.push('/home')
+          
          }else {
           // session is expored 
           window.storageService.removeItem("current_user");

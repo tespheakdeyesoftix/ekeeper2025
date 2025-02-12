@@ -28,6 +28,16 @@ function getToken(){
     return "" ;
    
 }
+export function logoutApi() {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const auth = frappe.auth()
+    return auth
+  .logout()
+  .then(() => (true))
+  .catch((error) => (false));
+}
 
 export function getDocList(DocType: string, param: any = null) {
     if (!frappe) {

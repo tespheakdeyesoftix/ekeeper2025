@@ -1,16 +1,24 @@
 <template>
   <ion-app>
-    <DrawerMenu v-if="isAuthenticated"/>
-    <ion-page id="main-content">
+      <component :is="Layout">
     <ion-router-outlet   />
-    </ion-page>
+    </component>
+    
+ 
   </ion-app>
 </template>
 
 <script setup lang="ts">
 
+import { computed, defineAsyncComponent } from 'vue';
+import { useRoute } from 'vue-router';
 import { IonApp, IonRouterOutlet,IonPage } from '@ionic/vue';
-import DrawerMenu from "@/views/layouts/DrawerMenu.vue"  
+
 import { useAuth } from './hooks/useAuth';
 const {isAuthenticated} = useAuth();
+const route = useRoute();
+const Layout = computed(() => {
+  return route.meta.layout || defineAsyncComponent(() => import('@/views/layouts/MainLayout.vue'));
+});
+
 </script>

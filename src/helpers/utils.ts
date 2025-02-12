@@ -25,3 +25,14 @@ export async function showWarning(message:string){
     });
     toast.present();
 }
+
+export function getAvatarLetter(name: string): string {
+    if (!name) return '?'; // Default placeholder
+  
+    const words = name.trim().split(' ');
+    if (words.length > 1) {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    return words[0][0].toUpperCase();
+  }
+  

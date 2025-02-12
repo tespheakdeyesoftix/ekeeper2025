@@ -119,8 +119,8 @@ const { logout, currentUser } = useAuth();
 
 const ionRouter = useIonRouter();
 
-const onLogout = () => {
-  logout();
+const onLogout = async () => {
+  await logout();
   ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
 </script>

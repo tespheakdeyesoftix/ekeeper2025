@@ -81,7 +81,7 @@ import { setFrappeAppUrl } from '@/services/api-service';
 const {currentProperty} = useApp()
 const ionRouter = useIonRouter();
 const properties = ref([]);
-const { login } = useAuth()
+const { login,isAuthenticated } = useAuth()
 async function onLogin(p: any) {
   const loading = await loadingController.create({
     message: 'Login...',
@@ -150,6 +150,10 @@ async function onOpenMenu(p: any) {
 }
 
 onMounted(() => {
+  if(isAuthenticated){
+    ionRouter.navigate('/home', 'forward', 'replace');
+  }
+  
   const strProperties = window.storageService.getItem("properties");
   if (strProperties) {
     properties.value = JSON.parse(strProperties)
