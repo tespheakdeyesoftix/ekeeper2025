@@ -10,8 +10,7 @@
 
       <!-- Add Workspace Button -->
       <ion-button expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >Add Workspace</ion-button>
-
-      <!-- Workspace List -->
+       <!-- Workspace List -->
       <ion-list class="workspace-list">
         <ion-card
   v-for="p in properties"

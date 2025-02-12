@@ -60,6 +60,8 @@ function openPopover(e: Event) {
   popoverOpen.value = true;
 }
 
+ 
+
 const onLogout = async () => {
   popoverOpen.value = false;
   await logout();

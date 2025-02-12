@@ -37,6 +37,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import AppBar from '@/views/layouts/AppBar.vue';
  
 
 
@@ -56,7 +57,7 @@ async function init() {
 
  
   app.use(router);
-  
+  app.component('AppBar', AppBar)
   await router.isReady();
   
   app.mount("#app");

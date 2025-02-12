@@ -1,7 +1,7 @@
  
 import { ref } from "vue";
  
-const currentProperty = ref({})
+const currentProperty = ref({property_name:""})
 const currentWorkingDate = ref("")
 const currentWorkingDay = ref({})
 
