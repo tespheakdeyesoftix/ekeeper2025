@@ -72,7 +72,14 @@ export function useAuth(router:any = null) {
 
   
  async function checkPropertyCode(api_url:string, property_code:string) {
+  const x = await alertController.create({
+    header: 'Connect to server',
+    message:api_url + "api/method/edoor.mobile_api.api.check_api_url?property_code=" + property_code,
     
+    buttons: ['OK'],
+});
+await x.present();
+
     try {
       const response = await fetch(api_url + "api/method/edoor.mobile_api.api.check_api_url?property_code=" + property_code, {
         method: 'GET',

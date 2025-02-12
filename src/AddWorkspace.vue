@@ -77,7 +77,7 @@ const formData = ref({
 })
  
 async function onSaveWorkspace() {
-
+  showWarning(import.meta.env.VITE_SUPABASE_API_URL);
     if(!formData.value.property_code){
         showWarning("Please enter property code");
         return
