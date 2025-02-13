@@ -2,8 +2,6 @@ import { handleErrorMessage } from '@/helpers/error-message';
 import { FrappeApp } from 'frappe-js-sdk';
 
 let frappe: FrappeApp | null = null;
- 
-
 
 export function setFrappeAppUrl(url:string){
     
@@ -36,7 +34,7 @@ export function logoutApi() {
     return auth
   .logout()
   .then(() => (true))
-  .catch((error) => (false));
+  .catch(() => (false));
 }
 
 export function getDocList(DocType: string, param: any = null) {
@@ -59,6 +57,19 @@ export function getApi(api_url: string, param: any = null) {
     }
     const call = frappe.call();
       return call.get(api_url,param)
+      .then((r: any) => ({ data: r.message, error: null }))
+      .catch((error) => {
+        handleErrorMessage(error);
+        return { data: null, error }
+    });
+}
+
+export function postApi(api_url: string, param: any = null) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const call = frappe.call();
+      return call.post(api_url,param)
       .then((r: any) => ({ data: r.message, error: null }))
       .catch((error) => {
         handleErrorMessage(error);

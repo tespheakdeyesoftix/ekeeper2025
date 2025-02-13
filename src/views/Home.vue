@@ -23,6 +23,4 @@ import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import Loading from './components/Loading.vue';
 const { loading, data } = useHome()
-
-
 </script>

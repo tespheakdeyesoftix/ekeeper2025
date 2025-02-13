@@ -5,12 +5,12 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title>Room Detail - 101</ion-title>
+      <ion-title>Reservation Detail</ion-title>
     </ion-toolbar>
       </ion-header>
   
       <ion-content :fullscreen="true">
-        Room Detail
+        Reservation Detail
       </ion-content>
     </ion-page>
   </template>

@@ -47,4 +47,9 @@ export function getAvatarLetter(name: string): string {
     }
 }
 
+export function stripHtmlTags(text:string) {
+    return text.replace(/<[^>]*>/g, '');
+}
+
+
  

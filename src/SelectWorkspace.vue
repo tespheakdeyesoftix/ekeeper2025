@@ -5,9 +5,7 @@
       <div class="branding">
         <ion-img src="/assets/logo.svg" alt="App Logo" class="app-logo"></ion-img>
         <ion-text class="app-name">eKeeper</ion-text>
-         
       </div>
-
       <!-- Add Workspace Button -->
       <ion-button expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >Add Workspace</ion-button>
        <!-- Workspace List -->
@@ -69,7 +67,8 @@ import {
    actionSheetController, 
    alertController,
   useIonRouter,
-  loadingController
+  loadingController,
+  onIonViewWillEnter
 } from '@ionic/vue';
 import { onMounted, ref } from 'vue';
 import { imageUrl } from '@/helpers/utils';
@@ -140,19 +139,15 @@ async function onOpenMenu(p: any) {
 
         }
       },
-
-
     ],
   });
-
   await actionSheet.present();
 }
 
-onMounted(() => {
+onIonViewWillEnter(() => {
   if(isAuthenticated){
     ionRouter.navigate('/home', 'forward', 'replace');
   }
-  
   const strProperties = window.storageService.getItem("properties");
   if (strProperties) {
     properties.value = JSON.parse(strProperties)

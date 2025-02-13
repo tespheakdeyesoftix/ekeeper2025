@@ -8,7 +8,7 @@ import { useApp } from "./useApp";
 
 
 
-export function useHome() {
+export function useRoom() {
   const {currentProperty,currentWorkingDate} = useApp()
   // State variable
   const loading =ref(true)
@@ -29,16 +29,10 @@ export function useHome() {
     data.value = response.data
   }
 
-  
-  const onRefresh = async (event: CustomEvent) => {
-     
-    await getData();
-    event.target.complete();
-  };
-
+ 
   
   onMounted(async ()=>{
- 
+    alert("home is mounted")
     await getData();
     loading.value = false;
  
@@ -49,7 +43,6 @@ export function useHome() {
 
   return { 
     data,
-    loading,
-    onRefresh
+    loading
 };
 }

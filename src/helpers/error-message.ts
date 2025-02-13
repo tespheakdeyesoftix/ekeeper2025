@@ -1,6 +1,6 @@
 
 import {  toastController } from '@ionic/vue';
-
+import {stripHtmlTags} from "@/helpers/utils"
 export async function handleErrorMessage(error_data:any){
    
     // const toast = await toastController.create({
@@ -50,8 +50,8 @@ export async function handleErrorMessage(error_data:any){
             }
             if(arrException[0]){
                 if(arrException[0] == 'frappe.exceptions.ValidationError')
-                    window.postMessage('show_error|' + arrException[1], '*')
-
+                    
+                showWarningMessage(arrException[1])
                 else{
                     const msg = dictionary.find((r)=>r.exception == arrException[0])
                     if(msg?.text)
@@ -70,7 +70,7 @@ export async function handleErrorMessage(error_data:any){
 
 async function showWarningMessage(message:string){
     const toast = await toastController.create({
-        message: message,
+        message: stripHtmlTags(message),
         duration: 5000,
         position: "top",
         swipeGesture:"vertical",
