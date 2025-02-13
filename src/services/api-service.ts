@@ -66,3 +66,17 @@ export function getApi(api_url: string, param: any = null) {
     });
 }
 
+export function getDoc(DocType: string,DocName:string) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+
+    return db.getDoc(DocType, DocName)
+  .then((doc) =>({ data: doc, error: null }))
+  .catch((error) => {
+    handleErrorMessage(error);
+    return { data: null, error }
+  });
+}
+

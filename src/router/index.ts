@@ -60,6 +60,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   
   {
+    path: "/task-detail/:name",
+    component: () => import('@/views/task/TaskDetail.vue'),
+    meta: { requiresAuth: true}
+  },
+  
+  {
     path: "/help",
     component: Help,
     meta: { requiresAuth: true,title:"Help" }
