@@ -1,12 +1,12 @@
  
 import { onMounted, ref } from "vue";
  
+const currentProperty = ref({property_name:""})
+const currentWorkingDate = ref("")
+const currentWorkingDay = ref({})
 
 
 export function useApp() {
-  const currentProperty = ref({property_name:""})
-const currentWorkingDate = ref("")
-const currentWorkingDay = ref({})
 
 
   const currentLanguage = ref("en")

@@ -15,6 +15,7 @@
                 <ion-col size="auto">
                     <div class="date-box">
                         <ion-text>
+                         
                             <h3>{{ dayjs(currentWorkingDate).format("dddd") }}</h3>
                             <h1>{{ dayjs(currentWorkingDate).format("DD") }}</h1>
                             <h3>{{ dayjs(currentWorkingDate).format("MMMM") }}, {{ dayjs(currentWorkingDate).format("YYYY") }}</h3>

@@ -105,7 +105,7 @@ const changeLanguage = ( lang:string) => {
 
 async function onLogin(p: any) {
   const loading = await loadingController.create({
-    message: 'Login...',
+    message: t('Loging In...'),
   });
   await loading.present();
   const response = await login(p);
