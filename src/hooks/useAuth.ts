@@ -7,9 +7,13 @@ import { useApp } from "./useApp";
 import {logoutApi} from "@/services/api-service"
 const isAuthenticated = ref(false);  
 const currentUser = ref()
+import { useI18n } from 'vue-i18n';
+ 
  
 
-export function useAuth(router:any = null) {
+// { myT, myOther }: { myT?: (key: string) => string, myOther?: any }
+export function  useAuth(router:any = null,t:any=null) {
+ 
    const appCtrl = useApp()
  
  async function login(data: any) {

@@ -39,8 +39,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 import AppBar from '@/views/layouts/AppBar.vue';
 import Loading from '@/views/components/Loading.vue';
- 
-
+import i18n from '../i18n'; // Import i18n config
 
 
 // attach service to window easy to call it later
@@ -49,15 +48,18 @@ window.storageService = storageService;
 const  {checkUserLogin} = useAuth(router);
 const app = createApp(App)
 .use(IonicVue)
+
 async function init() {
   
   // check if have current login user then login
  
   await checkUserLogin();
+  
   // set frappe app
 
  
   app.use(router);
+  app.use(i18n);
   app.component('AppBar', AppBar)
   app.component('Loading', Loading)
   await router.isReady();

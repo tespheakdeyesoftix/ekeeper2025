@@ -6,46 +6,46 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title>Add Workspace</ion-title>
+      <ion-title>{{t("Add Workspace")}}</ion-title>
     </ion-toolbar>
       </ion-header>
   
       <ion-content :fullscreen="true" class="ion-padding">
         <div class="form-container">
           <ion-text color="primary" style="margin: 20px;">
-            <p>Please enter your property code, username and password</p>
+            <p>{{ t("Please enter your property code, username and password") }}</p>
           </ion-text>
   
           <ion-input
             v-model="formData.property_code"
-            label="Property Code"
+            :label="t('Property Code')"
             label-placement="floating"
             fill="outline"
-            placeholder="Property Code"
+            :placeholder="t('Property Code')"
             class="ion-margin-bottom"
           ></ion-input>
   
           <ion-input
             v-model="formData.username"
-            label="Username"
+            :label="t('Username')"
             label-placement="floating"
             fill="outline"
-            placeholder="Username"
+            :placeholder="t('Username')"
             class="ion-margin-bottom"
           ></ion-input>
   
           <ion-input
             v-model="formData.password"
-            label="Password"
+            :label="t('Password')"
             label-placement="floating"
             fill="outline"
-            placeholder="Password"
+            :placeholder="t('Password')"
             type="password"
             class="ion-margin-bottom"
           ></ion-input>
   
           <ion-button shape="round" size="large" expand="full" @click="onSaveWorkspace" class="save-button">
-            Save Workspace
+            {{t("Save Workspace")}}
           </ion-button>
         </div>
       </ion-content>
@@ -63,6 +63,9 @@ import { getPropertyInformation } from "@/services/auth-service"
 import { setFrappeAppUrl } from "@/services/api-service"
 import { useRoute } from 'vue-router';
 import { showWarning } from "@/helpers/utils";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const route = useRoute();
 
 import { useAuth } from "@/hooks/useAuth";
@@ -79,7 +82,7 @@ const formData = ref({
 async function onSaveWorkspace() {
   showWarning(import.meta.env.VITE_SUPABASE_API_URL);
     if(!formData.value.property_code){
-        showWarning("Please enter property code");
+        showWarning(t("Please enter property code"));
         return
     }
     if(!formData.value.username){

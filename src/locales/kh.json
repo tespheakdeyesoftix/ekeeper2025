@@ -1,0 +1,17 @@
+{
+    "welcome": "សូមស្វាគមន៍មកកាន់កម្មវិធីរបស់ខ្ញុំ!",
+    "greeting": "សួស្តី {name}!",
+    "Add Workspace":"បញ្ជូល Workspace",
+    "eKeeper by eDoor Front Desk":"eKeeper ដោយ eDoor Front Desk",
+    "Remove Property":"លុប Property",
+    "Edit Property":"កែប្រែព័ត៌មាន",
+    "Please enter your property code, username and password":"សូមបញ្ជូលព័ត៌មាន លេខកូដសណ្ឋាគារ, ឈ្មោះប្រើប្រាស់ និងលេខសម្ងាត់របស់អ្នក",
+    "Property Code":"លេខកូដសណ្ឋាគារ",
+    "Username":"ឈ្មោះប្រើប្រាស់",
+    "Password":"លេខសម្ងាត់",
+    "Save Workspace":"រក្សាទុក Workspace",
+    "Loading":"កំពុងដំណើរការ",
+    "Loading...":"កំពុងដំណើរការ...",
+    "Please enter property code":"សូមបញ្ជូលលេខកូដសណ្ឋាគារ",
+    "Loging In...":"កំពុងចូលប្រព័ន្ធ..."
+  } 

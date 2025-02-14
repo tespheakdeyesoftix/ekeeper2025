@@ -2,7 +2,7 @@
       
  
   
-     <div class="ion-activatable ripple-parent kpi-box">
+     <div class="ion-activatable ripple-parent kpi-box" @click="openUrl">
       <ion-ripple-effect></ion-ripple-effect>
       <h2 class="kpi-value"><slot></slot></h2>
       <ion-text class="kpi-label">{{ label }}</ion-text>
@@ -13,11 +13,19 @@
 
 </template>
 <script lang="ts" setup>
-      import {  IonRippleEffect ,IonText } from '@ionic/vue';
+      import {  IonRippleEffect ,IonText,useIonRouter } from '@ionic/vue';
+      const ionRouter = useIonRouter();
       const props = defineProps({
         label:String,
         url:String
       })
+
+      function openUrl(){
+        if(props.url){
+          ionRouter.navigate(props.url , 'forward', 'push');
+        }
+        
+      }
 </script>
 <style scoped>
 .kpi-box {

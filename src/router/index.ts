@@ -62,7 +62,22 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/task-detail/:name",
     component: () => import('@/views/task/TaskDetail.vue'),
-    meta: { requiresAuth: true}
+
+    meta: { requiresAuth: true,hideTab:true}
+  },
+  {
+    path: "/stay",
+    component: () => import('@/views/reservations/Reservation.vue'),
+    meta: { requiresAuth: true,}
+  },
+  {
+  path: "/occupy",
+    component: () => import('@/views/reservations/Occupy.vue'),
+    meta: { requiresAuth: true,hideTab:true}
+  },{
+  path: "/reservation-detail/:name",
+    component: () => import('@/views/reservations/ReservationDetail.vue'),
+    meta: { requiresAuth: true,hideTab:true}
   },
   
   {

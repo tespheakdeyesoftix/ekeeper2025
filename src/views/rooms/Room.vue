@@ -1,26 +1,37 @@
 <template>
   <ion-page>
-     <AppBar>Room</AppBar>
+    <AppBar>Room</AppBar>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 1</ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <ion-searchbar></ion-searchbar>
+      <!-- Filter -->
+      <ComRoomFilter />
+      <ion-accordion-group :value="['first', 'second', 'third']">
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>First Accordion</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">First Content</div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header" color="light">
+            <ion-label>Second Accordion</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">Second Content</div>
+        </ion-accordion>
 
-      
-      <ion-button router-link="/home">Open Room Detail</ion-button>
+        <ion-accordion value="third">
+          <ion-item slot="header" color="light">
+            <ion-label>Third Accordion</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">Third Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
     </ion-content>
   </ion-page>
 </template>
-
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonButton  } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import {getPropertyInformation} from "@/services/auth-service"
-const onCheckMe = async ()=>{
-   const {data,error} =await getPropertyInformation("SR2021-0001")
-
-   console.log(data)
-}
+import { IonPage, IonContent, IonButton, IonSearchbar, IonAccordion, IonAccordionGroup, IonItem, IonLabel } from '@ionic/vue';
+import ComRoomFilter from '@/views/rooms/components/ComRoomFilter.vue';
+import { defineComponent } from 'vue';
+import { searchCircle } from 'ionicons/icons';
 </script>
