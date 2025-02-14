@@ -1,11 +1,16 @@
 <template>
-    <div class="status-container">
-      <div class="status-list">
-        <div v-for="(s, index) in data" :key="index" class="status-card" >
-          <div class="status-icon" v-html="s.icon"></div>
-          <h1 :style="{ color: s.color }">{{ s.total }}</h1>
-          <div class="status-info">
-            <span class="status-value">{{ s.status }}</span>
+    <div style="padding: 0 5px">
+          <ion-text color="secondary">
+            <h1>Room Status</h1> 
+          </ion-text>
+      <div class="status-container">
+        <div class="status-list">
+          <div v-for="(s, index) in data" :key="index" class="status-card" > 
+            <h1 :style="{ color: s.color }">{{ s.total }}</h1>
+            <div class="status-">
+              <span class="status-value">{{ s.status }}</span>
+              <div class="status-icon" v-html="s.icon"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -22,6 +27,8 @@
   overflow-x: auto;
   white-space: nowrap;
   padding: 10px;
+  background-color: aqua;
+  border-radius: 20px;
 }
 .status-list {
   display: flex;
