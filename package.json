@@ -25,6 +25,7 @@
     "frappe-js-sdk": "^1.7.0",
     "ionicons": "^7.0.0",
     "vue": "^3.3.0",
+    "vue-i18n": "^10.0.5",
     "vue-router": "^4.2.0"
   },
   "devDependencies": {

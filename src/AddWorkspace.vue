@@ -6,7 +6,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title>Add Workspace</ion-title>
+      <ion-title>{{t("Add Workspace")}}</ion-title>
     </ion-toolbar>
       </ion-header>
   
@@ -63,6 +63,9 @@ import { getPropertyInformation } from "@/services/auth-service"
 import { setFrappeAppUrl } from "@/services/api-service"
 import { useRoute } from 'vue-router';
 import { showWarning } from "@/helpers/utils";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 const route = useRoute();
 
 import { useAuth } from "@/hooks/useAuth";

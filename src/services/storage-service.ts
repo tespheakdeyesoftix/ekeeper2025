@@ -5,7 +5,7 @@ export  function setItem(key:string,value:any) {
 }
 
 export  function getItem(key:string) {
-    localStorage.getItem(key)
+    return localStorage.getItem(key)
 }
 
 
