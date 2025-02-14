@@ -5,15 +5,14 @@
       <Loading v-if="loading"/>
         <template v-else>
           <ComWelcome />
- 
-
+   
           <ComOccupancyChart :data="{occupy:data?.summary.occupy, total_room_vacant:data?.summary.total_room_vacant }"  /> 
           <ComSummaryKPI :data="data?.summary" />
           <ComRoomStatus :data="data?.room_status" />
  
           <div style="padding: 0 5px">
-            <ComRecentList />
-          </div>
+            <ComRecentList :allTasks="data?.all_tasks" :myTasks="data?.my_tasks" />
+          </div> 
 
           <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
         </template>
