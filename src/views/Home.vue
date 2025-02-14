@@ -10,8 +10,14 @@
           <ComOccupancyChart :data="{occupy:data?.summary.occupy, total_room_vacant:data?.summary.total_room_vacant }"  /> 
           <ComSummaryKPI :data="data?.summary" />
           <ComRoomStatus :data="data?.room_status" />
+            
+            <ComRoomStatus :data="data?.room_status" />
+          <div style="padding: 0 5px">
+            <ComRecentList />
 
-          <ion-button router-link="/room-detail">Open Room Detail</ion-button>
+          </div>
+
+          <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
         </template>
  
     </ion-content>
@@ -25,6 +31,7 @@ import ComWelcome from "@/views/home/components/ComWelcome.vue"
 import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
+import ComRecentList from "@/views/home/components/ComRecentList.vue"
 
 const { loading, data,currentProperty } = useHome()
  
