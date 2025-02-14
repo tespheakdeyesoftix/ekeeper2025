@@ -14,45 +14,45 @@
         <ion-menu-toggle>
         <ion-item router-link="/home">
           <ion-icon :icon="homeOutline" slot="start"></ion-icon>
-          <ion-label>Home</ion-label>
+          <ion-label>{{t("Home")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item router-link="/room">
           <ion-icon :icon="bedOutline" slot="start"></ion-icon>
-          <ion-label>Room</ion-label>
+          <ion-label>{{t("Room")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
         <ion-item router-link="/task">
           <ion-icon :icon="clipboardOutline" slot="start"></ion-icon>
-          <ion-label>Task</ion-label>
+          <ion-label>{{t("Task")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
         <ion-item router-link="/account">
           <ion-icon :icon="calendarOutline" slot="start"></ion-icon>
-          <ion-label>Reservation</ion-label>
+          <ion-label>{{ t("reservation_menu") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
         <ion-item router-link="/settings">
           <ion-icon :icon="layersOutline" slot="start"></ion-icon>
-          <ion-label>Room Block</ion-label>
+          <ion-label>{{ t("Room Block") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
 
         <ion-item router-link="/settings">
           <ion-icon :icon="archiveOutline" slot="start"></ion-icon>
-          <ion-label>Lost and Found</ion-label>
+          <ion-label>{{ t("Lost and Found") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
 
-        <ion-item router-link="/settings">
+        <ion-item router-link="/sop">
           <ion-icon :icon="brushOutline" slot="start"></ion-icon>
-          <ion-label>Housekeeping SOP</ion-label>
+          <ion-label></ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
@@ -116,7 +116,8 @@ import { useApp } from '@/hooks/useApp';
 import { useAuth } from '@/hooks/useAuth';
 import { imageUrl } from "@/helpers/utils";
 const { logout, currentUser } = useAuth();
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const ionRouter = useIonRouter();
 
 const onLogout = async () => {

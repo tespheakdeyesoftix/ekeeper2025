@@ -14,7 +14,6 @@
   </template>
   <script setup lang="ts">
   import {  IonButtons, IonTitle, IonMenuButton } from '@ionic/vue';
-     
  
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
   

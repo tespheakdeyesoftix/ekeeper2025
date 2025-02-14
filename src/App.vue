@@ -19,8 +19,7 @@ import { IonApp, IonRouterOutlet,IonTabs,IonPage,IonContent,IonButtons, IonTitle
    
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"  
 import Tabs from "@/views/layouts/Tabs.vue"  
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+
 
   import { useAuth } from '@/hooks/useAuth';
   const {isAuthenticated} = useAuth();
