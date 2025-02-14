@@ -68,14 +68,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/stay",
     component: () => import('@/views/reservations/Reservation.vue'),
-    meta: { requiresAuth: true}
+    meta: { requiresAuth: true,}
   },
   {
   path: "/occupy",
     component: () => import('@/views/reservations/Occupy.vue'),
     meta: { requiresAuth: true,hideTab:true}
   },{
-  path: "/reservation-dtail/:name",
+  path: "/reservation-detail/:name",
     component: () => import('@/views/reservations/ReservationDetail.vue'),
     meta: { requiresAuth: true,hideTab:true}
   },

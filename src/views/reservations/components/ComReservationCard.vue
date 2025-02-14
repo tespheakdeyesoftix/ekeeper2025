@@ -3,8 +3,11 @@
   <ion-card-header>
     <div class="title-container">
       <ion-card-title>
-        <ion-icon :icon="bedOutline" class="icon" /> {{ data?.rooms }} - {{ data?.name  }}
+        <ion-icon :icon="bedOutline" class="icon" /> {{ data?.rooms }} - {{ data?.room_type_alias  }}
       </ion-card-title>
+      <ion-card-subtitle>
+        <ion-icon :icon="bookmarkOutline" class="icon" size="small" />  {{ data?.name }}
+      </ion-card-subtitle>
       <ion-card-subtitle>
         <ion-icon :icon="personCircle" class="icon" size="small" /> {{ data?.guest_name }} 
          / PAX: {{ data?.adult }}/ {{ data?.child }}
@@ -17,8 +20,7 @@
     </ion-chip>
   </ion-card-header>
 
-  <ion-card-content>
-     
+  <ion-card-content style="margin-top: -10px;">
       <p><ion-icon :icon="calendar" class="icon" /> Stay: {{ dayjs(data?.arrival_date).format("DD-MM-YYYY") }} to {{ dayjs(data?.departure_date).format("DD-MM-YYYY") }} ({{ data?.room_nights }}N)</p>
       <p><ion-icon :icon="briefcaseOutline" class="icon" /> Source: {{ data?.business_source }}</p>
     
@@ -30,7 +32,7 @@
   </template>
 <script setup lang="ts">
 import { useIonRouter,IonList, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonText, IonButton, IonIcon } from '@ionic/vue';
-import { personCircle, calendar, bedOutline, briefcaseOutline, checkmark, close } from 'ionicons/icons';
+import { bookmarkOutline, personCircle, calendar, bedOutline, briefcaseOutline, checkmark, close } from 'ionicons/icons';
 import dayjs from 'dayjs';
 const ionRouter = useIonRouter();
 
@@ -39,8 +41,8 @@ const ionRouter = useIonRouter();
     })
 
     function onViewReservationDetail(){
-      alert(123)
-      ionRouter.navigate("reservation-detail/" + props.data?.name , 'forward', 'push');
+     
+      ionRouter.navigate("reservation-detail/" + props.data?.name, 'forward', 'push');
     }
 </script>
 <style scoped>

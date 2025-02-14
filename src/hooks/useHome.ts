@@ -41,6 +41,7 @@ export function useHome() {
  
     await getData();
     loading.value = false;
+
  
   })
 
@@ -50,6 +51,7 @@ export function useHome() {
   return { 
     data,
     loading,
-    onRefresh
+    onRefresh,
+    currentProperty
 };
 }

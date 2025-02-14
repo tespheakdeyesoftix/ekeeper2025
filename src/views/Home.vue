@@ -5,6 +5,7 @@
       <Loading v-if="loading"/>
         <template v-else>
           <ComWelcome />
+     
           <ComSummaryKPI :data="data?.summary" />
           <ComRoomStatus :data="data?.room_status" />
 
@@ -22,5 +23,5 @@ import ComWelcome from "@/views/home/components/ComWelcome.vue"
 import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import Loading from './components/Loading.vue';
-const { loading, data } = useHome()
+const { loading, data,currentProperty } = useHome()
 </script>
