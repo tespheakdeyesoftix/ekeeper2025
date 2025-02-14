@@ -10,11 +10,9 @@
           <ComOccupancyChart :data="{occupy:data?.summary.occupy, total_room_vacant:data?.summary.total_room_vacant }"  /> 
           <ComSummaryKPI :data="data?.summary" />
           <ComRoomStatus :data="data?.room_status" />
-            
-            <ComRoomStatus :data="data?.room_status" />
+ 
           <div style="padding: 0 5px">
             <ComRecentList />
-
           </div>
 
           <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
