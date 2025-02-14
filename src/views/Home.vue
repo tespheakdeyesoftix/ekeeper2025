@@ -4,12 +4,15 @@
     <ion-content :fullscreen="true">
       <Loading v-if="loading"/>
         <template v-else>
-          <ComWelcome />
-     
-          <ComSummaryKPI :data="data?.summary" />
-          <ComRoomStatus :data="data?.room_status" />
+            <ComWelcome /> 
+            <ComSummaryKPI :data="data?.summary" />
+            <ComRoomStatus :data="data?.room_status" />
+          <div style="padding: 0 5px">
+            <ComRecentList />
 
-          <ion-button router-link="/room-detail">Open Room Detail</ion-button>
+          </div>
+
+          <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
         </template>
 
     </ion-content>
@@ -17,11 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { useHome } from '@/hooks/useHome';
-import { IonPage, IonContent, IonButton } from '@ionic/vue';
-import ComWelcome from "@/views/home/components/ComWelcome.vue"
-import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
-import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
-import Loading from './components/Loading.vue';
-const { loading, data,currentProperty } = useHome()
+    import { useHome } from '@/hooks/useHome';
+    import { IonPage, IonContent, IonButton } from '@ionic/vue';
+    import ComWelcome from "@/views/home/components/ComWelcome.vue";
+    import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue";
+    import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"; 
+    import ComRecentList from "@/views/home/components/ComRecentList.vue";  
+    import Loading from './components/Loading.vue';
+    const { loading, data,currentProperty } = useHome()
 </script>
