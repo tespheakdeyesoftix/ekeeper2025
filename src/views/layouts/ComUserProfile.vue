@@ -1,6 +1,6 @@
 <template>
   <ion-buttons slot="end" @click="openPopover($event)">
-
+ 
     <ion-avatar class="small-avatar">
 
       <img v-if="currentUser.photo" :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
@@ -20,47 +20,85 @@
         <div class="username-position">
           <strong>Administrator</strong><br />
           <span>FO Manager</span>
-          <ion-icon :icon="logoIonic"></ion-icon>
+          
         </div>
       </div>
 
       <ion-list>
         <ion-item button detail="false" router-link="/my-profile" @click="popoverOpen = false">
           <ion-icon slot="start" :icon="personOutline"></ion-icon>
-          <span>My Profile</span>
+          <span>{{ t("My Profile") }}</span>
         </ion-item>
-        <ion-item button detail="false" router-link="/help" @click="popoverOpen = false">
+        <ion-item button detail="false" @click="onChangeLanguage" id="open-custom-dialog">
+          <ion-icon slot="start" :icon="languageOutline"></ion-icon>
+          <span>{{ t("Change Language") }}</span>
+        </ion-item>
+        <ion-item button detail="false" router-link="/help"  @click="popoverOpen = false">
           <ion-icon slot="start" :icon="helpCircleOutline"></ion-icon>
-          <span>Help</span>
+          <span>{{ t("Help") }}</span>
         </ion-item>
         <ion-item button detail="false" lines="none" color="danger" @click="onLogout">
           <ion-icon slot="start" :icon="logOutOutline" class="logout-icon"></ion-icon>
-          <span>Logout</span>
+          <span>{{ t("Logout") }}</span>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-popover>
 
+<!-- change languatge -->
+<ion-modal id="example-modal"  :is-open="isOpenChangeLanguage" ref="modal">
+      <div class="wrapper">
+        <h3>{{ t("Change Language") }}</h3>
 
+        <ion-list lines="none">
+          <ion-item :button="true" :detail="false" @click="onDismissModal(l.lang)" v-for="(l, index) in languages" :key="index">
+            <ion-icon style="height: 32px;" :icon="l.icon"></ion-icon>
+            <ion-label>{{ l.label }}</ion-label>
+          </ion-item>
+           
+        </ion-list>
+      </div>
+    </ion-modal>
 </template>
 <script setup lang="ts">
-import { IonButton, IonRippleEffect, IonPopover, IonIcon, IonList, IonItem, useIonRouter } from '@ionic/vue';
+import {IonLabel, IonModal, alertController,actionSheetController, IonButton, IonRippleEffect, IonPopover, IonIcon, IonList, IonItem, useIonRouter } from '@ionic/vue';
 import { ref } from 'vue'
 import { imageUrl, getAvatarLetter } from "@/helpers/utils"
 import { useAuth } from "@/hooks/useAuth"
 
-import { personOutline, helpCircleOutline, logOutOutline } from 'ionicons/icons';
+import { personOutline, helpCircleOutline, logOutOutline,languageOutline } from 'ionicons/icons';
+import { useI18n } from 'vue-i18n';
+import { useApp } from '@/hooks/useApp';
+const modal = ref();
+const isOpenChangeLanguage = ref(false);
+const {languages} = useApp()
+const { t ,locale} = useI18n();
+const onDismissModal = (lang:string) =>{
+  isOpenChangeLanguage.value = false;
+  locale.value = lang;
+      window.localStorage.setItem("lang",locale.value)
+ 
+};
+
+
 const { logout } = useAuth()
 const ionRouter = useIonRouter();
 const { currentUser } = useAuth();
 const popoverOpen = ref(false)
 const event = ref<Event | null>(null);
+
+
 function openPopover(e: Event) {
   event.value = e;
   popoverOpen.value = true;
 }
 
- 
+async function onChangeLanguage(){
+  popoverOpen.value = false;
+  isOpenChangeLanguage.value = true;
+
+  
+}
 
 const onLogout = async () => {
   popoverOpen.value = false;
@@ -153,4 +191,34 @@ ion-item span {
   align-items: center;
   justify-content: center;
 }
+
+
+ion-modal#example-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  ion-modal#example-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+
+  ion-modal#example-modal ion-icon {
+    margin-right: 6px;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 4px 0;
+
+    color: #aaaaaa;
+  }
+
+  ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+    padding: 20px;
+  }
+
 </style>
