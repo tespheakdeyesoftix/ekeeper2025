@@ -27,6 +27,7 @@ export function useHome() {
     })
     
     data.value = response.data
+    console.log(data.value)
   }
 
   
