@@ -104,14 +104,16 @@ const changeLanguage = ( lang:string) => {
 
 
 async function onLogin(p: any) {
+
   const loading = await loadingController.create({
     message: t('Loging In...'),
   });
+
   await loading.present();
   const response = await login(p);
 
   await loading.dismiss()
-  if(response.data){
+  if(response){
     setFrappeAppUrl(p.api_url);
     currentProperty.value = p;
       ionRouter.navigate('/home', 'forward', 'replace');

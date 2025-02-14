@@ -6,8 +6,8 @@
                 <!-- Greeting Section -->
                 <ion-col>
                     <ion-text>
-                        <h2 class="greeting-text">{{ getGreetingMessage() }} <br/> {{ currentUser.full_name }}</h2>
-                        <p>Welcome to your workspace.</p>
+                        <h2 class="greeting-text">{{ t(getGreetingMessage()) }} <br/> {{ currentUser.full_name }}</h2>
+                        <p>{{ t("Welcome to your workspace.") }}</p>
                     </ion-text>
                 </ion-col>
 
@@ -16,9 +16,9 @@
                     <div class="date-box">
                         <ion-text>
                          
-                            <h3>{{ dayjs(currentWorkingDate).format("dddd") }}</h3>
+                            <h3>{{ t(dayjs(currentWorkingDate).format("dddd")) }}</h3>
                             <h1>{{ dayjs(currentWorkingDate).format("DD") }}</h1>
-                            <h3>{{ dayjs(currentWorkingDate).format("MMMM") }}, {{ dayjs(currentWorkingDate).format("YYYY") }}</h3>
+                            <h3>{{ t(dayjs(currentWorkingDate).format("MMMM")) }}, {{ dayjs(currentWorkingDate).format("YYYY") }}</h3>
                         </ion-text>
                     </div>
                 </ion-col>
@@ -39,6 +39,10 @@ import { IonText, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import { getGreetingMessage } from "@/helpers/utils"
 import dayjs from 'dayjs';
 import { useApp } from '@/hooks/useApp';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+
 const { currentUser } = useAuth()
 const { currentWorkingDate } = useApp();
 

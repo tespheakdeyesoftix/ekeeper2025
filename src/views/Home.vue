@@ -1,21 +1,20 @@
 <template>
   <ion-page>
-    <AppBar>Home</AppBar>
+    <AppBar>{{t("Home")}}</AppBar>
     <ion-content :fullscreen="true">
       <Loading v-if="loading"/>
         <template v-else>
+          <ComSelect/>
+          xx
           <ComWelcome />
  
 
-          <ComOccupancyChart :data="{occupy:data?.summary.occupy, total_room_vacant:data?.summary.total_room_vacant }"  /> 
+          <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
           <ComSummaryKPI :data="data?.summary" />
           <ComRoomStatus :data="data?.room_status" />
- 
           <div style="padding: 0 5px">
             <ComRecentList />
-          </div>
-
-          <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
+          </div>       
         </template>
  
     </ion-content>
@@ -30,7 +29,10 @@ import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
 import ComRecentList from "@/views/home/components/ComRecentList.vue"
+import ComSelect from "@/views/components/ComSelect.vue"
 
 const { loading, data,currentProperty } = useHome()
- 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 </script>

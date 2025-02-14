@@ -51,6 +51,8 @@ export function getDocList(DocType: string, param: any = null) {
 }
 
 
+
+
 export function getApi(api_url: string, param: any = null) {
     if (!frappe) {
         return { data: null, error: "Frappe is not defined" };
