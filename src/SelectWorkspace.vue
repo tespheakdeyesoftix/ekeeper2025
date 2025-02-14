@@ -7,7 +7,7 @@
         <ion-text class="app-name">eKeeper</ion-text>
       </div>
       <!-- Add Workspace Button -->
-      <ion-button expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
+      <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
        <!-- Workspace List -->
       <ion-list class="workspace-list">
         <ion-card

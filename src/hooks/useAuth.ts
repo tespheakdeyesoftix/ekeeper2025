@@ -30,6 +30,7 @@ export function  useAuth(router:any = null,t:any=null) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(postData),
+        mode: 'cors',
       });
   
       if (!response.ok) {
@@ -90,6 +91,7 @@ await x.present();
         headers: {
           'Content-Type': 'application/json',
         },
+        mode: 'cors',
       });
       
       
@@ -182,6 +184,7 @@ await x.present();
           'Content-Type': 'application/json',
           'Authorization': 'token ' + token.replaceAll('"',""),  
         },
+        mode: 'cors',
       });
  
     

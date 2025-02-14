@@ -1,7 +1,7 @@
 <template>
     <div style="padding: 0 5px">
         <ion-text color="secondary">
-    <h2>Summary</h2>
+    <h2>{{ t("Summary") }}</h2>
   </ion-text>
   <ion-grid>
     <ion-row>
@@ -40,4 +40,7 @@
 const props = defineProps({
     data:Object
 })
+import { useI18n } from 'vue-i18n';
+const { t  } = useI18n();
+
 </script>
