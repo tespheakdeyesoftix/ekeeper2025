@@ -98,4 +98,11 @@ button.alert-button.alert-button-confirm {
 }
   
 
-  
+
+
+ion-modal ion-content::part(scroll) {
+	overflow-y: var(--overflow);
+	overscroll-behavior-y: contain;
+
+  }
+
