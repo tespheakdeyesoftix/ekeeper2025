@@ -4,17 +4,26 @@
     <ion-content :fullscreen="true">
       <Loading v-if="loading"/>
         <template v-else>
+<<<<<<< Updated upstream
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
           <ComSelect docType="Employee"/>
+=======
+          <ComSelect/>
+>>>>>>> Stashed changes
           <ComSelect docType="Product"/>
         
           <ComWelcome />
   
           <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
    
+<<<<<<< Updated upstream
            <ComSummaryKPI :data="data?.summary" />
+=======
+          
+          <ComSummaryKPI :data="data?.summary" />
+>>>>>>> Stashed changes
           <ComRoomStatus :data="data?.room_status" />
           <div style="padding: 0 5px">
             <ComRecentList :allTasks="data?.all_tasks" :myTasks="data?.my_tasks" />
