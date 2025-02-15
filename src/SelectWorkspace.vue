@@ -7,7 +7,12 @@
         <ion-text class="app-name">eKeeper</ion-text>
       </div>
       <!-- Add Workspace Button -->
+       <div v-if="result">
+        {{ result }}
+       </div>
+       
       <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
+      <ion-button size="large" expand="full" class="add-workspace" shape="round" @click="doGet" >{{ t("Test API") }}</ion-button>
        <!-- Workspace List -->
       <ion-list class="workspace-list">
         <ion-card
@@ -24,6 +29,7 @@
         <ion-img :src="imageUrl(p.photo)" alt="Workspace Logo"></ion-img>
       </ion-avatar>
 
+      
       <!-- Workspace Info (Two Lines) -->
       <div class="workspace-info">
         <ion-text class="workspace-name">{{ p.property_name }}</ion-text>
@@ -89,8 +95,22 @@ import { setFrappeAppUrl } from '@/services/api-service';
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
+const result = ref({})
 
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 
+// Example of a GET request
+const doGet = async () => {
+  const options = {
+    url: 'http://webmonitor.inccloudserver.com:1216/api/method/edoor.mobile_api.api.check_api_url?property_code=SR2021-0001',
+    headers: { 'X-PULIC-ADDRESS': 'Fake-Value' }
+  };
+
+  const response: HttpResponse = await CapacitorHttp.get(options);
+ 
+ result.value = response;
+  
+};
 
 const {currentProperty,languages,currentLanguage} = useApp()
 const ionRouter = useIonRouter();
@@ -100,7 +120,7 @@ const { login,isAuthenticated } = useAuth()
 const changeLanguage = ( lang:string) => {
       locale.value = lang;
       window.localStorage.setItem("lang",locale.value)
-    };
+};
 
 
 async function onLogin(p: any) {

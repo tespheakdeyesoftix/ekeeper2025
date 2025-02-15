@@ -3,6 +3,7 @@
     <ion-content>
       <!-- Profile Section -->
       <div class="profile-section">
+      
         <ion-avatar class="profile-avatar">
           <img :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
         </ion-avatar>

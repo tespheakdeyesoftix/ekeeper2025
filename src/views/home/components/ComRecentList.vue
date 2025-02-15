@@ -47,7 +47,7 @@ const setSelectedTab = (tab: string) => {
   <div v-if="selectedTab === 'myTask'">
     <div v-if="myTasks?.length" class="task-list">
       <div v-for="(task, index) in myTasks" :key="index" class="task-card">
-        <img :src="task.photo" alt="task photo" class="task-photo" />
+        <img :src="task?.photo" alt="task photo" class="task-photo" />
         <div class="task-details">
           <p class="task-title">{{ task.work_order_type }}</p>
           <p class="task-description">{{ task.description }}</p>

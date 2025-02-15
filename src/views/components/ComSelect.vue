@@ -1,7 +1,5 @@
 <template>
-    
-        <ion-button @click="openSheetModal">Open Sheet Modal</ion-button>
-      
+    <ion-button @click="openSheetModal">Open Sheet Modal</ion-button>
   </template>
   
   <script setup>
@@ -14,8 +12,8 @@
   const openSheetModal = async () => {
     const modal = await modalController.create({
       component: ComSelectSheetModal,
-      initialBreakpoint:0.75,
-      breakpoints:[0.65, 0.75,0.95],
+      initialBreakpoint:0.5,
+      breakpoints:[0,0.5,0.75,0.95],
       swipeToClose: false,
       componentProps:{
         docType:props.docType,

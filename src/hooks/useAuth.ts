@@ -8,6 +8,8 @@ import {logoutApi} from "@/services/api-service"
 const isAuthenticated = ref(false);  
 const currentUser = ref()
 import { useI18n } from 'vue-i18n';
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+      
  
  
 
@@ -16,7 +18,8 @@ export function  useAuth(router:any = null,t:any=null) {
  
    const appCtrl = useApp()
  
- async function login(data: any) {
+
+ async function _login(data: any) {
     const postData = {
       property: data.property_name,
       usr: data.username,
@@ -56,6 +59,35 @@ export function  useAuth(router:any = null,t:any=null) {
       return { data: null, error:  error };
     }
   }
+ async function login(data: any) {
+    const postData = {
+      property: data.property_name,
+      usr: data.username,
+      pwd: data.password,
+    };
+  
+    try {
+      const options = {
+        url: data.api_url + "api/method/edoor.mobile_api.api.login",
+        data: postData
+      };
+  
+      const response: HttpResponse = await CapacitorHttp.post(options);
+      
+
+      currentUser.value =  response.data.message;
+      isAuthenticated.value = true;
+      appCtrl.currentWorkingDate.value =  response.data.message.working_day.date_working_day;
+      appCtrl.currentWorkingDay.value =  response.data.message.working_day;
+      window.storageService.setItem("current_user",JSON.stringify(currentUser.value));
+
+      return { data: response.data.message, error: null };  // Return data if successful
+    } catch (error) {
+      return { data: null, error };  // Return error if request fails
+    }
+  }
+
+
 
 
   async function logout() {
@@ -76,10 +108,11 @@ export function  useAuth(router:any = null,t:any=null) {
   }
 
   
- async function checkPropertyCode(api_url:string, property_code:string) {
+ async function _checkPropertyCode(api_url:string, property_code:string) {
  
 
     try {
+      
       const response = await fetch(api_url + "api/method/edoor.mobile_api.api.check_api_url?property_code=" + property_code, {
         method: 'GET',
         headers: {
@@ -115,6 +148,37 @@ export function  useAuth(router:any = null,t:any=null) {
       return { data: null, error:  error };
     }
   }
+
+ async function checkPropertyCode(api_url:string, property_code:string) {
+  alert(123)
+  try {
+    const options = {
+      url: api_url + "api/method/edoor.mobile_api.api.check_api_url?property_code=" + property_code,
+    };
+
+    const response: HttpResponse = await CapacitorHttp.get(options);
+    
+    //   set current login user
+      currentUser.value = response.data.message;
+      isAuthenticated.value = true;
+
+
+    return { data: response.data.message, error: null };  // Return data if successful
+  } catch (error) {
+    if (error?.toString().includes("Failed to parse URL from")) {
+      const alert = await alertController.create({
+          header: 'Invalid Server',
+          message: `This property code contains an invalid server URL. Please contact your system administrator for assistance.`,
+          buttons: ['OK'],
+      });
+      await alert.present();
+  } 
+
+    return { data: null, error };  // Return error if request fails
+  }
+};
+  
+}
 
   async function checkUserLogin(){
     const loading = await loadingController.create({

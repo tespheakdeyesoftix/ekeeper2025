@@ -3,14 +3,16 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+          <ion-button size="large" fill="clear" @click="dismissModal">
+    <ion-icon :icon="closeOutline"></ion-icon>
+  </ion-button>
       </ion-buttons>
-        <ion-title>{{ t("Select") }} {{ title ?? docType }}</ion-title>
+        <ion-title>{{ t("Select") }} xxx {{ title ?? docType }}</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-searchbar 
         placeholder="Search" 
-        class="fixed-searchbar"
+        @click="expandModal" 
       ></ion-searchbar>
 
     <ion-content>
@@ -46,13 +48,14 @@
  
   </ion-page>
 </template>
-  
+
   <script setup>
-  import { useComSelect } from '@/hooks/useComSelect';
-import {IonCardTitle, IonButtons,IonBackButton, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  modalController,
-  IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader } from '@ionic/vue';
-  import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+    import { useComSelect } from '@/hooks/useComSelect';
+    import {IonCardTitle, IonButtons,IonBackButton, IonIcon, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  
+    IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader,modalController } from '@ionic/vue';
+    import { closeOutline } from "ionicons/icons";
+    import { useI18n } from 'vue-i18n';
+    const { t } = useI18n();
 
 
   const props = defineProps({
@@ -63,6 +66,13 @@ const { t } = useI18n();
   const {loading, onLoadMore,data,onSelect} = useComSelect({docType:props.docType});
 
 
+  const expandModal = async () => {
+
+  const modal = await modalController.getTop();
+  if (modal) {
+    modal.setCurrentBreakpoint(0.95);
+  }
+};
  
   const onConfirm = () => modalController.dismiss("Hello World", 'confirm');
 
