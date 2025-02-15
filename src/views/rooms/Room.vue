@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <AppBar>Room</AppBar>
+    <AppBar>{{ t("Room") }}</AppBar>
     <ion-content :fullscreen="true">
       <ion-searchbar></ion-searchbar>
       <!-- Filter -->
@@ -34,4 +34,6 @@ import { IonPage, IonContent, IonButton, IonSearchbar, IonAccordion, IonAccordio
 import ComRoomFilter from '@/views/rooms/components/ComRoomFilter.vue';
 import { defineComponent } from 'vue';
 import { searchCircle } from 'ionicons/icons';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 </script>

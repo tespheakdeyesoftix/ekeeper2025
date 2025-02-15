@@ -7,15 +7,19 @@
   <script setup>
   import { modalController,IonButton } from '@ionic/vue';
   import ComSelectSheetModal from '@/views/components/ComSelectSheetModal.vue';
-  
+  const props = defineProps({
+    docType:String,
+    filter:Object
+  })
   const openSheetModal = async () => {
     const modal = await modalController.create({
       component: ComSelectSheetModal,
-      initialBreakpoint:0.65,
-      breakpoints:[0, 0.25, 0.5,0.65, 0.75,0.9],
-      swipeToClose: true,  
+      initialBreakpoint:0.75,
+      breakpoints:[0.65, 0.75,0.95],
+      swipeToClose: false,
       componentProps:{
-        docType:"Employee"
+        docType:props.docType,
+        filter:props.filter
       }
     });
     await modal.present();
@@ -29,6 +33,19 @@
   </script>
   
   <style scoped>
- 
+ ion-modal {
+--border-radius: 10px;
+padding-left: 15px;
+padding-right: 15px;
+background: red;
+}
+
+ion-modal.auto-height::part(content) {
+    position: relative;
+    --varPer: 50%;
+    bottom: 0px;
+    height: var(--varPer);
+    top: calc(var(--varPer) / 2);
+}
   </style>
   

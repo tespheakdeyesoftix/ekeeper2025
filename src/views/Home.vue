@@ -4,22 +4,28 @@
     <ion-content :fullscreen="true">
       <Loading v-if="loading"/>
         <template v-else>
-          <ComSelect/>
+          <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+          <ComSelect docType="Employee"/>
+ 
+ 
+ 
+          <ComSelect docType="Product"/>
         
           <ComWelcome />
- 
-
+  
           <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
    
-          <ComOccupancyChart :data="{occupy:data?.summary.occupy, total_room_vacant:data?.summary.total_room_vacant }"  /> 
-          <ComSummaryKPI :data="data?.summary" />
+ 
+           <ComSummaryKPI :data="data?.summary" />
+ 
+   
           <ComRoomStatus :data="data?.room_status" />
           <div style="padding: 0 5px">
             <ComRecentList :allTasks="data?.all_tasks" :myTasks="data?.my_tasks" />
           </div> 
-
-          <!-- <ion-button router-link="/room-detail">Open Room Detail</ion-button> -->
-        </template>
+         </template>
  
     </ion-content>
   </ion-page>
@@ -27,7 +33,7 @@
 
 <script setup lang="ts">
 import { useHome } from '@/hooks/useHome';
-import { IonPage, IonContent, IonButton } from '@ionic/vue';
+import { IonPage, IonContent, IonButton,IonRefresher,IonRefresherContent } from '@ionic/vue';
 import ComWelcome from "@/views/home/components/ComWelcome.vue"
 import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
@@ -35,8 +41,10 @@ import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
 import ComRecentList from "@/views/home/components/ComRecentList.vue"
 import ComSelect from "@/views/components/ComSelect.vue"
 
-const { loading, data,currentProperty } = useHome()
+const { loading, data,currentProperty ,onRefresh} = useHome()
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+
+     
 </script>

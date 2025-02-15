@@ -43,29 +43,29 @@
       </ion-menu-toggle>
       <ion-menu-toggle>
 
-        <ion-item router-link="/settings">
+        <ion-item router-link="/lost-and-found+">
           <ion-icon :icon="archiveOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Lost and Found") }}</ion-label>
+          <ion-label>{{ t("Lost and Found") }}cc</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
 
         <ion-item router-link="/sop">
           <ion-icon :icon="brushOutline" slot="start"></ion-icon>
-          <ion-label></ion-label>
+          <ion-label>{{ t("Housekeeping SOP") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
         <ion-item router-link="/report">
           <ion-icon :icon="barChartOutline" slot="start"></ion-icon>
-          <ion-label>Reports</ion-label>
+          <ion-label>{{ t("Reports") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
 
         <ion-item router-link="/settings">
           <ion-icon :icon="settingsOutline" slot="start"></ion-icon>
-          <ion-label>Setting</ion-label>
+          <ion-label>{{ t("Settings") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
        
@@ -74,12 +74,12 @@
       <!-- Bottom Section -->
       <div class="menu-bottom">
         <div class="app-info">
-          <ion-label class="app-name">eKeeper by eDoor Frontdesk</ion-label>
-          <ion-label class="app-version">Version 1.0.0</ion-label>
+          <ion-label class="app-name">{{ t("eKeeper by eDoor Front Desk") }}</ion-label>
+          <ion-label class="app-version">{{ t("Version") }} 1.0.0</ion-label>
         </div>
         <ion-button expand="full" class="logout-button" shape="round" @click="onLogout">
           <ion-icon :icon="logOutOutline" slot="start"></ion-icon>
-          Logout
+          {{ t("Logout") }}
         </ion-button>
       </div>
     </ion-content>
