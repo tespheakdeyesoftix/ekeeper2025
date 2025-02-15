@@ -1,71 +1,95 @@
 <template>
+  <div class="chart-container">
+    <ion-text color="primary" ><h2>{{t("Occupancy")}}</h2></ion-text>
     <v-chart class="chart" :option="option" autoresize />
+  </div>
+    
   </template>
   
   <script setup>
   import { use } from 'echarts/core';
   import { CanvasRenderer } from 'echarts/renderers';
   import { PieChart } from 'echarts/charts';
+  import {  IonText} from '@ionic/vue';
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
   import {
     TitleComponent,
     TooltipComponent,
     LegendComponent,
   } from 'echarts/components';
-  import VChart, { THEME_KEY } from 'vue-echarts';
-  import { ref, provide } from 'vue';
-  
+  import VChart from 'vue-echarts';
+  import { ref } from 'vue';
+import { graphic } from 'echarts';
+ 
+  const props = defineProps({
+    data:Object
+  })
   use([
     CanvasRenderer,
     PieChart,
     TitleComponent,
     TooltipComponent,
-    LegendComponent,
+    LegendComponent
   ]);
   
-  provide(THEME_KEY, 'dark');
-  
-  const option = ref({
-    title: {
-      text: 'Traffic Sources',
-      left: 'center',
-    },
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)',
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-      data: ['Direct', 'Email', 'Ad Networks', 'Video Ads', 'Search Engines'],
-    },
-    series: [
-      {
-        name: 'Traffic Sources',
-        type: 'pie',
-        radius: '55%',
-        center: ['50%', '60%'],
-        data: [
-          { value: 335, name: 'Direct' },
-          { value: 310, name: 'Email' },
-          { value: 234, name: 'Ad Networks' },
-          { value: 135, name: 'Video Ads' },
-          { value: 1548, name: 'Search Engines' },
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
+  const option =ref({
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    top: '5%',
+    left: 'center'
+  },
+  series: [
+    {
+      name: 'Occupancy',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      label: {
+        show: true,
+        position: 'center',
+        fontSize: 30,
+        fontWeight: 'bold',
+        formatter: props.data?.occupancy + "%"
       },
-    ],
-  });
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: 40,
+          fontWeight: 'bold'
+        }
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: props.data?.occupy, name: t('Occupy'),itemStyle: { color: props.data?.occupy_color } },
+        { value: props.data?.total_room_vacant, name: t('Vacant Room'), itemStyle: { color: props.data?.vacant_color }}
+      ]
+    }
+  ]
+});
+
+
   </script>
   
   <style scoped>
-  .chart {
-    height: 100vh;
-  }
+.chart-container {
+  background: rgba(223, 239, 248, 0.435);
+  height: 285px;
+  overflow-y: hidden;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  padding:0 10px;
+}
+
+
+ .chart {
+  height: 250px;
+  margin: 0px;
+}
   </style>
   
