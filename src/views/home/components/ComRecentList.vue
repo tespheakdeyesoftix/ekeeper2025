@@ -2,13 +2,13 @@
 import { ref } from 'vue';
 import { IonChip, IonIcon, IonLabel, IonText } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
-import { list, today } from 'ionicons/icons';
+import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
 
 const { t } = useI18n();
 
 const props = defineProps({
-    allTasks: Array,
-    myTasks: Array
+  allTasks: Object,
+  myTasks: Object
 });
 
 const chips = ref([
@@ -26,7 +26,7 @@ const setSelectedTab = (tab: string) => {
 <template>
   <ion-text color="secondary">
     <h2 class="title">{{ t("Recent List") }}</h2>
-  </ion-text>
+  </ion-text>  
 
   <!-- Filter Chips -->
   <div class="chip-container">
@@ -37,8 +37,7 @@ const setSelectedTab = (tab: string) => {
       :class="{ active: selectedTab === chip.value }"
       @click="setSelectedTab(chip.value)"
     >
-      <ion-icon :icon="chip.icon" :class="{ 'active-icon': selectedTab === chip.value }"
-      />
+      <ion-icon :icon="chip.icon" :class="{ 'active-icon': selectedTab === chip.value }" />
       <ion-label>{{ chip.label }}</ion-label>
     </ion-chip>
   </div>
@@ -47,11 +46,23 @@ const setSelectedTab = (tab: string) => {
   <div v-if="selectedTab === 'myTask'">
     <div v-if="myTasks?.length" class="task-list">
       <div v-for="(task, index) in myTasks" :key="index" class="task-card">
-        <img :src="task?.photo" alt="task photo" class="task-photo" />
-        <div class="task-details">
-          <p class="task-title">{{ task.work_order_type }}</p>
-          <p class="task-description">{{ task.description }}</p>
+        <img :src="task.photo" alt="task photo" class="task-photo" />
+        <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
+        <div class="task-details" style="flex-grow: 1;">
+          <p class="task-title">
+            <ion-icon :icon="briefcaseOutline" class="task-icon"></ion-icon>
+            {{ task.work_order_type }}
+          </p>
+          <p class="task-location">
+            <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
+            {{ task.location }}
+          </p>
+          <p class="task-description">
+            <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
+            {{ task.description }}
+          </p>
         </div>
+      </div>
       </div>
     </div>
     <p v-else class="no-task-message">No tasks available</p>
@@ -62,12 +73,28 @@ const setSelectedTab = (tab: string) => {
     <div v-if="allTasks?.length" class="task-list">
       <div v-for="(task, index) in allTasks" :key="index" class="task-card">
         <img :src="task.photo" alt="task photo" class="task-photo" />
-        <div class="task-details">
-          <p class="task-title">{{ task.work_order_type }}</p>
-          <p class="task-description">{{ task.description }}</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
+        <div class="task-details" style="flex-grow: 1;">
+          <p class="task-title">
+            <ion-icon :icon="constructOutline" class="task-icon"></ion-icon>
+            {{ task.work_order_type }}
+          </p>
+          <p class="task-location">
+            <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
+            {{ task.location }}
+          </p>
+          <p class="task-description">
+            <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
+            {{ task.description }}
+          </p>
+        </div>
+
+        <div class="task-status">
+          <ion-chip class="status-chip">{{ task.work_order_status }}</ion-chip>
         </div>
       </div>
-    </div>
+      </div>
+    </div> 
     <p v-else class="no-task-message">No tasks available</p>
   </div>
 </template>
@@ -92,8 +119,7 @@ const setSelectedTab = (tab: string) => {
   padding: 8px 14px;
   background: #f8f9fd;
   border-radius: 20px;
-  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
 }
 
@@ -101,10 +127,10 @@ const setSelectedTab = (tab: string) => {
   background: #8594DC;
   color: white;
 }
-.active-icon{
-    color: white;
+
+.active-icon {
+  color: white;
 }
-  
 
 .chip-icon {
   margin-right: 6px;
@@ -115,25 +141,42 @@ const setSelectedTab = (tab: string) => {
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+}
+
+.task-details p {
+  margin: 5px 0; /* Apply controlled margin for all p tags inside task-details */
+}
+
+.task-icon { 
+  margin-right: 6px;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+.task-location {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
 }
 
 .task-card {
   display: flex;
   background: white;
   border-radius: 12px;
-  padding: 10px;
+  padding: 15px;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
   gap: 12px;
   align-items: center;
 }
- 
+
 .task-photo {
   width: 50px;
   height: 50px;
   object-fit: cover;
-  border-radius: 50px;
+  border-radius: 50%;
   background-color: aqua;
+  flex-shrink: 0;
 }
 
 .task-title {
@@ -144,6 +187,12 @@ const setSelectedTab = (tab: string) => {
 .task-description {
   font-size: 0.9rem;
   color: #777;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  word-break: break-word; /* Ensures better text wrapping */
+  overflow: hidden;
 }
 
 .no-task-message {
@@ -151,5 +200,11 @@ const setSelectedTab = (tab: string) => {
   font-size: 1rem;
   color: #888;
   margin-top: 10px;
+}
+
+.status-chip {
+  font-size: 0.85rem;
+  color: #fff;
+  background-color: #8594dc;
 }
 </style>
