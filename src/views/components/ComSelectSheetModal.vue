@@ -2,6 +2,9 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
         <ion-title>{{ t("Select") }} {{ title ?? docType }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -46,7 +49,7 @@
   
   <script setup>
   import { useComSelect } from '@/hooks/useComSelect';
-import { IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  modalController,
+import {IonCardTitle, IonButtons,IonBackButton, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  modalController,
   IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader } from '@ionic/vue';
   import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

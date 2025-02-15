@@ -9,7 +9,7 @@
     </ion-refresher>
           <ComSelect docType="Employee"/>
  
-          <ComSelect/>
+ 
  
           <ComSelect docType="Product"/>
         
