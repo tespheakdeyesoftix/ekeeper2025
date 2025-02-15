@@ -11,6 +11,9 @@
           <ComSelect docType="Employee"/>
 =======
           <ComSelect/>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
           <ComSelect docType="Product"/>
         
@@ -19,8 +22,11 @@
           <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
    
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
            <ComSummaryKPI :data="data?.summary" />
 =======
+=======
+>>>>>>> Stashed changes
           
           <ComSummaryKPI :data="data?.summary" />
 >>>>>>> Stashed changes
