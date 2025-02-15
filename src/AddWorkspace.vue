@@ -120,7 +120,8 @@ async function onSaveWorkspace() {
 
     // get api url 
     const checkPropertyCodeResponse = await checkPropertyCode(response.data.app_url, formData.value.property_code);
-   if(checkPropertyCodeResponse.error){
+ 
+    if(checkPropertyCodeResponse?.error){
     await loading.dismiss();
     return;
    }
