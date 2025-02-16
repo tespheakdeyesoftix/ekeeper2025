@@ -4,7 +4,7 @@
         <ion-grid>
             <ion-row class="align-items-center">
                 <!-- Greeting Section -->
-                <ion-col>
+                <ion-col size="6">
                     <ion-text>
                         <h2 class="greeting-text">{{ t(getGreetingMessage()) }} <br/> {{ currentUser.full_name }}</h2>
                         <p>{{ t("Welcome to your workspace.") }}</p>
@@ -12,10 +12,9 @@
                 </ion-col>
 
                 <!-- Date Box Section -->
-                <ion-col size="auto">
+                <ion-col size="6">
                     <div class="date-box">
                         <ion-text>
-                         
                             <h3>{{ t(dayjs(currentWorkingDate).format("dddd")) }}</h3>
                             <h1>{{ dayjs(currentWorkingDate).format("DD") }}</h1>
                             <h3>{{ t(dayjs(currentWorkingDate).format("MMMM")) }}, {{ dayjs(currentWorkingDate).format("YYYY") }}</h3>
@@ -26,6 +25,7 @@
         </ion-grid>
     </ion-card-content>
 </ion-card>
+
 
 
 
@@ -52,13 +52,17 @@ const { currentWorkingDate } = useApp();
 .dashboard-card {
     border-radius: 15px;
     background: rgb(230, 245, 254);
-   
- 
+    padding: 0px;
+    margin: 10px;
 }
-
+ion-card-content{
+    padding: 5px;
+}
+ 
 .greeting-text {
     font-size: 1.4rem;
     font-weight: bold;
+    margin: 0px;
 }
 
 .date-box {
@@ -69,6 +73,7 @@ const { currentWorkingDate } = useApp();
     backdrop-filter: blur(10px);
     display: inline-block;
     min-width: 100px;
+    
 }
 
 .date-box h1 {

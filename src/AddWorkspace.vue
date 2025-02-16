@@ -97,7 +97,7 @@ async function onSaveWorkspace() {
 
 
     const loading = await loadingController.create({
-        message: 'Checking property code',
+        message: t('Checking property code'),
     });
 
     loading.present();
@@ -107,10 +107,10 @@ async function onSaveWorkspace() {
     if (response.error) {
         await loading.dismiss();
         const alert = await alertController.create({
-            header: 'Check property code',
-            message: `Property ${formData.value.property_code} does not exist.`,
+            header: t('Check Property Information'),
+            message: t("property_not_exist_message",{ property_code: formData.value.property_code }),
         
-            buttons: ['OK'],
+            buttons: [t('OK')],
         });
         await alert.present();
 
@@ -132,7 +132,7 @@ async function onSaveWorkspace() {
     // save current current property and username, password to local storage
      
     const loadingLogin = await loadingController.create({
-        message: 'Loging In...',
+        message: t('Loging In') + '...',
     });
     await loadingLogin.present();
 

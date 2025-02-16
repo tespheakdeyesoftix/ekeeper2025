@@ -55,11 +55,19 @@
     "Stays":"ភ្ងៀវស្នាក់នៅ",
     "reservation_menu":"ភ្ងៀវស្នាក់នៅ",
     "Report":"របាយការណ៌",
+    "Reports":"របាយការណ៌",
     "Recent List":"បញ្ជីថ្មីៗ",
     "Room Block":"បិទបន្ទប់",
     "Lost and Found":"បាត់របស់ និងរកឃើញ",
     "Housekeeping SOP":"នីតិវិធីស្តង់ដារផ្នែកអនាម័យ",
     "Settings":"កំណត់",
-    "Setting":"កំណត់"
-
+    "Setting":"កំណត់",
+    "Checking property code": "ត្រួតពិនិត្យលេខកូដសណ្ឋាគាររបស់អ្នក",
+  "Loging In":"កំពុងចូលប្រព័ន្ធ",
+  "property_not_exist_message": "លេខកូដ {property_code} មិនមានក្នុងប្រព័ន្ធទេ",
+  "Check Property Information": "ត្រួតពិនិត្យព័ត៌មានសណ្ឋាគារ",
+  "OK":"យល់ព្រម",
+  "Ok":"យល់ព្រម",
+  "ok":"យល់ព្រម"
+  
   } 

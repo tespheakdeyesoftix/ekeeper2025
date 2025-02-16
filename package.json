@@ -26,6 +26,7 @@
     "frappe-js-sdk": "^1.7.0",
     "install": "^0.13.0",
     "ionicons": "^7.0.0",
+    "lodash": "^4.17.21",
     "npm": "^11.1.0",
     "vue": "^3.3.0",
     "vue-echarts": "^7.0.3",

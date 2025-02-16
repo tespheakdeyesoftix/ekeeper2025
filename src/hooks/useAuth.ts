@@ -14,7 +14,7 @@ import { CapacitorHttp, HttpResponse } from '@capacitor/core';
  
 
 // { myT, myOther }: { myT?: (key: string) => string, myOther?: any }
-export function  useAuth(router:any = null,t:any=null) {
+export function  useAuth(router:any = null) {
  
    const appCtrl = useApp()
  
@@ -55,7 +55,7 @@ export function  useAuth(router:any = null,t:any=null) {
 
   async function logout() {
     const loading = await loadingController.create({
-      message: 'Logout...',
+      message: window.t("Logout") + '...',
   });
   await loading.present();
     await logoutApi();
@@ -110,7 +110,7 @@ export function  useAuth(router:any = null,t:any=null) {
 
   async function checkUserLogin(){
     const loading = await loadingController.create({
-      message: 'Loading...',
+      message: window.t('Loading...'),
   });
   await loading.present();
     const strCurrentProperty = window.storageService.getItem("current_property")

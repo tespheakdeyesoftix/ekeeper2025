@@ -12,8 +12,8 @@
        </div>
        
       <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
-      <ion-button size="large" expand="full" class="add-workspace" shape="round" @click="doGet" >{{ t("Test API") }}</ion-button>
        <!-- Workspace List -->
+
       <ion-list class="workspace-list">
         <ion-card
   v-for="p in properties"
@@ -98,19 +98,7 @@ const { t, locale } = useI18n();
 const result = ref({})
 
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
-
-// Example of a GET request
-const doGet = async () => {
-  const options = {
-    url: 'http://webmonitor.inccloudserver.com:1216/api/method/edoor.mobile_api.api.check_api_url?property_code=SR2021-0001',
-    headers: { 'X-PULIC-ADDRESS': 'Fake-Value' }
-  };
-
-  const response: HttpResponse = await CapacitorHttp.get(options);
  
- result.value = response;
-  
-};
 
 const {currentProperty,languages,currentLanguage} = useApp()
 const ionRouter = useIonRouter();

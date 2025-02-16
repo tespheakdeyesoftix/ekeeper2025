@@ -1,5 +1,6 @@
 <template>
-    <ion-card class="reservation-card" @click="onViewReservationDetail">
+    <ion-card class="reservation-card" button @click="onViewReservationDetail">
+      <ion-ripple-effect></ion-ripple-effect>
   <ion-card-header>
     <div class="title-container">
       <ion-card-title>
@@ -31,7 +32,7 @@
 
   </template>
 <script setup lang="ts">
-import { useIonRouter,IonList, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonText, IonButton, IonIcon } from '@ionic/vue';
+import { IonRippleEffect, useIonRouter,IonList, IonItem, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCardSubtitle, IonText, IonButton, IonIcon } from '@ionic/vue';
 import { bookmarkOutline, personCircle, calendar, bedOutline, briefcaseOutline, checkmark, close } from 'ionicons/icons';
 import dayjs from 'dayjs';
 const ionRouter = useIonRouter();

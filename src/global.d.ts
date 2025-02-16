@@ -4,6 +4,7 @@ declare global {
         setItem(key: string, value: any): void;
         removeItem(key: string, value: any): void;
         getItem(key: string): string | null;
+        t(key: string): string | null;
       };
     }
   }
