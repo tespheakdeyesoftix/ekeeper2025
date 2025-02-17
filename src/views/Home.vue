@@ -7,9 +7,9 @@
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-          <ComSelect docType="Employee" labelPrefix="Select" @onSelected="onSelected" @onClear="onClearMe"/>
+          <ComSelect docType="Employee" labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
  
-          <ComSelect docType="Product" label="Select Products"/>
+          <ComSelect docType="Product" label="Select Products" modalType="modal"/>
           <ComSelect docType="Work Order Type" :multiple="true" >
             open modul multple select
           </ComSelect>

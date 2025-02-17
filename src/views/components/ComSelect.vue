@@ -1,14 +1,15 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
     <template v-if="mode == 'chip'">
-      <ion-chip :color="selected?selectedColor:color">
-        <ion-label v-if="!selected">{{labelPrefix }} {{ label ?? docType }}</ion-label>
+      <ion-chip :color="selected ? selectedColor : color">
+        <ion-label v-if="!selected">{{ labelPrefix }} {{ label ?? docType }}</ion-label>
         <ion-label v-else>
           <!-- Show Value -->
           {{ getLabel() }}
+        
         </ion-label>
 
-        <ion-icon v-if="clear && selected" :icon="close"   @click.stop="onClear"></ion-icon>
+        <ion-icon v-if="clear && selected" :icon="close" @click.stop="onClear"></ion-icon>
       </ion-chip>
     </template>
 
@@ -25,7 +26,7 @@ import { close } from 'ionicons/icons';
 import { useApp } from "@/hooks/useApp";
 const props = defineProps({
   docType: String,
-  label:String,
+  label: String,
   filter: Object,
   valueField: {
     type: String,
@@ -55,7 +56,13 @@ const props = defineProps({
     type: String,
     default: "warning"
   },
-  labelPrefix:String 
+
+  modalType: {
+    modalType: String,
+    default: "sheet_modal"
+  },
+
+  labelPrefix: String
 
 
 })
@@ -70,20 +77,29 @@ const { getMeta } = useApp(props)
 const hasDefaultSlot = ref(slots.default);
 
 const openSheetModal = async () => {
-  const modal = await modalController.create({
+
+  const modalOption = {
     component: ComSelectSheetModal,
-    initialBreakpoint: 0.5,
-    breakpoints: [0, 0.5, 0.75, 0.95],
     swipeToClose: false,
-    componentProps: {...props,selectedValue:selected.value?selected.value[props.valueField]:""}
-  });
+    componentProps: { ...props, selectedValue: selected.value ? selected.value[props.valueField] : "" }
+  }
+
+
+  if (props.modalType == "sheet_modal") {
+
+    modalOption.initialBreakpoint = 0.5,
+      modalOption.breakpoints = [0, 0.5, 0.75, 0.95]
+  }
+
+
+  const modal = await modalController.create(modalOption);
   await modal.present();
 
   const { data, role } = await modal.onWillDismiss();
 
   if (role === 'confirm') {
     selected.value = data;
-    emit("onSelected",data)
+    emit("onSelected", data)
   }
 };
 
@@ -97,13 +113,27 @@ function getLabel() {
       return selected.value.name;
     }
   } else {
-    return "multiple value"
+    if (Array.isArray(selected.value)) {
+        
+      if (selected.value.length == 1) {
+        if (meta.value.title_field) {
+          return selected.value[0][meta.value.title_field];
+        } else if (props.labelField) {
+          return selected.value[0](props.labelField);
+        } else {
+          return selected.value[0].name;
+        }
+      } else {
+        return selected.value.length + " Selected";
+      }
+    }  
+
   }
 
 }
 
-function onClear(){
-  selected.value=null;
+function onClear() {
+  selected.value = null;
   emit("onClear");
 }
 onMounted(async () => {

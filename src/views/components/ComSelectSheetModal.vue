@@ -90,7 +90,7 @@
     selectedValues:Object
   });
 
-  const { meta, loading, onLoadMore,data,onSelect,onConfirm,dismissModal,expandModal,keyword,Search} = useComSelect(props);
+  const { meta, loading, onLoadMore,data,onSelect,onConfirm,dismissModal,expandModal,keyword,Search,confirmSelection} = useComSelect(props);
  
 
   

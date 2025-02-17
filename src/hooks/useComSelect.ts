@@ -68,8 +68,7 @@ const meta = ref<any>()
   }
 
   const onLoadMore = async (event: InfiniteScrollCustomEvent) => {
-    console.log(canLoadMore.value);
-    
+     
     if (!canLoadMore.value) return event.target.complete();
   
     startIndex.value += pageSize.value;
@@ -87,14 +86,29 @@ const meta = ref<any>()
   };
 
   function onSelect(selected:any){
+    alert(Array.isArray(selected))
     if(props.multiple){
-      selected.selected = !selected.selected;
+      if(Array.isArray(selected)){
+        console.log(selected);
+        
+        modalController.dismiss(selected, 'confirm')
+      data.value=[];
+      }else {
+        selected.selected = !selected.selected;
+      }
+      
     }else {
       modalController.dismiss(selected, 'confirm')
       data.value=[];
       
     }
     
+  }
+
+
+  function confirmSelection(){
+    alert(123)
+    onSelect(data.value.filter((r:any)=> r.selected));
   }
 
   const dismissModal = () => {
@@ -115,7 +129,6 @@ const meta = ref<any>()
 
  
   const Search = debounce(async () => {
-    console.log("do search")
     loading.value = true;
     canLoadMore.value = true;
     startIndex.value = 0;
@@ -123,7 +136,7 @@ const meta = ref<any>()
   
     
     loading.value = false;
-  }, 700); // Delay for 700ms
+  }, 1000); // Delay for 700ms
  
 
   onMounted(async ()=>{
@@ -139,12 +152,14 @@ const meta = ref<any>()
     loading,
     keyword,
     data,   
+    Search,
+    meta,
     getData,
     onLoadMore,
     onSelect,
     dismissModal,
     expandModal,
-    Search,
-    meta
+    confirmSelection
+    
 };
 }
