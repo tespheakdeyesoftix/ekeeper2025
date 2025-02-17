@@ -7,8 +7,13 @@
         <ion-text class="app-name">eKeeper</ion-text>
       </div>
       <!-- Add Workspace Button -->
+       <div v-if="result">
+        {{ result }}
+       </div>
+       
       <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
        <!-- Workspace List -->
+
       <ion-list class="workspace-list">
         <ion-card
   v-for="p in properties"
@@ -24,6 +29,7 @@
         <ion-img :src="imageUrl(p.photo)" alt="Workspace Logo"></ion-img>
       </ion-avatar>
 
+      
       <!-- Workspace Info (Two Lines) -->
       <div class="workspace-info">
         <ion-text class="workspace-name">{{ p.property_name }}</ion-text>
@@ -89,8 +95,10 @@ import { setFrappeAppUrl } from '@/services/api-service';
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
+const result = ref({})
 
-
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+ 
 
 const {currentProperty,languages,currentLanguage} = useApp()
 const ionRouter = useIonRouter();
@@ -100,7 +108,7 @@ const { login,isAuthenticated } = useAuth()
 const changeLanguage = ( lang:string) => {
       locale.value = lang;
       window.localStorage.setItem("lang",locale.value)
-    };
+};
 
 
 async function onLogin(p: any) {

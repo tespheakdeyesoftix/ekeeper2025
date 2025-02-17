@@ -1,4 +1,5 @@
  
+import { getApi } from "@/services/api-service";
 import { onMounted, ref } from "vue";
  
 const currentProperty = ref({property_name:""})
@@ -7,6 +8,8 @@ const currentWorkingDay = ref({})
 
 
 export function useApp() {
+
+  const metas = ref<any[]>([])
 
 
   const currentLanguage = ref("en")
@@ -25,6 +28,25 @@ export function useApp() {
     ]
 
 
+    
+      async function getMeta(doctype:string){
+        const existingDoctype = metas.value.find(r=>r.name == doctype);
+        if(existingDoctype){
+          return existingDoctype
+        }
+    
+        const response =await getApi("edoor.api.frontdesk.get_meta",{
+          doctype:doctype
+        });
+        
+        if(response.data){
+          metas.value.push(response.data);
+          return response.data;
+        }
+    
+    
+      }
+
 
 
   onMounted(()=>{
@@ -37,6 +59,7 @@ export function useApp() {
     currentProperty,
     currentWorkingDate,
     currentWorkingDay,
-    currentLanguage
+    currentLanguage,
+    getMeta
 };
 }

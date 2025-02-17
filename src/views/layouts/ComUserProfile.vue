@@ -18,8 +18,8 @@
 
         </ion-avatar>
         <div class="username-position">
-          <strong>Administrator</strong><br />
-          <span>FO Manager</span>
+          <strong>{{ currentUser.full_name }}</strong><br />
+          <span>{{ currentUser.position }}</span>
           
         </div>
       </div>

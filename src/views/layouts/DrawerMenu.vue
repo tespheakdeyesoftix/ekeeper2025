@@ -3,6 +3,7 @@
     <ion-content>
       <!-- Profile Section -->
       <div class="profile-section">
+      
         <ion-avatar class="profile-avatar">
           <img :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
         </ion-avatar>
@@ -45,7 +46,7 @@
 
         <ion-item router-link="/lost-and-found+">
           <ion-icon :icon="archiveOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Lost and Found") }}cc</ion-label>
+          <ion-label>{{ t("Lost and Found") }}</ion-label>
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>

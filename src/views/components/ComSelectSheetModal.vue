@@ -1,35 +1,57 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-        <ion-title>{{ t("Select") }} {{ title ?? docType }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <ion-toolbar>
+    <!-- Close Button (Left) -->
+    <ion-buttons slot="start">
+      <ion-button size="large" fill="clear" @click="dismissModal">
+        <ion-icon :icon="closeOutline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Title (Centered) -->
+    <ion-title>{{ t("Select") }} - {{ title ?? docType }}</ion-title>
+
+    <!-- Confirm Button (Right) -->
+    <ion-buttons v-if="multiple" slot="end">
+      <ion-button  shape="round" fill="solid" color="success" @click="confirmSelection" size="large"> 
+        <ion-icon :icon="checkmarkOutline" slot="start" size="large"></ion-icon>
+        {{ t("Confirm") }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
     <ion-searchbar 
         placeholder="Search" 
-        class="fixed-searchbar"
+        @click="expandModal" 
+        v-model="keyword"
+        @ionInput="Search"
       ></ion-searchbar>
 
     <ion-content>
      
-      <ion-list>
-        <!-- Cards Displaying Data -->
-        <ion-card 
-          class="custom-card" 
-          v-for="(d, index) in data" 
-          :key="index" 
-          @click="onSelect(d)" 
-          button
-        >
-          <ion-ripple-effect></ion-ripple-effect>
-          <ion-card-header>
-            <ion-card-title>{{ d.label ?? d.value }}</ion-card-title>
-            <ion-card-subtitle v-if="d.description">{{ d.description }}</ion-card-subtitle>
-          </ion-card-header>
-        </ion-card>
+      <div class="spinner-container" v-if="loading">
+ 
+        <ion-spinner></ion-spinner>
+   
+      </div>
+  
+ 
+
+      <template v-else>
+        <ion-list>
+       <ComSelectCard v-for="(d, index) in data" :key="index" :data="d" 
+          @onSelect="onSelect(d)" 
+          valueField="name"
+          :labelField="meta.title_field"
+          :descriptionFields="meta.search_fields"
+          :photoField="meta.image_field"
+          :selectedValue = "props.selectedValue"
+          :selectedValues = "props.selectedValues"
+       />
+        
       </ion-list>
 
       <!-- Infinite Scroll -->
@@ -41,41 +63,49 @@
         <ion-infinite-scroll-content loading-text="Loading more..."></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </div>
+      </template>
+      
     </ion-content>
 
  
   </ion-page>
 </template>
-  
+
   <script setup>
-  import { useComSelect } from '@/hooks/useComSelect';
-import {IonCardTitle, IonButtons,IonBackButton, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  modalController,
-  IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader } from '@ionic/vue';
-  import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+    import { useComSelect } from '@/hooks/useComSelect';
+    import {IonSpinner, IonCardTitle, IonButtons,IonBackButton, IonIcon, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  
+    IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader,modalController } from '@ionic/vue';
+    import { checkmarkOutline, closeOutline } from "ionicons/icons";
+    import ComSelectCard from "@/views/components/ComSelectCard.vue"
+
+    import { useI18n } from 'vue-i18n';
+    const { t } = useI18n();
 
 
   const props = defineProps({
     docType:String,
     title:String,
+    multiple:Boolean,
+    selectedValue:String,
+    selectedValues:Object
   });
 
-  const {loading, onLoadMore,data,onSelect} = useComSelect({docType:props.docType});
-
-
+  const { meta, loading, onLoadMore,data,onSelect,onConfirm,dismissModal,expandModal,keyword,Search,confirmSelection} = useComSelect(props);
  
-  const onConfirm = () => modalController.dismiss("Hello World", 'confirm');
 
   
  
-  const dismissModal = () => {
-    modalController.dismiss(null, 'cancel')
-  };
+ 
   </script>
 
 
 <style scoped>
-
+.spinner-container {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 ion-list {
   padding: 0;
@@ -97,6 +127,7 @@ ion-infinite-scroll {
   z-index: 10; /* Adjust the z-index if needed */
   background-color: white; /* Ensure background is solid */
 }
+
 
  
   </style>

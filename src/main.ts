@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 
 
-import { IonicVue,useIonRouter } from '@ionic/vue';
+import {IonLabel, IonChip, IonPage,IonContent, IonicVue,useIonRouter,IonRippleEffect,IonCard,IonCardContent,IonCardHeader,IonCardTitle,IonCardSubtitle, IonIcon } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -44,7 +44,7 @@ import i18n from '../i18n'; // Import i18n config
 
 // attach service to window easy to call it later
 window.storageService = storageService;
- 
+window.t = i18n.global.t;
 const  {checkUserLogin} = useAuth(router);
 const app = createApp(App)
 .use(IonicVue)
@@ -62,6 +62,19 @@ async function init() {
   app.use(i18n);
   app.component('AppBar', AppBar)
   app.component('Loading', Loading)
+  app.component('ion-ripple-effect', IonRippleEffect)
+  app.component('ion-card', IonCard)
+  app.component('ion-card-title', IonCardTitle)
+  app.component('ion-card-content', IonCardContent)
+  app.component('ion-card-header', IonCardHeader)
+  app.component('ion-card-subtitle', IonCardSubtitle)
+  app.component('ion-page', IonPage)
+  app.component('ion-content', IonContent)
+  app.component('ion-content', IonContent)
+  app.component('ion-icon',IonIcon)
+  app.component('ion-chip',IonChip)
+  app.component('ion-label',IonLabel)
+
   await router.isReady();
   
   app.mount("#app");

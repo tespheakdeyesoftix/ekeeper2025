@@ -7,11 +7,12 @@
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-          <ComSelect docType="Employee"/>
+          <ComSelect docType="Employee" labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
  
- 
- 
-          <ComSelect docType="Product"/>
+          <ComSelect docType="Product" label="Select Products" modalType="modal"/>
+          <ComSelect docType="Work Order Type" :multiple="true" >
+            open modul multple select
+          </ComSelect>
         
           <ComWelcome />
   
@@ -45,6 +46,13 @@ const { loading, data,currentProperty ,onRefresh} = useHome()
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
+function onSelected(data:any){
+  alert(data.name)
+}
+
+function onClearMe(){
+  alert("hello world clear me")
+}
 
      
 </script>
