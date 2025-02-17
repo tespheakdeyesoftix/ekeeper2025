@@ -111,11 +111,12 @@ function getLabel() {
       return selected.value(props.labelField);
     } else {
       return selected.value.name;
-    }
+  }
   } else {
     if (Array.isArray(selected.value)) {
         
       if (selected.value.length == 1) {
+        alert(JSON.stringify(selected.value))
         if (meta.value.title_field) {
           return selected.value[0][meta.value.title_field];
         } else if (props.labelField) {
