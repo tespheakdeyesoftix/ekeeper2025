@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { IonChip, IonIcon, IonLabel, IonText } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
 import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
+import { imageUrl } from '@/helpers/utils';
+import { getAvatarLetter } from '@/helpers/utils';
 
 const { t } = useI18n();
 
@@ -72,7 +74,12 @@ const setSelectedTab = (tab: string) => {
   <div v-if="selectedTab === 'allTask'">
     <div v-if="allTasks?.length" class="task-list">
       <div v-for="(task, index) in allTasks" :key="index" class="task-card">
-        <img :src="task.photo" alt="task photo" class="task-photo" />
+        <template v-if="task.photo">
+           <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
+        </template>
+        <template v-else>
+          <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
+        </template>
         <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
         <div class="task-details" style="flex-grow: 1;">
           <p class="task-title">
@@ -207,4 +214,18 @@ const setSelectedTab = (tab: string) => {
   color: #fff;
   background-color: #8594dc;
 }
+
+.avatar-placeholder {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ddd;
+  color: #333;
+  font-weight: bold;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 </style>
