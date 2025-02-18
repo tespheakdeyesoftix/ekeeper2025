@@ -13,11 +13,8 @@
 <script lang="ts" setup>
   import {ref} from "vue"
   import {uploadFile} from "@/services/api-service"
-
   const file = ref(null);
   const imageUrl = ref("");
-
-  
   const handleFileUpload = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -26,23 +23,23 @@
     }
 };
   const uploadImage = async () => {
-  
+   
     if (!file.value) {
-    alert("Please select a file first!");
-
-    
-
+      window.showWarning("Please select file to upload")
     return;
   }else {
-    uploadFile(
+  
+   await uploadFile(
       "Work Order",
       "WO2025-0001",
-      "photo",
+      "",
       file.value,
       {
         folder:"WorkOrder"
       }
-    )
+    );
+   
+
   }
 }
 </script>

@@ -105,9 +105,7 @@ export async function uploadFile(
 
     const file = frappe.file();
 
-    try {
-        // Upload file to Frappe
-        let formData = new FormData();
+  
 
         const fileArgs = {
             "isPrivate": false,
@@ -119,27 +117,31 @@ export async function uploadFile(
             /** Field in the document **/
             "fieldname": fieldname
           }
-        file.uploadFile(
+          const loading = await window.showLoading("Uploading...");
+        return file.uploadFile(
             fileData,
             fileArgs,
-            /** Progress Indicator callback function **/
-            
-            (completedBytes, totalBytes) => {
-                if(totalBytes){
-                    console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
-                }
-                
-            },
+            undefined,
+            // (completedBytes, totalBytes) => {
+            //     if(totalBytes){
+            //         console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
+            //     }
+            // },
             "edoor.api.upload.upload_file"
         )
-        .then(() => console.log("File Upload complete"))
-        .catch(e => console.error(e))
+        .then(async (result:any) =>{
+            await loading.dismiss()
+            window.showSuccess(window.t("Upload file successfully"));
+            return { data: result.message, error: null };
+        })
+        .catch(async(e) => {
+            await loading.dismiss()
+            handleErrorMessage(e);
+            return { data: null, e }
+        })
          
        
-      } catch (error) {
-        console.error("Error uploading image:", error);
-        alert("Failed to upload image.");
-      }
+       
 }
 
 

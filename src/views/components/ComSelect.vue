@@ -1,5 +1,7 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
+
+    <!-- Display select as chip control -->
     <template v-if="mode == 'chip'">
       <ion-chip :color="selected ? selectedColor : color">
         <ion-label v-if="!selected">{{ labelPrefix }} {{ label ?? docType }}</ion-label>
@@ -12,6 +14,9 @@
         <ion-icon v-if="clear && selected" :icon="close" @click.stop="onClear"></ion-icon>
       </ion-chip>
     </template>
+    <!-- end display select as chip control -->
+
+
 
     <slot v-if="hasDefaultSlot"></slot>
 
@@ -81,7 +86,7 @@ const openSheetModal = async () => {
   const modalOption = {
     component: ComSelectSheetModal,
     swipeToClose: false,
-    componentProps: { ...props, selectedValue: selected.value ? selected.value[props.valueField] : "" }
+    componentProps: { ...props, selectedValue: selected.value ? selected.value[props.valueField] : "",selected:selected.value }
   }
 
 
@@ -116,16 +121,16 @@ function getLabel() {
     if (Array.isArray(selected.value)) {
         
       if (selected.value.length == 1) {
-        alert(JSON.stringify(selected.value))
         if (meta.value.title_field) {
           return selected.value[0][meta.value.title_field];
         } else if (props.labelField) {
-          return selected.value[0](props.labelField);
+          
+          return selected.value[0][props.labelField];
         } else {
           return selected.value[0].name;
         }
       } else {
-        return selected.value.length + " Selected";
+        return `${selected.value.length} ${(props.label || props.docType)}s` ;
       }
     }  
 

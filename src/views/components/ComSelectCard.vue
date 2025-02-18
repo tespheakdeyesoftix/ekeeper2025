@@ -1,6 +1,6 @@
 <template>
     <ion-card :key="index" @click="onSelect" button>
-        
+     
         <ion-ripple-effect></ion-ripple-effect>
         <ion-card-header>
             <ion-avatar v-if="photoField">
@@ -13,7 +13,7 @@
             <ion-card-title>{{ data[labelField] ?? data[valueField] }}</ion-card-title>
             <ion-card-subtitle v-if="description">{{ description }}</ion-card-subtitle>
 
-            <ion-icon :icon="checkmarkCircle" v-if="isSelcted" size="large" color="success" />
+            <ion-icon :icon="checkmarkCircle" v-if="data.selected" size="large" color="success" />
 
         </ion-card-header>
     </ion-card>
@@ -46,22 +46,7 @@ const props = defineProps({
 })
 const emit = defineEmits();
 
-const isSelcted = computed(()=>{
-    if(props.data?.selected){
-        return props.data?.selected
-    }
-    else {
-        if(props.selectedValues){
-            return false
-        }else {
-            if(props.data){
-                return props.selectedValue == props.data[props.valueField];
-            }
-            
-        }
-    }
-    return false;
-})
+ 
 const description = computed(() => {
 
     if (props.descriptionFields) {

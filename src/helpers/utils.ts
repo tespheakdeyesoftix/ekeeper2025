@@ -1,4 +1,4 @@
-import {  toastController } from '@ionic/vue';
+import {  toastController,loadingController } from '@ionic/vue';
  
 
 export function imageUrl(imageUrl:string,baseUrl:string = ""){
@@ -56,3 +56,26 @@ export const getRandomColor = () => {
     return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
   };
  
+
+  
+export async  function showToast(message:string,color:string=""){
+    const toast = await toastController.create({
+        message: stripHtmlTags(message),
+        duration: 5000,
+        position: "top",
+        swipeGesture:"vertical",
+        color: color
+    });
+    toast.present();
+}
+
+
+ 
+export async function showLoading(message: string="Loading") {
+  const loading = await loadingController.create({
+    message:window.t(message)
+  });
+
+  await loading.present();  
+  return loading;  
+}

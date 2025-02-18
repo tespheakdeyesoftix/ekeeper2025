@@ -7,7 +7,7 @@
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-          <ComSelect docType="Employee" mode="select" labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
+          <ComSelect docType="Employee"  labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
  
           <ComSelect docType="Product" label="Select Products" modalType="modal">
 
