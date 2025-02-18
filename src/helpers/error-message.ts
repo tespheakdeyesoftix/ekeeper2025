@@ -68,7 +68,8 @@ export async function handleErrorMessage(error_data:any){
 
 }
 
-async function showWarningMessage(message:string){
+
+export async  function showWarningMessage(message:string){
     const toast = await toastController.create({
         message: stripHtmlTags(message),
         duration: 5000,

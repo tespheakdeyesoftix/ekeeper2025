@@ -14,21 +14,15 @@
 
     <!-- Confirm Button (Right) -->
     <ion-buttons v-if="multiple" slot="end">
-      <ion-button  shape="round" fill="solid" color="success" @click="confirmSelection" size="large"> 
-        <ion-icon :icon="checkmarkOutline" slot="start" size="large"></ion-icon>
+      <ion-button  shape="round" fill="solid" color="primary" @click="confirmSelection" size="medium"> 
+        <ion-icon :icon="checkmarkOutline" slot="start" size="medium"></ion-icon>
         {{ t("Confirm") }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
-    <ion-searchbar 
-        placeholder="Search" 
-        @click="expandModal" 
-        v-model="keyword"
-        @ionInput="Search"
-      ></ion-searchbar>
+<ComSelectSearchField @click="expandModal" @onSearch="Search" />
 
     <ion-content>
      
@@ -42,14 +36,15 @@
 
       <template v-else>
         <ion-list>
+         
        <ComSelectCard v-for="(d, index) in data" :key="index" :data="d" 
           @onSelect="onSelect(d)" 
-          valueField="name"
+          :valueField="valueField"
           :labelField="meta.title_field"
           :descriptionFields="meta.search_fields"
           :photoField="meta.image_field"
-          :selectedValue = "props.selectedValue"
-          :selectedValues = "props.selectedValues"
+          :selectedValue = "selectedValue"
+          :selectedValues = "selectedValues"
        />
         
       </ion-list>
@@ -75,10 +70,11 @@
     import { useComSelect } from '@/hooks/useComSelect';
     import {IonSpinner, IonCardTitle, IonButtons,IonBackButton, IonIcon, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  
     IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader,modalController } from '@ionic/vue';
-    import { checkmarkOutline, closeOutline } from "ionicons/icons";
+    import { checkmarkOutline, closeOutline, expand } from "ionicons/icons";
     import ComSelectCard from "@/views/components/ComSelectCard.vue"
 
     import { useI18n } from 'vue-i18n';
+import ComSelectSearchField from '@/views/components/ComSelectSearchField.vue';
     const { t } = useI18n();
 
 
@@ -86,11 +82,16 @@
     docType:String,
     title:String,
     multiple:Boolean,
-    selectedValue:String,
-    selectedValues:Object
+    selectedValue:String,//this return string value only
+    selectedValues:Object,//this return array string of values
+    selected:Object,//this is the object json of select data,
+    valueField:{
+      type:String,
+      default:"name"
+    }
   });
 
-  const { meta, loading, onLoadMore,data,onSelect,onConfirm,dismissModal,expandModal,keyword,Search,confirmSelection} = useComSelect(props);
+  const { Search,data,meta, loading, onLoadMore,onSelect,onConfirm,dismissModal,expandModal,confirmSelection} = useComSelect(props);
  
 
   

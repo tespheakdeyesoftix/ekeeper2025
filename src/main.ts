@@ -24,7 +24,8 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonImg
+  IonImg,
+  IonSearchbar
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -52,19 +53,33 @@ import '@ionic/vue/css/display.css';
 
 /* @import '@ionic/vue/css/palettes/dark.always.css'; */
 /* @import '@ionic/vue/css/palettes/dark.class.css'; */
-import '@ionic/vue/css/palettes/dark.system.css';
+
+
+/* import '@ionic/vue/css/palettes/dark.always.css';*/
+/* import '@ionic/vue/css/palettes/dark.class.css';  */
+
+import '@ionic/vue/css/palettes/dark.system.css'; 
 
 /* Theme variables */
 import './theme/variables.css';
 import AppBar from '@/views/layouts/AppBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import i18n from '../i18n'; // Import i18n config
+import { showToast,showLoading } from '@/helpers/utils';
 
 // attach service to window easy to call it later
 
 window.storageService = storageService;
 
+// register function to window object
 window.t = i18n.global.t;
+window.showWarning = (message: string) => showToast(message, "warning");
+window.showSuccess = (message: string) => showToast(message, "success");
+window.showError = (message: string) => showToast(message, "danger");
+
+window.showLoading = (message: string) => showLoading(message);
+
+
 const  {checkUserLogin} = useAuth(router);
 const app = createApp(App)
 
@@ -99,6 +114,7 @@ async function init() {
   app.component('ion-toolbar',IonToolbar)
   app.component('ion-title',IonTitle)
   app.component('ion-img',IonImg)
+  app.component('ion-searchbar',IonSearchbar)
 
 
   await router.isReady();
