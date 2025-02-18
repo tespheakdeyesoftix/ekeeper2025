@@ -5,14 +5,14 @@ This table shows the default color use in app
 | Color Name          | Hex Value   | color | 
 |---------------------|-------------|---------------------|
 | **Primary**          | `#3c449c`   | ![#3c449c](https://placehold.co/40x15/3c449c/3c449c.png) | 
-| **Secondary**        | `#484aa1`   | ![#484aa1](https://placehold.co/40x15/484aa1/484aa1.png) |
-| **Tertiary**         | `#2a406d`   | ![#2a406d](https://placehold.co/40x15/2a406d/2a406d.png) |
-| **Success**          | `#008000`   | ![#008000](https://placehold.co/40x15/008000/008000.png) |
-| **Warning**          | `#ffcc00`   | ![#ffcc00](https://placehold.co/40x15/ffcc00/ffcc00.png) |
-| **Danger**           | `#cc3300`   | ![#cc3300](https://placehold.co/40x15/cc3300/cc3300.png) |
-| **Light**            | `#f4f5f8`   | ![#f4f5f8](https://placehold.co/40x15/f4f5f8/f4f5f8.png) |
-| **Medium**           | `#989aa2`   | ![#989aa2](https://placehold.co/40x15/989aa2/989aa2.png) |
-| **Dark**             | `#222428`   | ![#222428](https://placehold.co/40x15/222428/222428.png) |
+| **Secondary**        | `#41729F`   | ![#41729F](https://placehold.co/40x15/41729F/41729F.png) |
+| **Tertiary**         | `#C3E0E5`   | ![#C3E0E5](https://placehold.co/40x15/C3E0E5/C3E0E5.png) |
+| **Success**          | `#2dd55b`   | ![#2dd55b](https://placehold.co/40x15/2dd55b/2dd55b.png) |
+| **Warning**          | `#ffc409`   | ![#ffc409](https://placehold.co/40x15/ffc409/ffc409.png) |
+| **Danger**           | `#c5000f`   | ![#c5000f](https://placehold.co/40x15/c5000f/c5000f.png) |
+| **Light**            | `#f6f8fc`   | ![#f4f5f8](https://placehold.co/40x15/f6f8fc/f6f8fc.png) |
+| **Medium**           | `#5f5f5f`   | ![#5f5f5f](https://placehold.co/40x15/5f5f5f/5f5f5f.png) |
+| **Dark**             | `#2f2f2f`   | ![#2f2f2f](https://placehold.co/40x15/2f2f2f/2f2f2f.png) |
 
 
 
