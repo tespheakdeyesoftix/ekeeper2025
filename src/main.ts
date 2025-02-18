@@ -25,7 +25,14 @@ import {
   IonToolbar,
   IonTitle,
   IonImg,
-  IonSearchbar
+  IonSearchbar,
+  IonList,
+  IonItem,
+  IonFab,
+  IonFabButton,
+  IonSegment,
+  IonSegmentButton,
+  IonSegmentView
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -115,6 +122,13 @@ async function init() {
   app.component('ion-title',IonTitle)
   app.component('ion-img',IonImg)
   app.component('ion-searchbar',IonSearchbar)
+  app.component('ion-list',IonList)
+  app.component('ion-item',IonItem)
+  app.component('ion-fab',IonFab)
+  app.component('ion-fab-button',IonFabButton)
+  app.component('ion-segment',IonSegment)
+  app.component('ion-segment-button',IonSegmentButton)
+  app.component('ion-segment-view',IonSegmentView)
 
 
   await router.isReady();

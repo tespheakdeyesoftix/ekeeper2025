@@ -45,6 +45,7 @@ import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
 import ComRecentList from "@/views/home/components/ComRecentList.vue"
 import ComSelect from "@/views/components/ComSelect.vue"
 
+
 const { loading, data,currentProperty ,onRefresh} = useHome()
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

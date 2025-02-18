@@ -13,6 +13,7 @@
        
       <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
        <!-- Workspace List -->
+              <Img />
 
       <ion-list class="workspace-list">
         <ion-card
@@ -94,6 +95,7 @@ import { useApp } from './hooks/useApp';
 import { setFrappeAppUrl } from '@/services/api-service';
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
+import Img from "@/views/components/Img.vue"
 
 const result = ref({})
 
