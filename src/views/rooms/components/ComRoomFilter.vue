@@ -2,15 +2,16 @@
     <div>
         <div class="scroll-container">
             <!-- Date -->
-            <!-- <ion-chip style="padding: 0px;background-color: transparent;"> -->
-                <ion-datetime-button datetime="datetime" ></ion-datetime-button>
+            <ion-chip style="padding: 0;">
+                <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
+            </ion-chip>
             <ion-chip v-for="(item, index) in date" :key="index" expand="block" @click="setOpen(true)">
                 {{ item.label }}
             </ion-chip>
         </div>
-        <!-- Date Picker -->
+        <!-- Modal Date -->
         <ion-modal :keep-contents-mounted="true">
-            <ion-datetime id="datetime" presentation="date" :value="selectedDate" :format-options="formatOptions"
+            <ion-datetime id="selectedDate" presentation="date" v-model="selectedDate" :format-options="formatOptions"
                 :show-default-buttons="true"></ion-datetime>
         </ion-modal>
 
@@ -47,9 +48,10 @@
 import {
     IonChip, IonModal, IonContent,
     IonList, IonItem, IonAvatar,
-    IonImg, IonLabel, IonSearchbar, IonDatetime, IonDatetimeButton, IonIcon 
+    IonImg, IonLabel, IonSearchbar, IonDatetime, IonDatetimeButton, IonIcon, IonButton,
+    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle
 } from '@ionic/vue';
-import {  closeCircle  } from 'ionicons/icons';
+import { closeCircle } from 'ionicons/icons';
 
 import { ref } from 'vue';
 import { defineComponent } from 'vue';
@@ -61,7 +63,7 @@ const setOpen = (open: boolean) => {
     isOpen.value = open;
 };
 const date = ref([
-    { label: 'Housekeeping Status' },
+    { label: 'Status' },
     { label: 'hello' },
     { label: 'hello' },
     { label: 'hello' },
