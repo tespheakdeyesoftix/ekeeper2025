@@ -92,8 +92,8 @@ const openSheetModal = async () => {
 
   if (props.modalType == "sheet_modal") {
 
-    modalOption.initialBreakpoint = 0.5,
-      modalOption.breakpoints = [0, 0.5, 0.75, 0.95]
+    modalOption.initialBreakpoint = 0.65,
+      modalOption.breakpoints = [0, 0.5,0.65, 0.75, 0.95]
   }
 
 

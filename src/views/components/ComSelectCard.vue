@@ -1,22 +1,17 @@
 <template>
-    <ion-card :key="index" @click="onSelect" button>
-     
-        <ion-ripple-effect></ion-ripple-effect>
-        <ion-card-header>
-            <ion-avatar v-if="photoField">
-                <img :src="imageUrl(data[photoField])" alt="Avatar" v-if="data[photoField]" />
+ 
+    <ion-item @click="onSelect" button  >
+            <ion-avatar slot="start" v-if="photoField">
+                <img :src="imageUrl(data[photoField])"   v-if="data[photoField]" />
                 <div class="avatar-placeholder" :style="{ backgroundColor: getRandomColor() }" v-else>{{
                     getAvatarLetter(data[labelField] ?? data[valueField]) }}</div>
-
             </ion-avatar>
-
-            <ion-card-title>{{ data[labelField] ?? data[valueField] }}</ion-card-title>
-            <ion-card-subtitle v-if="description">{{ description }}</ion-card-subtitle>
-
-            <ion-icon :icon="checkmarkCircle" v-if="data.selected" size="large" color="success" />
-
-        </ion-card-header>
-    </ion-card>
+            <ion-label>
+              <h2>{{ data[labelField] ?? data[valueField] }}</h2>
+              <p  v-if="description">{{ description }}</p>
+            </ion-label>
+            <ion-icon slot="end" :icon="checkmarkCircle" v-if="data.selected" size="medium" color="primary" />
+          </ion-item>
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";

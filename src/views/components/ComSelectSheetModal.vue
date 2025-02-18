@@ -14,13 +14,14 @@
 
     <!-- Confirm Button (Right) -->
     <ion-buttons v-if="multiple" slot="end">
-      <ion-button  shape="round" fill="solid" color="success" @click="confirmSelection" size="large"> 
-        <ion-icon :icon="checkmarkOutline" slot="start" size="large"></ion-icon>
+      <ion-button  shape="round" fill="solid" color="primary" @click="confirmSelection" size="medium"> 
+        <ion-icon :icon="checkmarkOutline" slot="start" size="medium"></ion-icon>
         {{ t("Confirm") }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 <ComSelectSearchField @click="expandModal" @onSearch="Search" />
 
     <ion-content>
