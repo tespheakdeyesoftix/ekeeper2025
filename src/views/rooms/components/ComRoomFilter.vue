@@ -64,14 +64,8 @@ const setOpen = (open: boolean) => {
 };
 const date = ref([
     { label: 'Status' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
-    { label: 'hello' },
+    { label: 'HouseKeeper' },
+    { label: 'Housekeeping Status' },
 ]);
 const formatOptions = {
     date: {
