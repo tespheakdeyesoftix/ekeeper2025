@@ -19,6 +19,13 @@ This table shows the default color use in app
 ### Custom Ionic Color Example
 link for get generate https://ionicframework.com/docs/theming/color-generator
 ### Define Custom Colors
+
+> **Note:**  
+> - **`--ion-color-mybrand`**: The main color used for backgrounds, buttons, and other UI elements.  
+> - **`--ion-color-mybrand-contrast`**: The text color that ensures readability when placed over the `mybrand` background (e.g., on buttons or cards).  
+> - **`--ion-color-mybrand-shade`**: A darker version of `mybrand`, typically used for pressed or active states.  
+> - **`--ion-color-mybrand-tint`**: A lighter version of `mybrand`, often used for hover effects or subtle highlights.  
+
 ```css
 :root {
   --ion-color-mybrand: #c5000f;
