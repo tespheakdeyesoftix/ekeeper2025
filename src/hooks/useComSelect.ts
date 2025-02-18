@@ -86,7 +86,7 @@ const meta = ref<any>()
   };
 
   function onSelect(selected:any){
-    alert(Array.isArray(selected))
+    
     if(props.multiple){
       if(Array.isArray(selected)){
         console.log(selected);
@@ -107,7 +107,7 @@ const meta = ref<any>()
 
 
   function confirmSelection(){
-    alert(123)
+    
     onSelect(data.value.filter((r:any)=> r.selected));
   }
 

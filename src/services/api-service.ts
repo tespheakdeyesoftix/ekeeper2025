@@ -93,3 +93,55 @@ export function getDoc(DocType: string,DocName:string) {
   });
 }
 
+export async function uploadFile(
+    docType:string, 
+    docname:string,
+    fieldname:string, 
+    fileData:any,otherOption:any
+) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+
+    const file = frappe.file();
+
+    try {
+        // Upload file to Frappe
+        let formData = new FormData();
+
+        const fileArgs = {
+            "isPrivate": false,
+            "folder":"home",
+            /** File URL (optional) */
+            "file_url": otherOption.file_url??"",
+            "doctype": docType,
+            "docname": docname,
+            /** Field in the document **/
+            "fieldname": fieldname
+          }
+        file.uploadFile(
+            fileData,
+            fileArgs,
+            /** Progress Indicator callback function **/
+            
+            (completedBytes, totalBytes) => {
+                if(totalBytes){
+                    console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
+                }
+                
+            },
+            "edoor.api.upload.upload_file"
+        )
+        .then(() => console.log("File Upload complete"))
+        .catch(e => console.error(e))
+         
+       
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        alert("Failed to upload image.");
+      }
+}
+
+
+
+
