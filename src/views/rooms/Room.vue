@@ -30,10 +30,24 @@
   </ion-page>
 </template>
 <script setup lang="ts">
-import { IonPage, IonContent, IonButton, IonSearchbar, IonAccordion, IonAccordionGroup, IonItem, IonLabel } from '@ionic/vue';
-import ComRoomFilter from '@/views/rooms/components/ComRoomFilter.vue';
-import { defineComponent } from 'vue';
-import { searchCircle } from 'ionicons/icons';
-import { useI18n } from 'vue-i18n';
+import {
+  IonPage,
+  IonContent,
+  IonButton,
+  IonSearchbar,
+  IonAccordion,
+  IonAccordionGroup,
+  IonItem,
+  IonLabel,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+} from "@ionic/vue";
+import ComRoomFilter from "@/views/rooms/components/ComRoomFilter.vue";
+import { defineComponent } from "vue";
+import { searchCircle } from "ionicons/icons";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 </script>
