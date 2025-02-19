@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonChip, IonIcon, IonLabel, IonText } from '@ionic/vue';
+import { IonChip, IonIcon, IonLabel, IonText, IonButton } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
 import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
 import { imageUrl } from '@/helpers/utils';
 import { getAvatarLetter } from '@/helpers/utils';
-import { useRouter } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+import TaskDetail from '@/views/task/TaskDetail.vue';
 
 const { t } = useI18n();
+const router = useRouter()
 
 const props = defineProps({
   allTasks: Object,
@@ -19,7 +21,7 @@ const chips = ref([
   { id: 2, label: 'All Task', icon: today, value: 'allTask' }
 ]);
 
-const selectedTab = ref('my');
+const selectedTab = ref('myTask');
 
 const setSelectedTab = (tab: string) => {
   selectedTab.value = tab;
@@ -31,7 +33,7 @@ const setSelectedTab = (tab: string) => {
   <ion-text color="secondary">
     <h2 class="title">{{ t("Recent List") }}</h2>
   </ion-text>
-  <ion-button  @click="() => $router.push('/task')">
+  <ion-button  @click="() => router.push('/task')">
     {{ t("View All") }}
   </ion-button>
 </div> 
@@ -84,7 +86,13 @@ const setSelectedTab = (tab: string) => {
   <!-- All Tasks List -->
   <div v-if="selectedTab === 'allTask'">
     <div v-if="allTasks?.length" class="task-list">
-      <div v-for="(task, index) in allTasks" :key="index" class="task-card">
+      <RouterLink 
+          v-for="(task, index) in allTasks"
+          :key="index"
+          :to="`/task-detail/${task.id}`"
+          class="task-card"
+          
+          >
         <template v-if="task.photo">
            <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
         </template>
@@ -111,7 +119,7 @@ const setSelectedTab = (tab: string) => {
           <ion-chip class="status-chip">{{ task.work_order_status }}</ion-chip>
         </div>
       </div>
-      </div>
+      </RouterLink>
     </div> 
     <p v-else class="no-task-message">No tasks available</p>
   </div>
@@ -193,6 +201,9 @@ const setSelectedTab = (tab: string) => {
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
   gap: 12px;
   align-items: center;
+  text-decoration: none; /* Remove default link styling */
+  color: inherit; /* Inherit text color */
+  cursor: pointer; 
 }
 
 .task-photo {
