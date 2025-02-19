@@ -5,8 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
 import { imageUrl } from '@/helpers/utils';
 import { getAvatarLetter } from '@/helpers/utils';
-import { RouterLink, useRouter } from 'vue-router';
-import TaskDetail from '@/views/task/TaskDetail.vue';
+import { RouterLink, useRouter } from 'vue-router'; 
 
 const { t } = useI18n();
 const router = useRouter()
@@ -33,7 +32,7 @@ const setSelectedTab = (tab: string) => {
   <ion-text color="secondary">
     <h2 class="title">{{ t("Recent List") }}</h2>
   </ion-text>
-  <ion-button  @click="() => router.push('/task')">
+  <ion-button size="small" class="view-all-btn" @click="() => router.push('/task')">
     {{ t("View All") }}
   </ion-button>
 </div> 
@@ -133,6 +132,11 @@ const setSelectedTab = (tab: string) => {
   align-items: center;
   width: 100%;
 } 
+.view-all-btn { 
+  padding: 6px 2px;  
+  --border-radius: 6px;
+  --background: #3c449c;
+}
 .title {
   font-size: 1.4rem;
   font-weight: bold;
