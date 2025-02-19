@@ -24,7 +24,7 @@
   <ion-progress-bar v-if="loadingMoreData"  type="indeterminate"></ion-progress-bar>
 </ion-header>
 
-<ComSelectSearchField @click="expandModal" @onSearch="Search" />
+<ComSearchBar @click="expandModal" @onSearch="Search" />
 
     <ion-content>
      
@@ -75,7 +75,7 @@
     import ComSelectCard from "@/views/components/ComSelectCard.vue"
 
     import { useI18n } from 'vue-i18n';
-import ComSelectSearchField from '@/views/components/ComSelectSearchField.vue';
+import ComSearchBar from '@/views/components/ComSearchBar.vue';
     const { t } = useI18n();
 
 

@@ -15,7 +15,7 @@ export function useComSelect(props: any) {
   const startIndex = ref(0);
   const loadingMoreData = ref(false)
 
-
+  const groupBy = ref("room_type")
 
 
 
@@ -111,6 +111,7 @@ export function useComSelect(props: any) {
       }
 
     } else {
+      
       modalController.dismiss(selected, 'confirm')
       data.value = [];
 
@@ -177,8 +178,9 @@ export function useComSelect(props: any) {
     loadingMoreData,
     keyword,
     data,
-    Search,
+    groupBy,
     meta,
+    Search,
     getData,
     onLoadMore,
     onSelect,

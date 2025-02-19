@@ -43,7 +43,12 @@ import {
   IonInfiniteScrollContent,
   IonFooter,
   IonModal,
-  IonPopover
+  IonPopover,
+  IonAvatar,
+  IonDatetime,
+  IonDatetimeButton,
+  IonAccordionGroup,
+  IonAccordion
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -87,6 +92,7 @@ import Img from "@/views/components/Img.vue"
 import i18n from '../i18n'; // Import i18n config
 import { showToast,showLoading } from '@/helpers/utils';
 import longPress from '@/directives/long-press';
+import ComSelect from '@/views/components/ComSelect.vue';
 
 // attach service to window easy to call it later
 
@@ -118,6 +124,7 @@ async function init() {
   app.use(router);
   app.use(i18n);
   app.component('AppBar', AppBar)
+  app.component('ComSelect', ComSelect)
   app.component('ion-footer', IonFooter)
   app.component('Loading', Loading)
   app.component('ion-ripple-effect', IonRippleEffect)
@@ -132,6 +139,7 @@ async function init() {
   app.component('ion-content', IonContent)
   app.component('ion-icon',IonIcon)
   app.component('ion-chip',IonChip)
+  app.component('ion-avatar',IonAvatar)
   app.component('ion-label',IonLabel)
   app.component('ion-button',IonButton)
   app.component('ion-buttons',IonButtons)
@@ -154,6 +162,10 @@ async function init() {
   app.component('ion-spinner',IonSpinner)
   app.component('ion-modal',IonModal)
   app.component('ion-popover',IonPopover)
+  app.component('ion-datetime',IonDatetime)
+  app.component('ion-datetime-button',IonDatetimeButton)
+  app.component('ion-accordion-group',IonAccordionGroup)
+  app.component('ion-accordion',IonAccordion)
 
   app.component('Img',Img)
 
