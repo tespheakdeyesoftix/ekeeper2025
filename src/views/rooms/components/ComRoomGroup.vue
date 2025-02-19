@@ -5,7 +5,7 @@
         <ion-item slot="header" color="light">
           <ion-label>First Accordion</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content" style="  display: grid; grid-template-columns: repeat(3, 1fr);">
+        <div class="ion-padding" slot="content" style="padding: 0px; display: grid; grid-template-columns: repeat(3, 1fr);">
             <ComRoomCard />
             <ComRoomCard />
             <ComRoomCard />
@@ -29,20 +29,5 @@
   </div>
 </template>
 <script setup lang="ts">
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonSearchbar,
-  IonAccordion,
-  IonAccordionGroup,
-  IonItem,
-  IonLabel,
-} from "@ionic/vue";
 import ComRoomCard from "@/views/rooms/components/ComRoomCard.vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-function onSelected(data: any) {}
-
-function onClearMe() {}
 </script>
