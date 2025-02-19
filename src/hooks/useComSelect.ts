@@ -13,6 +13,7 @@ export function useComSelect(props: any) {
   const data = ref<any[]>([])
   const keyword = ref<string>(''); // Declare keyword type as string
   const startIndex = ref(0);
+  const loadingMoreData = ref(false)
 
 
 
@@ -20,7 +21,7 @@ export function useComSelect(props: any) {
 
   async function getData() {
     
-    loading.value = true;
+
     let fields = ["name"]
     if (meta.value.image_field) {
       fields.push(meta.value.image_field)
@@ -70,6 +71,7 @@ export function useComSelect(props: any) {
 
     });
     loading.value = false;
+    loadingMoreData.value = false
     if (response.data) {
       return response.data;
     }
@@ -77,10 +79,11 @@ export function useComSelect(props: any) {
   }
 
   const onLoadMore = async (event: InfiniteScrollCustomEvent) => {
-
+    loadingMoreData.value = true
     if (!canLoadMore.value) return event.target.complete();
 
     startIndex.value += pageSize.value;
+    loadingMoreData.value = true
     const result = await getData();
 
 
@@ -138,7 +141,7 @@ export function useComSelect(props: any) {
 
 
   async function  Search  (str:string=""){
-    
+
     keyword.value = str;
     loading.value = true;
     canLoadMore.value = true;
@@ -171,6 +174,7 @@ export function useComSelect(props: any) {
 
   return {
     loading,
+    loadingMoreData,
     keyword,
     data,
     Search,

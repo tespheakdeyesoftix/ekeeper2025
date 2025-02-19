@@ -1,19 +1,17 @@
 <template>
    <ion-page>
-    <ion-content class="home-content">
+    <ion-content fullscreen="true" class="home-content">
       <!-- Branding Section -->
       <div class="branding">
         <ion-img src="/assets/logo.svg" alt="App Logo" class="app-logo"></ion-img>
         <ion-text class="app-name">eKeeper</ion-text>
       </div>
       <!-- Add Workspace Button -->
-       <div v-if="result">
-        {{ result }}
-       </div>
+      
        
       <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
        <!-- Workspace List -->
-              <Img />
+ 
 
       <ion-list class="workspace-list">
         <ion-card
@@ -27,7 +25,7 @@
     <div class="workspace-header">
       <!-- Workspace Avatar -->
       <ion-avatar class="workspace-logo">
-        <ion-img :src="imageUrl(p.photo)" alt="Workspace Logo"></ion-img>
+        <Img :src="p.photo" :api_url="p.api_url"/>
       </ion-avatar>
 
       
@@ -95,7 +93,6 @@ import { useApp } from './hooks/useApp';
 import { setFrappeAppUrl } from '@/services/api-service';
 import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
-import Img from "@/views/components/Img.vue"
 
 const result = ref({})
 

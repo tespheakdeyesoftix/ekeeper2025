@@ -9,13 +9,12 @@
   </ion-page>
 </template>
 <script setup lang="ts">
-import {
-  IonPage,
-  IonContent,
-  IonSearchbar,
-} from "@ionic/vue";
+
 import ComRoomFilter from "@/views/rooms/components/ComRoomFilter.vue";
 import comRoomGroup from "@/views/rooms/components/ComRoomGroup.vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+ const t = window.t;
+ const x = window.t("hello")
+ const l = window.showLoading("Loging please wait")
+ 
+ 
 </script>

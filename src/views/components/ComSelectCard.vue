@@ -2,7 +2,7 @@
  
     <ion-item @click="onSelect" button  >
             <ion-avatar slot="start" v-if="photoField">
-                <img :src="imageUrl(data[photoField])"   v-if="data[photoField]" />
+                <Img :src="data[photoField]"   v-if="data[photoField]" />
                 <div class="avatar-placeholder" :style="{ backgroundColor: getRandomColor() }" v-else>{{
                     getAvatarLetter(data[labelField] ?? data[valueField]) }}</div>
             </ion-avatar>

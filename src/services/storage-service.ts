@@ -14,6 +14,7 @@ export const storageService = {
       localStorage.setItem(key, value);
     },
     getItem(key: string): string | null {
+      
       return localStorage.getItem(key);
     },
     removeItem(key: string, value: any): void {

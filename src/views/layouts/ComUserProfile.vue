@@ -3,7 +3,7 @@
  
     <ion-avatar class="small-avatar">
 
-      <img v-if="currentUser.photo" :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
+      <Img v-if="currentUser.photo" :src="currentUser.photo"/>
       <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
 
     </ion-avatar>
@@ -13,7 +13,7 @@
     <ion-content class="ion-padding">
       <div class="user-info">
         <ion-avatar>
-          <img v-if="currentUser.photo" :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
+          <Img v-if="currentUser.photo" :src="currentUser.photo"  />
           <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
 
         </ion-avatar>
@@ -61,7 +61,7 @@
     </ion-modal>
 </template>
 <script setup lang="ts">
-import {IonLabel, IonModal, alertController,actionSheetController, IonButton, IonRippleEffect, IonPopover, IonIcon, IonList, IonItem, useIonRouter } from '@ionic/vue';
+import {   alertController,actionSheetController, useIonRouter } from '@ionic/vue';
 import { ref } from 'vue'
 import { imageUrl, getAvatarLetter } from "@/helpers/utils"
 import { useAuth } from "@/hooks/useAuth"
@@ -140,7 +140,7 @@ const onLogout = async () => {
   background-color: #007bff;
   /* Blue background */
   color: white;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: bold;
   border-radius: 50%;
   text-transform: uppercase;

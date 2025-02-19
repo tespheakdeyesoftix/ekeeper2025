@@ -72,6 +72,19 @@
 
 }
 
+body {
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-left: env(safe-area-inset-left);
+	padding-right: env(safe-area-inset-right);
+  }
+
+html {
+	--ion-safe-area-left: 25px;
+}
+  
+ 
+
 ion-toolbar {
   height: var(--ion-toolbar-height);
   

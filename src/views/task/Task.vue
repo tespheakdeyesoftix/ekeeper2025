@@ -1,8 +1,8 @@
 <template>
   <ion-page>
 <AppBar>Task</AppBar>
-<ion-content>
-  {{selectedTab}}
+<ion-content class="ion-pading">
+   
   <ion-segment v-model="selectedTab" @ionSelect="loadData">
     <ion-segment-button value="first" content-id="first">
       <ion-label>First</ion-label>
