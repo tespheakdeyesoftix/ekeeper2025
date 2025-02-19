@@ -1,16 +1,14 @@
 <template>
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>Card Title</ion-card-title>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      <ion-card-header color="primary" style="border-bottom: 1px solid gray; padding: 5px;">
+        <ion-card-title style="text-align: center;">A 102</ion-card-title>
       </ion-card-header>
   
-      <ion-card-content>
-        Here's a small text description for the card content. Nothing more, nothing less.
+      <ion-card-content style="padding: 3px; font-size: 12;">
+        <ion-label>Pokémon Yel</ion-label>
       </ion-card-content>
     </ion-card>
   </template>
   
-  <script setup lang="ts">
-    
+  <script lang="ts" setup>
   </script>
