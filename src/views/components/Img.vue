@@ -1,36 +1,84 @@
 <template>
-    <div>
-      xx
-      <img v-if="imgData" :src="imgData" style="width:250px">
-      <p v-else>Loading image...</p>
-    </div>
+ 
+      <img   :src="imgData" :width="100" />
+  
   </template>
 <script setup>
 import { ref, onMounted } from 'vue';
 import { CapacitorHttp } from '@capacitor/core';
+import { isPlatform } from '@ionic/vue';
+import { getPlatforms } from '@ionic/vue';
+import { imageUrl } from '@/helpers/utils';
+const props = defineProps({
+  api_url:String,
+  src:String,
+  height:{
+    type:Number,
+    default:0
+  },
+  
+  width:{
+    type:Number,
+    default:0
+  },
+})
 
-const imgUrl = "/files/profilea8a357.jpg&width=150";
-const imgData = ref(null);
 
-const getImage = async (url) => {
-  try {
+
+const imgData = ref("/assets/placeholder.jpg");
+const strCurrentProperty = window.storageService.getItem("current_property");
+ 
+let serverUrl = props.api_url;
+if (!serverUrl){
+  if (strCurrentProperty){
+  const currentProperty = JSON.parse(strCurrentProperty);
+  serverUrl = currentProperty.api_url;
+}
+}
+
+ 
+ 
+const getImage = async () => {
+  
+  if (props.src?.startsWith("https://") || props.src?.startsWith("http://") ){
+        return props.src;
+  }
+
+  // check if image start with http or https
+  if(isPlatform("mobileweb") || isPlatform("desktop") ){
+    imgData.value= imageUrl(props.src);
+    
+    return
+  } else if( 
+    (isPlatform("android") && isPlatform("mobile")) ||
+    (isPlatform("iphone") && isPlatform("ios") && isPlatform("mobile"))
+
+    )
+  {
+    
+    try {
+    
     const response = await CapacitorHttp.request({
       method: 'GET',
-      url: "http://webmonitor.inccloudserver.com:1216/api/method/edoor.api.image_resizer.resize_image?image_path=/files/profilea8a357.jpg&width=3000"
+      url: `${serverUrl}api/method/edoor.api.image_resizer.resize_image?image_path=${props.src}&width=${props.width==0?150:props.width}&height=${props.height}`
     });
 
     if(response.status==200){
-      console.log(response.data);
+      
       imgData.value = response.data.message.image
     }
+    
   } catch (err) {
-    console.error("Error loading image:", err);
-    return null;
+     
   }
+  }
+
+
+ 
 };
 
 // Load the image when component is mounted
 onMounted(async () => {
-  getImage("xx")
+  getImage()
 });
 </script>

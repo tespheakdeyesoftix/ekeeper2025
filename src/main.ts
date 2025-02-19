@@ -32,7 +32,18 @@ import {
   IonFabButton,
   IonSegment,
   IonSegmentButton,
-  IonSegmentView
+  IonSegmentView,
+  IonRefresherContent,
+  IonRefresher,
+  IonProgressBar,
+  IonSpinner,
+  IonButtons,
+  IonBackButton,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  IonFooter,
+  IonModal,
+  IonPopover
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -71,8 +82,11 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 import AppBar from '@/views/layouts/AppBar.vue';
 import Loading from '@/views/components/Loading.vue';
+import Img from "@/views/components/Img.vue"
+
 import i18n from '../i18n'; // Import i18n config
 import { showToast,showLoading } from '@/helpers/utils';
+import longPress from '@/directives/long-press';
 
 // attach service to window easy to call it later
 
@@ -104,8 +118,11 @@ async function init() {
   app.use(router);
   app.use(i18n);
   app.component('AppBar', AppBar)
+  app.component('ion-footer', IonFooter)
   app.component('Loading', Loading)
   app.component('ion-ripple-effect', IonRippleEffect)
+  app.component('ion-infinite-scroll', IonInfiniteScroll)
+  app.component('ion-infinite-scroll-content', IonInfiniteScrollContent)
   app.component('ion-card', IonCard)
   app.component('ion-card-title', IonCardTitle)
   app.component('ion-card-content', IonCardContent)
@@ -117,6 +134,8 @@ async function init() {
   app.component('ion-chip',IonChip)
   app.component('ion-label',IonLabel)
   app.component('ion-button',IonButton)
+  app.component('ion-buttons',IonButtons)
+  app.component('ion-back-button',IonBackButton)
   app.component('ion-header',IonHeader)
   app.component('ion-toolbar',IonToolbar)
   app.component('ion-title',IonTitle)
@@ -129,6 +148,17 @@ async function init() {
   app.component('ion-segment',IonSegment)
   app.component('ion-segment-button',IonSegmentButton)
   app.component('ion-segment-view',IonSegmentView)
+  app.component('ion-refresher-content',IonRefresherContent)
+  app.component('ion-refresher',IonRefresher)
+  app.component('ion-progress-bar',IonProgressBar)
+  app.component('ion-spinner',IonSpinner)
+  app.component('ion-modal',IonModal)
+  app.component('ion-popover',IonPopover)
+
+  app.component('Img',Img)
+
+ 
+  app.directive('longPress', longPress);
 
 
   await router.isReady();

@@ -5,7 +5,10 @@
       <div class="profile-section">
       
         <ion-avatar class="profile-avatar">
-          <img :src="imageUrl(currentUser.photo)" :alt="currentUser.full_name" />
+          
+          <Img v-if="currentUser.photo" :src="currentUser.photo"/>
+          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
+
         </ion-avatar>
         <ion-label class="profile-name">{{ currentUser.full_name }}</ion-label>
       </div>
@@ -120,7 +123,7 @@ const { logout, currentUser } = useAuth();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const ionRouter = useIonRouter();
-
+import {getAvatarLetter} from "@/helpers/utils"
 const onLogout = async () => {
   await logout();
   ionRouter.navigate('/select-workspace', 'back', 'replace');
@@ -150,7 +153,21 @@ const onLogout = async () => {
   border: 3px solid white;
   margin-bottom: 10px;
 }
-
+/* Placeholder styling when no image */
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  /* Blue background */
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 50%;
+  text-transform: uppercase;
+}
 /* Profile Name */
 .profile-name {
   font-size: 18px;
