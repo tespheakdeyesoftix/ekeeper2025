@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
 import { imageUrl } from '@/helpers/utils';
 import { getAvatarLetter } from '@/helpers/utils';
+import { useRouter } from 'vue-router';
 
 const { t } = useI18n();
 
@@ -26,9 +27,14 @@ const setSelectedTab = (tab: string) => {
 </script>
 
 <template>
+<div class="header-container">
   <ion-text color="secondary">
     <h2 class="title">{{ t("Recent List") }}</h2>
-  </ion-text>  
+  </ion-text>
+  <ion-button  @click="() => $router.push('/task')">
+    {{ t("View All") }}
+  </ion-button>
+</div> 
 
   <!-- Filter Chips -->
   <div class="chip-container">
@@ -48,7 +54,12 @@ const setSelectedTab = (tab: string) => {
   <div v-if="selectedTab === 'myTask'">
     <div v-if="myTasks?.length" class="task-list">
       <div v-for="(task, index) in myTasks" :key="index" class="task-card">
-        <img :src="task.photo" alt="task photo" class="task-photo" />
+        <template v-if="task.photo">
+           <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
+        </template>
+        <template v-else>
+          <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
+        </template>
         <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
         <div class="task-details" style="flex-grow: 1;">
           <p class="task-title">
@@ -107,6 +118,13 @@ const setSelectedTab = (tab: string) => {
 </template>
 
 <style scoped>
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+} 
 .title {
   font-size: 1.4rem;
   font-weight: bold;
