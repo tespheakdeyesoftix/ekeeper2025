@@ -5,7 +5,7 @@
         <ion-item slot="header" color="light">
           <ion-label>First Accordion</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content" style="  display: grid; grid-template-columns: repeat(2, 2fr); gap: 8px; ">
+        <div class="ion-padding" slot="content" style="  display: grid; grid-template-columns: repeat(3, 1fr);">
             <ComRoomCard />
             <ComRoomCard />
             <ComRoomCard />
