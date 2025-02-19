@@ -16,7 +16,7 @@ const getImage = async (url) => {
   try {
     const response = await CapacitorHttp.request({
       method: 'GET',
-      url: "http://webmonitor.inccloudserver.com:1216/api/method/edoor.api.image_resizer.resize_image?image_path=/files/profilea8a357.jpg&width=150"
+      url: "http://webmonitor.inccloudserver.com:1216/api/method/edoor.api.image_resizer.resize_image?image_path=/files/profilea8a357.jpg&width=3000"
     });
 
     if(response.status==200){
