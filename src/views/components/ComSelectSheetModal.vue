@@ -10,8 +10,8 @@
     </ion-buttons>
 
     <!-- Title (Centered) -->
-    <ion-title>{{ t("Select") }} - {{ title ?? docType }}</ion-title>
-
+    <ion-title>{{ t("Select") }} - {{ title ?? docType }} {{ loadingMoreData }}</ion-title>
+   
     <!-- Confirm Button (Right) -->
     <ion-buttons v-if="multiple" slot="end">
       <ion-button  shape="round" fill="solid" color="primary" @click="confirmSelection" size="medium"> 
@@ -19,7 +19,9 @@
         {{ t("Confirm") }}
       </ion-button>
     </ion-buttons>
+    
   </ion-toolbar>
+  <ion-progress-bar v-if="loadingMoreData"  type="indeterminate"></ion-progress-bar>
 </ion-header>
 
 <ComSelectSearchField @click="expandModal" @onSearch="Search" />
@@ -68,8 +70,7 @@
 
   <script setup>
     import { useComSelect } from '@/hooks/useComSelect';
-    import {IonSpinner, IonCardTitle, IonButtons,IonBackButton, IonIcon, IonPage,IonSearchbar, IonCard,IonCardHeader, IonCardSubtitle,IonRippleEffect, IonInfiniteScroll, IonInfiniteScrollContent,  
-    IonButton,IonContent,IonToolbar,IonTitle,IonFooter,IonLabel,IonList,IonItem,IonHeader,modalController } from '@ionic/vue';
+    import {   modalController } from '@ionic/vue';
     import { checkmarkOutline, closeOutline, expand } from "ionicons/icons";
     import ComSelectCard from "@/views/components/ComSelectCard.vue"
 
@@ -91,7 +92,7 @@ import ComSelectSearchField from '@/views/components/ComSelectSearchField.vue';
     }
   });
 
-  const { Search,data,meta, loading, onLoadMore,onSelect,onConfirm,dismissModal,expandModal,confirmSelection} = useComSelect(props);
+  const { loadingMoreData,Search,data,meta, loading, onLoadMore,onSelect,onConfirm,dismissModal,expandModal,confirmSelection} = useComSelect(props);
  
 
   

@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <DrawerMenu v-if="isAuthenticated" />
-  <ion-content id="main-content">
+  <ion-content :fullscreen="true" id="main-content">
     <ion-tabs>
 <ion-router-outlet />
 <Tabs v-if="!route.meta.hideTab"/>

@@ -16,7 +16,11 @@
           <ComSelect docType="Work Order Type" :multiple="true" >
             open modul multple select
           </ComSelect>
+
         
+          <ion-button v-duration="1000"  v-longPress="onLongPress" size="large" 
+          expand="full"  shape="round"   >Long Press Me</ion-button>
+   
           <ComWelcome />
   
           <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
@@ -37,14 +41,12 @@
 
 <script setup lang="ts">
 import { useHome } from '@/hooks/useHome';
-import { IonPage, IonContent, IonButton,IonRefresher,IonRefresherContent } from '@ionic/vue';
 import ComWelcome from "@/views/home/components/ComWelcome.vue"
 import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
 import ComRecentList from "@/views/home/components/ComRecentList.vue"
 import ComSelect from "@/views/components/ComSelect.vue"
-
 
 const { loading, data,currentProperty ,onRefresh} = useHome()
 import { useI18n } from 'vue-i18n';
@@ -53,7 +55,12 @@ const { t } = useI18n();
 function onSelected(data:any){
  
 }
+const onLongpress = (e: CustomEvent) => {
 
+};
+const onLongPress = () => {
+  alert("u long press me")
+}
 function onClearMe(){
   
 }

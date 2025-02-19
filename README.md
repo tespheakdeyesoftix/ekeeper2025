@@ -59,3 +59,13 @@ link for get generate https://ionicframework.com/docs/theming/color-generator
 ### Use in Class
 
 
+# Code sample
+Translate in code block use (window.t(""))
+In template block
+const t = window.t
+
+# show loading and show taost
+window.showWarning(message: string)
+window.showSuccess(message: string)
+window.showError(message: string)
+window.showLoading(message)
