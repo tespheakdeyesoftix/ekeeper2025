@@ -16,7 +16,9 @@
         <!-- Modal Date -->
         <ion-modal :keep-contents-mounted="true">
             <ion-datetime id="selectedDate" presentation="date" v-model="selectedDate" :format-options="formatOptions"
-                :show-default-buttons="true"></ion-datetime>
+                :show-default-buttons="true"
+                   @ionChange="onDateChange"
+                ></ion-datetime>
         </ion-modal>
 
  
@@ -29,6 +31,7 @@ import { closeCircle } from 'ionicons/icons';
 
 import { ref } from 'vue';
 import { useApp } from "@/hooks/useApp";
+import { useRoom } from '@/hooks/useRoom';
 const emit = defineEmits()
 
 const { currentWorkingDate,currentProperty } = useApp()
@@ -36,6 +39,8 @@ const isOpen = ref(false);
 const filter = ref({date: currentWorkingDate,property:currentProperty.value.property_name})
 const route = useRoute();
  
+const {onDateChange} = useRoom()
+
 
 const setOpen = (open: boolean) => {
     isOpen.value = open;
@@ -58,6 +63,9 @@ function onFilter(data:any){
  
     emit("onFilter",{ ...filter.value,...data});
 }
+
+
+
 
 
 </script>

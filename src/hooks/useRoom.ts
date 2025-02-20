@@ -1,19 +1,19 @@
  
 import { onMounted, ref } from "vue";
- 
+import dayjs from 'dayjs';
 import {  alertController,onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { getApi, postApi } from "@/services/api-service";
 import { useApp } from "./useApp";
 
 const groupBy=ref("floor");
-
+const data = ref()
 
 export function useRoom() {
   
   const {currentProperty,currentWorkingDate} = useApp()
   // State variable
   const loading =ref(true)
-  const data = ref()
+
   const filter = ref({property_name:currentProperty.value.property_name, date:currentWorkingDate})
 
   // Method
@@ -61,7 +61,13 @@ function onChangeGroupBy(){
     groupBy.value = "room_type"
   }
 }
- 
+
+const onDateChange = async (event) => {
+const loading = await window.showLoading("Loading")
+filter.value.date = dayjs(event.detail.value).format("YYYY-MM-DD")
+ await getData();
+ await loading.dismiss()
+};
 
  
   return { 
@@ -74,6 +80,7 @@ function onChangeGroupBy(){
     onRefresh,
     getData,
     onRoomLongPress,
-    onChangeGroupBy
+    onChangeGroupBy,
+    onDateChange
 };
 }
