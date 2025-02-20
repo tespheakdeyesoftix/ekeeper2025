@@ -5,7 +5,7 @@ import SelectWorkspace from '@/SelectWorkspace.vue'
 import AddWorkspace from '@/AddWorkspace.vue';
 import Home from '@/views/Home.vue';
 import Room from '@/views/rooms/Room.vue';
-import RoomDetail from '@/views/rooms/RoomDetail.vue';
+
 import MyProfile from '@/views/pages/MyProfile.vue';
 import Task from '@/views/task/Task.vue';
 import Help from '@/views/pages/Help.vue';
@@ -44,8 +44,8 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true,title:"Room" }
   },
   {
-    path: "/room-detail",
-    component: RoomDetail,
+    path: "/room-detail/:name",
+    component: () => import('@/views/rooms/RoomDetail.vue'),
     meta: { hideTab:true, requiresAuth: true }
   },
   {
