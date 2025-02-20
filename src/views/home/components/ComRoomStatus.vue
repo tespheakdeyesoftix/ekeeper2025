@@ -24,9 +24,8 @@ const props = defineProps({
 </script>
 
 <style scoped>
-
 .status-container {
-  overflow-x: auto;
+  overflow-x: auto; 
   white-space: nowrap;
   padding: 10px;
   background-color: #8594DC;
@@ -35,7 +34,7 @@ const props = defineProps({
 
 .status-list { 
   display: flex;
-  gap: 10px;
+  gap: 8px; 
 }
 
 .status-card {
@@ -44,15 +43,17 @@ const props = defineProps({
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 12px; 
+  padding: 10px; 
   border-radius: 12px;
+  width: 100%;
   min-height: 40px;
   text-align: center;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
   background: #8fa5ee;
+  margin: 2px;
 }
-
+ 
 .status-value {
   font-size: 18px;
   font-weight: bold;
@@ -79,3 +80,4 @@ const props = defineProps({
   justify-content: center;
 }
 </style>
+
