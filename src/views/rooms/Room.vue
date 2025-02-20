@@ -12,7 +12,7 @@
       <ComRoomFilter @onFilter="onFilter" />
 <ion-button @click="onChangeGroupBy">Change Group By</ion-button>
      
-      <ComRoom :data="data" @onLongPress="onRoomLongPress" :group_by="groupBy" />
+      <ComRoom :data="data"  />
     </template>
     </ion-content>
   </ion-page>
@@ -27,15 +27,13 @@ import ComRoom from "@/views/rooms/components/ComRoom.vue";
 import { onMounted } from "vue";
 const t = window.t;
 
-const {onSearch,onFilter,data,onRefresh,loading,onRoomLongPress,groupBy } =  useRoom()
- 
-function onChangeGroupBy(){
-  if(groupBy.value == "room_type"){
-    groupBy.value = "floor"
-  }else {
-    groupBy.value = "room_type"
-  }
-}
+const {onSearch,onFilter,data,onRefresh,loading,groupBy,getData,onChangeGroupBy } =  useRoom()
+
+
+onMounted(async ()=>{
+  await getData();
+})
+
 
  
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <ion-card v-longPress="onLongPress" button>
+  <ion-card v-longPress="onLongPress" button :router-link="'/room-detail/' + data?.name">
     <ion-ripple-effect></ion-ripple-effect>
     <ion-card-header
       color="primary"
@@ -13,7 +13,8 @@
       }"
     >
       <ion-card-title style="text-align: center">
-        {{ data?.room_number }} - {{ data?.floor_alias }}
+    
+        {{ data?.room_number }} - {{ (groupBy=='room_type'?data?.floor_alias:data?.room_type_alias) }}
       </ion-card-title>
     </ion-card-header>
 
@@ -81,15 +82,17 @@
 </template>
 
 <script lang="ts" setup>
+import { useRoom } from "@/hooks/useRoom";
 import { bed } from "ionicons/icons";
 const props = defineProps({
   data: Object,
 });
+const {onRoomLongPress,groupBy} = useRoom();
 
-const emit = defineEmits();
 
+ 
 function onLongPress() {
-  emit("onLongPress", props.data);
+  onRoomLongPress(props.data);
 }
 </script>
 <style>

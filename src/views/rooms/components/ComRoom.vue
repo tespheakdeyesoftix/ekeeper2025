@@ -1,29 +1,33 @@
 <template>
-  
+    group by = {{  groupBy }}
+      <ion-accordion-group :value="Array.from({ length: groupData.length }, (_, index) => index.toString())" >
+        
     <ComRoomGroup  
-        @onLongPress="onLongPress" v-for="(g, index) in groupData"  
+       v-for="(g, index) in groupData"  
         :key="index" 
         :value="index.toString()" 
-        :title="group_by=='room_type'?g.room_type:g.floor" 
-        :data="getRoom(group_by=='room_type'?g.room_type_id:g.floor)"
+        :title="groupBy=='room_type'?g.room_type:g.floor" 
+        :data="getRoom(groupBy=='room_type'?g.room_type_id:g.floor)"
     />
+      </ion-accordion-group>
 </template>
 <script setup lang="ts">
+ 
+import { useRoom } from "@/hooks/useRoom";
 import ComRoomGroup from "@/views/rooms/components/ComRoomGroup.vue"
 import { computed } from "vue";
-const emit = defineEmits()
+const {groupBy} = useRoom()
+ 
+
 const props = defineProps({
-    data:Object,
-    group_by:{
-        type:String,
-        default:"room_type"
-    }
+    data:Object
+    
 })
 
 
  
 const groupData = computed(()=>{
-    if(props.group_by =="room_type"){
+    if(groupBy.value =="room_type"){
         return  Array.from(
             new Map(props.data?.map(({ room_type_id, room_type }) => [room_type_id + room_type, { room_type_id, room_type }])).values()
     )
@@ -36,7 +40,7 @@ const groupData = computed(()=>{
 });
 
 function getRoom(value:string){
-    if(props.group_by == "room_type"){
+    if(groupBy.value == "room_type"){
         return props.data?.filter((r:any)=>r.room_type_id == value)
     }else {
         return props.data?.filter((r:any)=>r.floor == value)
@@ -45,9 +49,7 @@ function getRoom(value:string){
 }
 
 
-function onLongPress(data:any){
-  emit("onLongPress",data)
-}
+ 
 
 
  

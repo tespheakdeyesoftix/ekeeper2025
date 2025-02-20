@@ -5,7 +5,7 @@ import {  alertController,onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vu
 import { getApi, postApi } from "@/services/api-service";
 import { useApp } from "./useApp";
 
-
+const groupBy=ref("floor");
 
 
 export function useRoom() {
@@ -15,7 +15,7 @@ export function useRoom() {
   const loading =ref(true)
   const data = ref()
   const filter = ref({property_name:currentProperty.value.property_name, date:currentWorkingDate})
-  const groupBy=ref("room_type");
+
   // Method
   async function getData(){
 
@@ -27,6 +27,8 @@ export function useRoom() {
     })
  
     data.value = response.data
+
+    loading.value = false;
 
   }
 
@@ -51,11 +53,15 @@ export function useRoom() {
     alert("room log press clci" + JSON.stringify(room))
   }
 
-  onMounted(async ()=>{
-    await getData();
-    loading.value = false;
-  })
-  
+   
+function onChangeGroupBy(){
+  if(groupBy.value == "room_type"){
+    groupBy.value = "floor"
+  }else {
+    groupBy.value = "room_type"
+  }
+}
+ 
 
  
   return { 
@@ -67,6 +73,7 @@ export function useRoom() {
     onFilter,
     onRefresh,
     getData,
-    onRoomLongPress
+    onRoomLongPress,
+    onChangeGroupBy
 };
 }
