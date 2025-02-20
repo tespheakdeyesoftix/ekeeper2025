@@ -1,5 +1,9 @@
 <template>
-  <ion-card v-longPress="onLongPress" button :router-link="'/room-detail/' + data?.name">
+  <ion-card
+    v-longPress="onLongPress"
+    button
+    :router-link="'/room-detail/' + data?.name"
+  >
     <ion-ripple-effect></ion-ripple-effect>
     <ion-card-header
       color="primary"
@@ -8,13 +12,17 @@
         padding: '5px',
         backgroundColor:
           data?.room_status === 'Room Block'
-            ? '#ffffff'
+            ? '#000000'
             : data?.reservation_status_color || '#eae3e3',
       }"
     >
       <ion-card-title style="text-align: center">
-    
-        {{ data?.room_number }} - {{ (groupBy=='room_type'?data?.floor_alias:data?.room_type_alias) }}
+        <h5 style="padding: 0px; margin: 0px">
+          {{ data?.room_number }} -
+          {{
+            groupBy == "room_type" ? data?.floor_alias : data?.room_type_alias
+          }}
+        </h5>
       </ion-card-title>
     </ion-card-header>
 
@@ -37,16 +45,20 @@
           padding: 5px;
           height: 70px;
           display: flex;
-          flex-direction: column; 
+          flex-direction: column;
           justify-content: center;
           align-items: center;
         "
       >
-        <h6>{{ data?.block_start_date }} - {{ data.block_end_date }}</h6>
         <h6>
-            Room Block</h6>
+          {{ dayjs(data?.block_start_date).format("DD-MM-YYYY") }} 
+        </h6>
+        <h6>
+          {{ dayjs(data.block_end_date).format("DD-MM-YYYY") }}
+        </h6>
+        <h5 style="font-weight: bold">Room Block</h5>
       </div>
-      <!-- Vacant -->
+      <!-- Room Vacant -->
       <div
         v-else-if="data.room_status === 'Vacant'"
         style="
@@ -57,7 +69,7 @@
           align-items: center;
         "
       >
-        <h6>Vacant</h6>
+        <h5 style="font-weight: bold">Vacant</h5>
       </div>
       <!-- icon -->
       <div
@@ -65,17 +77,57 @@
           border-top: 1px solid gray;
           padding: 5px;
           display: flex;
+          align-items: center;
           gap: 5px;
         "
       >
         <ion-icon
-          :icon="bed"
-          style="background-color: red; padding: 5px; border-radius: 100%"
-        ></ion-icon>
+          v-if="data.is_arrival || data.is_departure"
+          :icon="airplane"
+          :style="{
+            width: '20px',
+            height: '20px',
+            borderRadius: '50%',
+            padding: '4.5px',
+            color: '#ffffff',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '1px solid #938f8f',
+            backgroundColor: data?.is_arrival ? '#0800ff' : '#3d3d3d',
+            transform: data?.is_arrival ? 'rotate(45deg)' : 'rotate(-45deg)',
+          }"
+        />
+        <div
+          v-html="data.housekeeping_icon"
+          :style="{
+            width: '30px',
+            height: '30px',
+            borderRadius: '50%',
+            padding: '0',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: data?.color,
+            border: '1px solid #938f8f',
+          }"
+        />
         <ion-icon
-          :icon="bed"
-          style="background-color: green; padding: 5px; border-radius: 100%"
-        ></ion-icon>
+          v-if="data.has_work_order"
+          :icon="list"
+          :style="{
+            width: '20px',
+            height: '20px',
+            borderRadius: '50%',
+            padding: '4.5px',
+            color: '#ffffff',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '1px solid #938f8f',
+            backgroundColor: '#fc6161',
+          }"
+        />
       </div>
     </ion-card-content>
   </ion-card>
@@ -83,14 +135,13 @@
 
 <script lang="ts" setup>
 import { useRoom } from "@/hooks/useRoom";
-import { bed } from "ionicons/icons";
+import { bed, airplane, list } from "ionicons/icons";
+import dayjs from "dayjs";
 const props = defineProps({
   data: Object,
 });
-const {onRoomLongPress,groupBy} = useRoom();
+const { onRoomLongPress, groupBy } = useRoom();
 
-
- 
 function onLongPress() {
   onRoomLongPress(props.data);
 }
