@@ -2,23 +2,17 @@
   <ion-page>
     <AppBar>{{t("Home")}}</AppBar>
     <ion-content :fullscreen="true">
-      <Loading v-if="loading"/>
-        <template v-else>
+    <Loading v-if="loading"/>
+      <template v-else>
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
           <ComSelect docType="Employee"  multiple labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
  
-          <ComSelect docType="Product" label="Select Products" modalType="modal">
-
-            
-          </ComSelect>
-          <ComSelect docType="Work Order Type" :multiple="true" >
-            open modul multple select
-          </ComSelect>
+          <ComSelect docType="Housekeeping Status" :clear="true"/>
 
         
-          <ion-button v-duration="1000"  v-longPress="onLongPress" size="large" 
+          <ion-button v-longPress="onLongPress" size="large" 
           expand="full"  shape="round"   >Long Press Me</ion-button>
    
           <ComWelcome />
@@ -46,8 +40,7 @@ import ComSummaryKPI from "@/views/home/components/ComSummaryKPI.vue"
 import ComRoomStatus from "@/views/home/components/ComRoomStatus.vue"
 import ComOccupancyChart from "@/views/home/components/ComOccupancyChart.vue"
 import ComRecentList from "@/views/home/components/ComRecentList.vue"
-import ComSelect from "@/views/components/ComSelect.vue"
-
+ 
 const { loading, data,currentProperty ,onRefresh} = useHome()
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();

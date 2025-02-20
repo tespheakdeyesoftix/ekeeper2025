@@ -1,6 +1,6 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
-
+ 
     <!-- Display select as chip control -->
     <template v-if="mode == 'chip'">
       <ion-chip :color="selected ? selectedColor : color">
@@ -101,8 +101,9 @@ const openSheetModal = async () => {
   await modal.present();
 
   const { data, role } = await modal.onWillDismiss();
-
+ 
   if (role === 'confirm') {
+    
     selected.value = data;
     emit("onSelected", data)
   }
@@ -110,10 +111,11 @@ const openSheetModal = async () => {
 
 function getLabel() {
   if (!props.multiple) {
+  
     if (meta.value.title_field) {
       return selected.value[meta.value.title_field];
     } else if (props.labelField) {
-      return selected.value(props.labelField);
+      return selected.value[props.labelField];
     } else {
       return selected.value.name;
   }

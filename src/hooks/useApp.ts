@@ -30,8 +30,11 @@ export function useApp() {
 
     
       async function getMeta(doctype:string){
+        console.log(metas.value)
         const existingDoctype = metas.value.find(r=>r.name == doctype);
+        console.log(doctype)
         if(existingDoctype){
+          console.log("exists")
           return existingDoctype
         }
     

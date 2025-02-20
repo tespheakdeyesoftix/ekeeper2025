@@ -5,68 +5,43 @@
             <ion-chip style="padding: 0;">
                 <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
             </ion-chip>
-            <ion-chip v-for="(item, index) in date" :key="index" expand="block" @click="setOpen(true)">
-                {{ item.label }}
-            </ion-chip>
+            <ComSelect @onSelected="onSelectRoomStatus"  multiple docType="Room Status" :clear="false"/>
+            <ComSelect label="Housekeeping Status" docType="Housekeeping Status Code" :clear="false" multiple/>
+            <ComSelect label="Housekeeper" docType="Employee" filter="" :clear="false" multiple/>
+            <ComSelect  docType="Building" filter="" :clear="false" multiple/>
+            <ComSelect  docType="Floor":filter="{}" :clear="false" multiple/>
+
         </div>
+
         <!-- Modal Date -->
         <ion-modal :keep-contents-mounted="true">
             <ion-datetime id="selectedDate" presentation="date" v-model="selectedDate" :format-options="formatOptions"
                 :show-default-buttons="true"></ion-datetime>
         </ion-modal>
 
-        <ion-modal ref="modal" :is-open="isOpen" :initial-breakpoint="0.25" :breakpoints="[0, 0.25, 0.5, 0.75]"
-            @ionModalDidDismiss="setOpen(false)">
-            <ion-content class="ion-padding">
-                <ion-searchbar @click="$refs.modal.$el.setCurrentBreakpoint(0.75)" placeholder="Search"></ion-searchbar>
-                <ion-list>
-                    <ion-item>
-                        <ion-avatar slot="start">
-                            <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
-                        </ion-avatar>
-                        <ion-label>
-                            <h2>Connor Smith</h2>
-                            <p>Sales Rep</p>
-                        </ion-label>
-                    </ion-item>
-                    <ion-item>
-                        <ion-avatar slot="start">
-                            <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
-                        </ion-avatar>
-                        <ion-label>
-                            <h2>Daniel Smith</h2>
-                            <p>Product Designer</p>
-                        </ion-label>
-                    </ion-item>
-                </ion-list>
-            </ion-content>
-        </ion-modal>
+ 
     </div>
 </template>
 
 <script setup lang="ts">
-import {
-    IonChip, IonModal, IonContent,
-    IonList, IonItem, IonAvatar,
-    IonImg, IonLabel, IonSearchbar, IonDatetime, IonDatetimeButton, IonIcon, IonButton,
-    IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle
-} from '@ionic/vue';
+import { useRoute } from 'vue-router';
 import { closeCircle } from 'ionicons/icons';
 
 import { ref } from 'vue';
-import { defineComponent } from 'vue';
 import { useApp } from "@/hooks/useApp";
-const { currentWorkingDate } = useApp()
+const emit = defineEmits()
+
+const { currentWorkingDate,currentProperty } = useApp()
 const isOpen = ref(false);
-const selectedDate = ref(currentWorkingDate)
+const filter = ref({date: currentWorkingDate,property:currentProperty.value.property_name})
+const route = useRoute();
+ 
+
 const setOpen = (open: boolean) => {
     isOpen.value = open;
 };
-const date = ref([
-    { label: 'Status' },
-    { label: 'HouseKeeper' },
-    { label: 'Housekeeping Status' },
-]);
+
+
 const formatOptions = {
     date: {
         day: '2-digit',
@@ -74,6 +49,17 @@ const formatOptions = {
         year: 'numeric',
     },
 };
+
+function onSelectRoomStatus(selected:any){
+    
+    onFilter({"room_status":selected.map((r:any)=>r.name)})
+}
+function onFilter(data:any){
+ 
+    emit("onFilter",{ ...filter.value,...data});
+}
+
+
 </script>
 
 <style scoped>
