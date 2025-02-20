@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useApp } from "@/hooks/useApp";
-const emit = defineEmits();
+const emit = defineEmits()
 
 const { currentWorkingDate, currentProperty } = useApp();
 const filter = ref({

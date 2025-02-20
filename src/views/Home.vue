@@ -7,22 +7,11 @@
           <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-          <ComSelect docType="Employee"  multiple labelPrefix="Select" modalType="sheet_modal" @onSelected="onSelected" @onClear="onClearMe"/>
  
-          <ComSelect docType="Housekeeping Status" :clear="true"/>
-
-        
-          <ion-button v-longPress="onLongPress" size="large" 
-          expand="full"  shape="round"   >Long Press Me</ion-button>
-   
-          <ComWelcome />
-  
+        <ComWelcome />
           <ComOccupancyChart :data="{occupancy:data?.summary.occupancy, occupy:data?.summary.total_room_occupy, total_room_vacant:data?.summary.total_room_vacant,occupy_color:data?.summary.occupy_color, vacant_color:data?.summary.vacant_color }"  /> 
-   
- 
            <ComSummaryKPI :data="data?.summary" />
- 
-   
+  
           <ComRoomStatus :data="data?.room_status" />
           <div style="padding: 0 5px">
             <ComRecentList :allTasks="data?.all_tasks" :myTasks="data?.my_tasks" />
