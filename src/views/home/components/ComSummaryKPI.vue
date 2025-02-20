@@ -1,35 +1,33 @@
 <template>
     <div style="padding: 0 5px">
         <ion-text color="secondary">
-    <h2>{{ t("Summary") }}</h2>
-  </ion-text>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="4">
+          <h2>{{ t("Summary") }}</h2>
+        </ion-text>
         
-        <ComKPI url="/occupy"  label="Occupy">{{ data?.total_room_occupy }}</ComKPI>
-      </ion-col>
-      <ion-col size="4">
-        <ComKPI label="Vacant Room" url="/room">{{ data?.total_room_vacant }}</ComKPI>
-      </ion-col>
-      <ion-col size="4">
-        <ComKPI url="/room" label="Total Rooms">{{ data?.total_room }}</ComKPI>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="4">
-      
-        <ComKPI label="Arrival">{{ data?.arrival }}</ComKPI>
- 
-      </ion-col>
-      <ion-col size="4">
-        <ComKPI label="Stay Over">{{ data?.stay_over }}</ComKPI>
-      </ion-col>
-      <ion-col size="4">
-        <ComKPI label="Departure">{{ data?.departure }}</ComKPI>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <ion-grid class="grid-container">
+          <ion-row class="row-container">
+            <ion-col size="4" class="col-container" > 
+              <ComKPI class="kpi-container" url="/occupy"  label="Occupy">{{ data?.total_room_occupy }}</ComKPI>
+            </ion-col>
+            <ion-col size="4" class="col-container">
+              <ComKPI class="kpi-container" label="Vacant Room">{{ data?.total_room_vacant }}</ComKPI>
+            </ion-col>
+            <ion-col size="4" class="col-container">
+              <ComKPI class="kpi-container" url="/room" label="Total Rooms">{{ data?.total_room }}</ComKPI>
+            </ion-col>
+          </ion-row>
+          <ion-row class="row-container" >
+            <ion-col size="4" class="col-container" >  
+              <ComKPI class="kpi-container" label="Arrival">{{ data?.arrival }}</ComKPI> 
+            </ion-col>
+            <ion-col size="4" class="col-container">
+              <ComKPI class="kpi-container" label="Stay Over">{{ data?.stay_over }}</ComKPI>
+            </ion-col>
+            <ion-col size="4" class="col-container">
+              <ComKPI class="kpi-container" label="Departure">{{ data?.departure }}</ComKPI>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
  
     </div>
     
@@ -44,3 +42,15 @@ import { useI18n } from 'vue-i18n';
 const { t  } = useI18n();
 
 </script>
+
+<style scoped> 
+
+/* .row-container{ 
+  height: 120px; 
+}  */
+.kpi-container{
+  width: 100%;
+  height: 100%;
+}
+
+</style>
