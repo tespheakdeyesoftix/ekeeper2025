@@ -55,7 +55,9 @@ const setSelectedTab = (tab: string) => {
   <div v-if="selectedTab === 'myTask'">
     <div v-if="myTasks?.length" class="task-list">
       <div v-for="(task, index) in myTasks" :key="index" class="task-card">
+       
         <template v-if="task.photo">
+          {{ task.photo }}
            <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
         </template>
         <template v-else>
@@ -88,12 +90,14 @@ const setSelectedTab = (tab: string) => {
       <RouterLink 
           v-for="(task, index) in allTasks"
           :key="index"
-          :to="`/task-detail/${task.id}`"
+          :to="`/task-detail/${task.name}`"
           class="task-card"
           
           >
         <template v-if="task.photo">
-           <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
+          <ion-avatar>
+            <Img :src="task.photo" width="100"  />
+          </ion-avatar>
         </template>
         <template v-else>
           <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
@@ -113,7 +117,6 @@ const setSelectedTab = (tab: string) => {
             {{ task.description }}
           </p>
         </div>
-
         <div class="task-status">
           <ion-chip class="status-chip">{{ task.work_order_status }}</ion-chip>
         </div>

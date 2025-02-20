@@ -79,10 +79,6 @@ body {
 	padding-right: env(safe-area-inset-right);
   }
 
-html {
-	--ion-safe-area-left: 25px;
-}
-  
  
 
 ion-toolbar {
@@ -91,13 +87,13 @@ ion-toolbar {
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
-}
+} 
 
-
+/* 
 ion-title {
 	font-size: var(--ion-title-font-size);
 	 
-}
+} */
 
  
 button.alert-button.alert-button-confirm {
