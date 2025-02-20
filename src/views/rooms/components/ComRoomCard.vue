@@ -14,17 +14,49 @@
     >
       <ion-card-title style="text-align: center">
         {{ data?.room_number }} - {{ data?.floor_alias }}
-        </ion-card-title>
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content style="padding: 0px">
-      <div style="padding: 5px; height: 80px;" >
-        <ion-label  class="truncate" >{{ data?.guest_name }}</ion-label>
+      <!-- Guest Name -->
+      <div v-if="data.guest_name" style="padding: 5px; height: 70px">
+        <ion-label class="truncate">{{ data?.guest_name }}</ion-label>
         <div style="display: flex; align-items: center">
           <ion-icon :icon="bed"></ion-icon>
           <h6>{{ data?.adult }}/{{ data?.child }}</h6>
         </div>
-        <h6>Deposit Guest</h6>
+        <h6 v-if="data.reservation_color_code">
+          {{ data?.reservation_color_code }}
+        </h6>
+      </div>
+      <!-- Room Block -->
+      <div
+        v-else-if="data.room_status === 'Room Block'"
+        style="
+          padding: 5px;
+          height: 70px;
+          display: flex;
+          flex-direction: column; 
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <h6>{{ data?.block_start_date }} - {{ data.block_end_date }}</h6>
+        <h6>
+            Room Block</h6>
+      </div>
+      <!-- Vacant -->
+      <div
+        v-else-if="data.room_status === 'Vacant'"
+        style="
+          padding: 5px;
+          height: 70px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <h6>Vacant</h6>
       </div>
       <!-- icon -->
       <div
@@ -65,8 +97,7 @@ function onLongPress() {
   display: block;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;  
-  max-width: 100%;         
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
-
 </style>
