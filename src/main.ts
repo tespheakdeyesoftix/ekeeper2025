@@ -93,6 +93,7 @@ import i18n from '../i18n'; // Import i18n config
 import { showToast,showLoading } from '@/helpers/utils';
 import longPress from '@/directives/long-press';
 import ComSelect from '@/views/components/ComSelect.vue';
+import DocList from '@/views/components/document-list/DocList.vue';
 
 // attach service to window easy to call it later
 
@@ -168,6 +169,7 @@ async function init() {
   app.component('ion-accordion',IonAccordion)
 
   app.component('Img',Img)
+  app.component('DocList',DocList)
 
  
   app.directive('longPress', longPress);
