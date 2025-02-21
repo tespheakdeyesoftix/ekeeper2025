@@ -9,7 +9,11 @@ const groupBy=ref("floor");
 const data = ref()
 const filter = ref<any>({
   property_name:"",
-  room_status:null
+  room_status:null,
+  housekeeping_status_code:null,
+  employee:null,
+  building:null,
+  floor:null
 });
 let backupData: any[] = [];
 export function useRoom() {
@@ -58,9 +62,22 @@ export function useRoom() {
         const roomStatus  = JSON.parse(JSON.stringify(f.room_status)); 
         result  =result.filter((r:any)=>roomStatus.includes(r.room_status))
       }
-
-
-     
+      if(f.housekeeping_status_code){
+        const housekeepingStatusCode  = JSON.parse(JSON.stringify(f.housekeeping_status_code)); 
+        result  =result.filter((r:any)=>housekeepingStatusCode.includes(r.housekeeping_status_code))
+      }
+      if(f.employee){
+        const Employee  = JSON.parse(JSON.stringify(f.employee)); 
+        result  =result.filter((r:any)=>Employee.includes(r.employee))
+      }
+      if(f.building){
+        const Building  = JSON.parse(JSON.stringify(f.building)); 
+        result  =result.filter((r:any)=>Building.includes(r.building))
+      }
+      if(f.floor){
+        const Floor  = JSON.parse(JSON.stringify(f.floor)); 
+        result  =result.filter((r:any)=>Floor.includes(r.floor))
+      }
     }
 
     data.value = result;

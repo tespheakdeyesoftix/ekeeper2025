@@ -1,9 +1,5 @@
 <template>
-  <ion-card
-    v-longPress="onLongPress"
-    button
-   @click = "onClick"
-  >
+  <ion-card v-longPress="onLongPress" button @click="onClick">
     <ion-ripple-effect></ion-ripple-effect>
     <ion-card-header
       color="primary"
@@ -13,7 +9,7 @@
         backgroundColor:
           data?.room_status === 'Room Block'
             ? '#000000'
-            : data?.reservation_status_color || '#eae3e3',
+            : data?.reservation_status_color || '#aeb1ba',
       }"
     >
       <ion-card-title style="text-align: center">
@@ -52,7 +48,7 @@
         "
       >
         <h6>
-          {{ dayjs(data?.block_start_date).format("DD-MM-YYYY") }} 
+          {{ dayjs(data?.block_start_date).format("DD-MM-YYYY") }}
         </h6>
         <h6>
           {{ dayjs(data.block_end_date).format("DD-MM-YYYY") }}
@@ -83,49 +79,37 @@
         "
       >
         <ion-icon
-          v-if="data.is_arrival || data.is_departure"
+          v-if="data?.is_arrival || data?.is_departure"
           :icon="airplane"
+          class="icon"
           :style="{
             width: '20px',
             height: '20px',
-            borderRadius: '50%',
             padding: '4.5px',
             color: '#ffffff',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: '1px solid #938f8f',
             backgroundColor: data?.is_arrival ? '#0800ff' : '#3d3d3d',
             transform: data?.is_arrival ? 'rotate(45deg)' : 'rotate(-45deg)',
           }"
         />
         <div
-          v-html="data.housekeeping_icon"
+          v-html="data?.housekeeping_icon"
+          class="icon"
           :style="{
             width: '30px',
             height: '30px',
-            borderRadius: '50%',
             padding: '0',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
             backgroundColor: data?.color,
-            border: '1px solid #938f8f',
           }"
         />
         <ion-icon
-          v-if="data.has_work_order"
+          v-if="data?.has_work_order"
           :icon="list"
+          class="icon"
           :style="{
             width: '20px',
             height: '20px',
-            borderRadius: '50%',
             padding: '4.5px',
             color: '#ffffff',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: '1px solid #938f8f',
             backgroundColor: '#fc6161',
           }"
         />
@@ -148,20 +132,25 @@ function onLongPress() {
 }
 
 function onClick() {
-  if(props.data){
-    props.data.selected = !props.data?.selected; 
+  if (props.data) {
+    props.data.selected = !props.data?.selected;
   }
-  
 }
-
-
 </script>
-<style>
+<style scoped>
 .truncate {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid #938f8f;
 }
 </style>
