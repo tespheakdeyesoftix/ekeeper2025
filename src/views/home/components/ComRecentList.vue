@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonChip, IonIcon, IonLabel, IonText, IonButton } from '@ionic/vue';
+import { IonChip, IonIcon, IonLabel, IonText, IonButton, IonRippleEffect, IonCard, IonCardContent } from '@ionic/vue';
 import { useI18n } from 'vue-i18n';
 import { list, today, briefcaseOutline, locationOutline, documentTextOutline, constructOutline } from 'ionicons/icons';
 import { imageUrl } from '@/helpers/utils';
 import { getAvatarLetter } from '@/helpers/utils';
 import { RouterLink, useRouter } from 'vue-router'; 
+import Img from '@/views/components/Img.vue';
 
 const { t } = useI18n();
 const router = useRouter()
@@ -29,14 +30,13 @@ const setSelectedTab = (tab: string) => {
 
 <template>
 <div class="header-container">
-  <ion-text color="secondary">
-    <h2 class="title">{{ t("Recent List") }}</h2>
-  </ion-text>
+        <ion-text color="secondary">
+          <h2>{{ t("Recent List") }}</h2>
+        </ion-text>
   <ion-button size="small" class="view-all-btn" @click="() => router.push('/task')">
     {{ t("View All") }}
   </ion-button>
-</div> 
-
+</div>    
   <!-- Filter Chips -->
   <div class="chip-container">
     <ion-chip
@@ -47,84 +47,107 @@ const setSelectedTab = (tab: string) => {
       @click="setSelectedTab(chip.value)"
     >
       <ion-icon :icon="chip.icon" :class="{ 'active-icon': selectedTab === chip.value }" />
-      <ion-label>{{ chip.label }}</ion-label>
+      <ion-label>{{ t(chip.label) }}</ion-label>
     </ion-chip>
   </div>
 
-  <!-- My Tasks List -->
-  <div v-if="selectedTab === 'myTask'">
-    <div v-if="myTasks?.length" class="task-list">
-      <div v-for="(task, index) in myTasks" :key="index" class="task-card">
-       
-        <template v-if="task.photo">
-          {{ task.photo }}
-           <img :src="imageUrl(task.photo)" alt="task photo" class="task-photo" />
-        </template>
-        <template v-else>
-          <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
-        </template>
-        <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
-        <div class="task-details" style="flex-grow: 1;">
-          <p class="task-title">
-            <ion-icon :icon="briefcaseOutline" class="task-icon"></ion-icon>
-            {{ task.work_order_type }}
-          </p>
-          <p class="task-location">
-            <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
-            {{ task.location }}
-          </p>
-          <p class="task-description">
-            <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
-            {{ task.description }}
-          </p>
-        </div>
-      </div>
-      </div>
-    </div>
-    <p v-else class="no-task-message">No tasks available</p>
-  </div>
+  <!-- My Tasks List --> 
+  <div v-if="selectedTab === 'myTask'">  
+    <div v-if="myTasks?.length">
+      <RouterLink 
+          v-for="(task, index) in myTasks"
+          :key="index"
+          :to="`/task-detail/${task.name}`"
+          style="text-decoration: none;"
+          > 
+        <ion-card v-if="myTasks?.length" >
+          <ion-card-content class="task-card">
+                <template v-if="task.photo">
+                  <ion-avatar>
+                    <Img :src="task.photo" width="100" style="flex-shrink: 0;" />
+                  </ion-avatar>
+                </template>
+                <template v-else>
+                  <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
+                </template>
 
-  <!-- All Tasks List -->
-  <div v-if="selectedTab === 'allTask'">
-    <div v-if="allTasks?.length" class="task-list">
+                <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
+                <div>
+                  <h3 class="task-title">
+                    <ion-icon :icon="constructOutline" class="task-icon"></ion-icon>
+                      {{ task.work_order_type }}
+                  </h3>
+                  <h3 class="task-location">
+                    <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
+                    {{ task.location }}
+                  </h3>
+                  <h3 class="task-description">
+                    <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
+                    {{ task.description }}
+                  </h3>
+                </div>
+                <h3>
+                  <ion-chip >{{ task.work_order_status }}</ion-chip>
+                </h3>
+                </div>
+          </ion-card-content>
+        </ion-card>
+      </RouterLink> 
+    </div>
+    <ion-text v-else class="no-task-message">No tasks available</ion-text> 
+  </div> 
+
+  <!-- All Tasks List --> 
+
+ <div v-if="selectedTab === 'allTask'">  
+    <div v-if="allTasks?.length">
       <RouterLink 
           v-for="(task, index) in allTasks"
           :key="index"
           :to="`/task-detail/${task.name}`"
-          class="task-card"
-          
-          >
-        <template v-if="task.photo">
-          <ion-avatar>
-            <Img :src="task.photo" width="100"  />
-          </ion-avatar>
-        </template>
-        <template v-else>
-          <div class="avatar-placeholder">{{ getAvatarLetter(task.work_order_type) }}</div>
-        </template>
-        <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
-        <div class="task-details" style="flex-grow: 1;">
-          <p class="task-title">
-            <ion-icon :icon="constructOutline" class="task-icon"></ion-icon>
-            {{ task.work_order_type }}
-          </p>
-          <p class="task-location">
-            <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
-            {{ task.location }}
-          </p>
-          <p class="task-description">
-            <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
-            {{ task.description }}
-          </p>
-        </div>
-        <div class="task-status">
-          <ion-chip class="status-chip">{{ task.work_order_status }}</ion-chip>
-        </div>
-      </div>
-      </RouterLink>
-    </div> 
-    <p v-else class="no-task-message">No tasks available</p>
-  </div>
+          style="text-decoration: none;"
+          > 
+        <ion-card v-if="allTasks?.length" >
+          <ion-card-content class="task-card">
+                <template v-if="task.photo">
+                  <ion-avatar>
+                    <Img :src="task.photo" width="100"  />
+                  </ion-avatar>
+                </template>
+                <template v-else>
+                  <ion-avatar >{{ getAvatarLetter(task.work_order_type) }}</ion-avatar>
+                </template>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;width: 100%;">
+                <div>
+                  <h3 class="task-title">
+                    <ion-icon :icon="constructOutline" class="task-icon"></ion-icon>
+                      {{ task.work_order_type }}
+                  </h3>
+                  <h3 class="task-location">
+                    <ion-icon :icon="locationOutline" class="task-icon"></ion-icon>
+                    {{ task.location }}
+                  </h3>
+                  <h3 class="task-description">
+                    <ion-icon :icon="documentTextOutline" class="task-icon"></ion-icon>
+                    {{ task.description }}
+                  </h3>
+                </div>
+                <h3>
+                  <ion-chip >{{ t(task.work_order_status) }}</ion-chip>
+                </h3>
+                </div>
+          </ion-card-content>
+        </ion-card>
+      </RouterLink> 
+    </div>
+    <ion-text v-else class="no-task-message">No tasks available</ion-text> 
+  </div> 
+
+
+
+
+
 </template>
 
 <style scoped>
@@ -143,7 +166,7 @@ const setSelectedTab = (tab: string) => {
 .title {
   font-size: 1.4rem;
   font-weight: bold;
-  color: #1e1e1e;
+  color: #c41a1a;
   margin-bottom: 10px;
 }
 
@@ -163,31 +186,11 @@ const setSelectedTab = (tab: string) => {
   cursor: pointer;
 }
 
-.custom-chip.active {
+.custom-chip.active, .active-icon {
   background: #8594DC;
   color: white;
-}
-
-.active-icon {
-  color: white;
-}
-
-.chip-icon {
-  margin-right: 6px;
-  font-size: 1rem;
-  color: #6366f1;
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.task-details p {
-  margin: 5px 0; /* Apply controlled margin for all p tags inside task-details */
-}
-
+} 
+ 
 .task-icon { 
   margin-right: 6px;
   font-size: 1rem;
@@ -201,27 +204,12 @@ const setSelectedTab = (tab: string) => {
 }
 
 .task-card {
-  display: flex;
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;  
+  padding: 15px; 
   gap: 12px;
-  align-items: center;
-  text-decoration: none; /* Remove default link styling */
-  color: inherit; /* Inherit text color */
+  align-items: center; 
   cursor: pointer; 
-}
-
-.task-photo {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 50%;
-  background-color: aqua;
-  flex-shrink: 0;
-}
-
+}  
 .task-title {
   font-weight: bold;
   color: #333;
@@ -239,21 +227,15 @@ const setSelectedTab = (tab: string) => {
 }
 
 .no-task-message {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   font-size: 1rem;
   color: #888;
-  margin-top: 10px;
-}
-
-.status-chip {
-  font-size: 0.85rem;
-  color: #fff;
-  background-color: #8594dc;
-}
+}  
 
 .avatar-placeholder {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;

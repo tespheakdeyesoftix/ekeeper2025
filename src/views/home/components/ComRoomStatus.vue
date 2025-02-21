@@ -1,12 +1,12 @@
 <template>
   <div style="padding: 0 5px">
     <ion-text color="secondary">
-      <h1>Room Status</h1>
+      <h1>{{ t("Room Status") }}</h1>
     </ion-text>
     <div class="status-container">
       <div class="status-list">
         <div v-for="(s, index) in data" :key="index" class="status-card">
-          <div class="status-value">{{ s.status }}</div>
+          <div class="status-value" >{{ t(s.status) }}</div>
           <div class="status-inline">
             <div class="status-total" :style="{ color: s.color }">{{ s.total }}</div>
             <div class="status-icon" v-html="s.icon"></div>
@@ -21,6 +21,8 @@
 const props = defineProps({
   data: Object
 });
+import { useI18n } from 'vue-i18n';
+const { t  } = useI18n();
 </script>
 
 <style scoped>

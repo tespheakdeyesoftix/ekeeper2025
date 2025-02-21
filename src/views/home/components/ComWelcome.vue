@@ -84,8 +84,7 @@
     justify-content: space-between;
     width: 100%;
   }
-  
-  /* Ensure the Date Box stays on the right */
+   
   .date-box-col {
     display: flex;
     justify-content: flex-end; /* Ensures the Date Box is right aligned */
