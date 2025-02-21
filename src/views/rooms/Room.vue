@@ -10,7 +10,6 @@
 
         <ComSearchBar @onSearch="onSearch" />
         <ComRoomFilter  />
-        <ion-button @click="onChangeGroupBy">Change Group By</ion-button>
         <ion-button @click="Test">Get Selected</ion-button>
  
         <ComRoom :data="data"   />
@@ -30,7 +29,6 @@ const {
   loading,
   onSearch,
   getData,
-  onChangeGroupBy,
   data
 } = useRoom();
 
