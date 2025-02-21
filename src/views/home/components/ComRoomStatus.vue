@@ -6,6 +6,7 @@
     <div class="status-container">
       <div class="status-list">
         <div v-for="(s, index) in data" :key="index" class="status-card">
+         
           <div class="status-value" >{{ t(s.status) }}</div>
           <div class="status-inline">
             <div class="status-total" :style="{ color: s.color }">{{ s.total }}</div>

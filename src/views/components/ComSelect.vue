@@ -1,6 +1,6 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
-  x{{selectedValues }}
+  {{ selected }}
     <!-- Display select as chip control -->
     <template v-if="mode == 'chip'">
       <ion-chip :color="isSelected ? selectedColor : color">
@@ -32,7 +32,7 @@ import { useApp } from "@/hooks/useApp";
 const props = defineProps({
   docType: String,
   label: String,
-  filter: Object,
+  filters: Object,
   valueField: {
     type: String,
     default: "name"

@@ -22,7 +22,7 @@ export function useComSelect(props: any) {
   async function getData() {
     
 
-    let fields = getDoctypeDefaultFields(props.docType);
+    let fields = await getDoctypeDefaultFields(props.docType);
 
     let filters = []
     if (keyword.value) {

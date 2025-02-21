@@ -2,6 +2,7 @@
   <div>
     <div class="scroll-container">
       <!-- Date -->
+    
       <ion-chip style="padding: 0">
         <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
       </ion-chip>
@@ -23,21 +24,20 @@
         @onSelected="onSelectHousekeeper"
         label="Housekeeper"
         docType="Employee"
-        filter=""
         :clear="false"
         multiple
       />
       <ComSelect
         @onSelected="onSelectBuilding"
         docType="Building"
-        filter=""
+        :filters="[['property','=',currentProperty.property_name]]"
         :clear="false"
         multiple
       />
       <ComSelect
         @onSelected="onSelectFloor"
         docType="Floor"
-        :filter="{}"
+         :filters="floorFilter"
         :clear="false"
         multiple
       />
@@ -67,8 +67,9 @@
 
 <script setup lang="ts">
 import { useRoom } from "@/hooks/useRoom";
+import { computed } from "vue";
 const t = window.t;
-const { onFilter, filter, onChangeGroupBy } = useRoom();
+const { onFilter, filter, onChangeGroupBy,currentProperty } = useRoom();
 
 const formatOptions = {
   date: {
@@ -77,6 +78,13 @@ const formatOptions = {
     year: "numeric",
   },
 };
+
+const floorFilter=computed(()=>{
+  if(filter.value.building){
+    return [["property",'=',currentProperty.value.property_name],["building",'in',filter.value.building]]
+  }
+  return [["property",'=',currentProperty.value.property_name]];
+})
 
 function onSelectRoomStatus(selected: any) {
   onFilter({ ...filter.value, room_status: selected.map((r: any) => r.name) });
@@ -87,15 +95,22 @@ function onSelectHousekeepingStatus(selected: any) {
     housekeeping_status_code: selected.map((r: any) => r.name),
   });
 }
+
 function onSelectHousekeeper(selected: any) {
   onFilter({ ...filter.value, employee: selected.map((r: any) => r.name) });
 }
+
+
 function onSelectBuilding(selected: any) {
   onFilter({ ...filter.value, building: selected.map((r: any) => r.name) });
 }
+
 function onSelectFloor(selected: any) {
   onFilter({ ...filter.value, floor: selected.map((r: any) => r.name) });
 }
+
+
+
 </script>
 
 <style scoped>
