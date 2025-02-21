@@ -1,13 +1,15 @@
 <template>
   <ion-page>
-<AppBar>Task</AppBar>
-<button @click="childEvent">Raise Child Event</button>
+<AppBar>{{ t("Task") }}</AppBar>
+<ion-button @click="childEvent">Raise Child Event</ion-button>
 
 <ion-content class="ion-pading">
-   <DocList ref="myComponentRef" docType="Employee" :fields="['name','photo']" >
+   <DocList :showSearchBar="true" ref="myComponentRef" docType="Product" :fields="['name']"  >
+     
     <template v-slot:default="{ item }">
+
             <h3>{{ item.name }}</h3>  
-            {{ item }}
+        
     </template>
    </DocList>
    
@@ -17,7 +19,7 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
- 
+const t = window.t 
 
 const myComponentRef = ref();
     const childEvent = () => {
