@@ -7,9 +7,7 @@ import { list, today, briefcaseOutline, locationOutline, documentTextOutline, co
 import { imageUrl } from '@/helpers/utils';
 import { getAvatarLetter } from '@/helpers/utils';
 import { RouterLink, useRouter } from 'vue-router'; 
-import ComTaskCard from '@/views/task/components/ComTaskCard.vue';
- 
-
+import ComTaskCard from '@/views/task/components/ComTaskCard.vue'; 
 
 const { t } = useI18n();
 const router = useRouter()
@@ -83,8 +81,7 @@ const setSelectedTab = (tab: string) => {
   </div>
   <ion-text v-else class="no-task-message">No tasks available</ion-text>
 </div>
-</template>
-
+</template> 
 <style scoped>
 
 .header-container {
@@ -102,8 +99,7 @@ const setSelectedTab = (tab: string) => {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
-}
-
+} 
 .custom-chip {
   display: flex;
   align-items: center;
@@ -112,10 +108,15 @@ const setSelectedTab = (tab: string) => {
   border-radius: 20px;
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.1); 
   cursor: pointer;
-}
-
+} 
 .custom-chip.active, .active-icon {
   background: #8594DC;
   color: white;
-}       
+}     
+.no-task-message {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  color: #888;
+}    
 </style>
