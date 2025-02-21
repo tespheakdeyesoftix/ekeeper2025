@@ -17,11 +17,7 @@ export function useComSelect(props: any) {
 
   const groupBy = ref("room_type")
 
-
-
   async function getData() {
-    
-
     let fields = await getDoctypeDefaultFields(props.docType);
 
     let filters = []

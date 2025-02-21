@@ -8,6 +8,7 @@
       </ion-chip>
       <ComSelect
         @onSelected="onSelectRoomStatus"
+        @onClear="onClearRoomStatus"
         multiple
         docType="Room Status"
         :selectedValues="['Vacant']"
@@ -89,6 +90,11 @@ const floorFilter=computed(()=>{
 function onSelectRoomStatus(selected: any) {
   onFilter({ ...filter.value, room_status: selected.map((r: any) => r.name) });
 }
+function onClearRoomStatus() {
+  delete  filter.value.room_status;
+  onFilter(filter.value );
+}
+
 function onSelectHousekeepingStatus(selected: any) {
   onFilter({
     ...filter.value,
