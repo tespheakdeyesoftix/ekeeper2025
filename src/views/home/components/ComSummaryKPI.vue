@@ -34,7 +34,8 @@
 
 <script lang="ts" setup>
   import {  IonText,IonGrid,IonRow,IonCol,useIonRouter } from '@ionic/vue';
-  import ComKPI from "@/views/components/ComKPI.vue"
+  import ComKPI from "@/views/components/ComKPI.vue" 
+
 const props = defineProps({
     data:Object
 })
