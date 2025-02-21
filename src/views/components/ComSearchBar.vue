@@ -1,7 +1,7 @@
 <template>
   
     <ion-searchbar 
-      placeholder="Search" 
+      :placeholder="t('Search')" 
       @click="expandModal" 
       v-model="keyword"
       @ionInput="debouncedSearch"
@@ -11,7 +11,7 @@
   <script setup lang="ts">
     import { ref } from "vue";
     import { debounce } from 'lodash';
-  
+  const t= window.t;
     const emit = defineEmits();
     const keyword = ref<string>('');
   
