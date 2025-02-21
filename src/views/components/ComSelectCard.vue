@@ -15,7 +15,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
-import { imageUrl, getAvatarLetter, getRandomColor } from "@/helpers/utils"
+import {  getAvatarLetter, getRandomColor } from "@/helpers/utils"
 import { checkmarkCircle } from "ionicons/icons"; // Import Ionicons
 
 

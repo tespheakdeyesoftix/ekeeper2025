@@ -124,6 +124,7 @@ filter.value.date = dayjs(event.detail.value).format("YYYY-MM-DD")
     loading,
     filter,
     groupBy,
+    currentProperty,
     onSearch,
     onFilter,
     onRefresh,

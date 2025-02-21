@@ -1,17 +1,17 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
- 
+  
     <!-- Display select as chip control -->
     <template v-if="mode == 'chip'">
-      <ion-chip :color="selected ? selectedColor : color">
-        <ion-label v-if="!selected">{{ labelPrefix }} {{ label ?? docType }}</ion-label>
+      <ion-chip :color="isSelected ? selectedColor : color">
+        <ion-label v-if="!isSelected">{{ labelPrefix }} {{ label ?? docType }}</ion-label>
         <ion-label v-else>
           <!-- Show Value -->
           {{ getLabel() }}
         
         </ion-label>
 
-        <ion-icon v-if="clear && selected" :icon="close" @click.stop="onClear"></ion-icon>
+        <ion-icon v-if="clear && isSelected" :icon="close" @click.stop="onClear"></ion-icon>
       </ion-chip>
     </template>
     <!-- end display select as chip control -->
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, useSlots } from "vue"
+import { computed, onMounted, ref, useSlots } from "vue"
 import { modalController, IonButton } from '@ionic/vue';
 import ComSelectSheetModal from '@/views/components/ComSelectSheetModal.vue';
 import { close } from 'ionicons/icons';
@@ -32,7 +32,7 @@ import { useApp } from "@/hooks/useApp";
 const props = defineProps({
   docType: String,
   label: String,
-  filter: Object,
+  filters: Object,
   valueField: {
     type: String,
     default: "name"
@@ -67,8 +67,10 @@ const props = defineProps({
     default: "sheet_modal"
   },
 
-  labelPrefix: String
-
+  labelPrefix: String,
+  selectedValues:Object,//for multiple select send  array string 
+  selectedValue:String,// for single select string only
+  selected:Object // Array of object eg. [{name:'123', label:'Label 1'}]
 
 })
 
@@ -80,6 +82,15 @@ const slots = useSlots();
 const { getMeta } = useApp(props)
 
 const hasDefaultSlot = ref(slots.default);
+
+const isSelected = computed(()=>{
+  if(props.multiple){
+    return selected.value && selected.value.length> 0;
+  }
+  else {
+    return selected;
+  }
+})
 
 const openSheetModal = async () => {
 
