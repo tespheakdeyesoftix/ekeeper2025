@@ -1,14 +1,15 @@
 <template>
   <ion-page>
     <AppBar>{{ t("Home") }}</AppBar>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="ion-padding">
       <Loading v-if="loading" />
       <template v-else>
         <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <ComWelcome />
-        <ComOccupancyChart
+     <div style="background: red;">hello</div>
+     <ComWelcome />
+        <ComOccupancyChart  
           :data="{ occupancy: data?.summary.occupancy, occupy: data?.summary.total_room_occupy, total_room_vacant: data?.summary.total_room_vacant, occupy_color: data?.summary.occupy_color, vacant_color: data?.summary.vacant_color }" />
         <ComSummaryKPI :data="data?.summary" />
 

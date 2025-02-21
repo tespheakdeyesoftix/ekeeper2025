@@ -1,12 +1,12 @@
 <template>
-    <div style="padding: 0 5px">
+    <div style="padding: 0 5px; margin: 0px;">
         <ion-text color="secondary">
           <h2>{{ t("Summary") }}</h2>
         </ion-text>
         
-        <ion-grid class="grid-container">
-          <ion-row class="row-container">
-            <ion-col size="4" class="col-container" > 
+        <ion-grid class="grid-container ion-no-padding">
+          <ion-row class="row-container ">
+            <ion-col size="4" class="col-container " > 
               <ComKPI class="kpi-container" url="/occupy"  label="Occupy">{{ data?.total_room_occupy }}</ComKPI>
             </ion-col>
             <ion-col size="4" class="col-container">
@@ -52,6 +52,7 @@ const { t  } = useI18n();
 .kpi-container{
   width: 100%;
   height: 100%;
+  border-radius: 20px;
 }
 
 </style>

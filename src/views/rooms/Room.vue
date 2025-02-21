@@ -29,6 +29,7 @@ const {
   loading,
   onSearch,
   getData,
+  onRefresh,
   data
 } = useRoom();
 
