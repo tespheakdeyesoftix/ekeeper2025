@@ -105,6 +105,7 @@ const openSheetModal = async () => {
   if (role === 'confirm') {
     
     selected.value = data;
+     
     emit("onSelected", data)
   }
 };
