@@ -60,6 +60,11 @@ const routes: Array<RouteRecordRaw> = [
   },
   
   {
+    path: "/all-task",
+    component: () => import('@/views/task/AllTask.vue'),
+    meta: { requiresAuth: true,title:"All Task",hideTab:true  }
+  },
+  {
     path: "/task-detail/:name",
     component: () => import('@/views/task/TaskDetail.vue'),
 

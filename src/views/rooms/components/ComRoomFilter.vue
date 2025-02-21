@@ -2,7 +2,6 @@
   <div>
     <div class="scroll-container">
       <!-- Date -->
-    
       <ion-chip style="padding: 0">
         <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
       </ion-chip>
@@ -98,7 +97,7 @@ function onClearRoomStatus() {
 function onSelectHousekeepingStatus(selected: any) {
   onFilter({
     ...filter.value,
-    housekeeping_status_code: selected.map((r: any) => r.name),
+    housekeeping_status_code: selected.map((r: any) => r.name)
   });
 }
 
@@ -114,7 +113,6 @@ function onSelectBuilding(selected: any) {
 function onSelectFloor(selected: any) {
   onFilter({ ...filter.value, floor: selected.map((r: any) => r.name) });
 }
-
 
 
 </script>

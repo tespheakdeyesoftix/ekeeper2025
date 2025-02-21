@@ -35,7 +35,7 @@ const setSelectedTab = (tab: string) => {
           <h2>{{ t("Recent List") }}</h2>
         </ion-text>
   <ion-button size="small" class="view-all-btn" @click="() => router.push('/task')">
-    {{ t("View All") }}
+    {{ t("View all Tasks") }}
   </ion-button>
 </div>    
   <!-- Filter Chips -->

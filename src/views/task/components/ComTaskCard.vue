@@ -5,17 +5,22 @@ import { constructOutline, locationOutline, documentTextOutline } from 'ionicons
 import { getAvatarLetter } from '@/helpers/utils';
 import Img from '@/views/components/Img.vue';
 import { useI18n } from 'vue-i18n';
+import Task from '../Task.vue';
 
+const emit = defineEmits()
 
 const { t } = useI18n() 
 const props = defineProps({
   task: Object
 });
 
-</script>
+function onClick(){
+emit('onClick',Task);
+}
 
+</script>
 <template>
-  <ion-card>
+  <ion-card button @click="onClick">
     <ion-card-content class="task-card">
       <template v-if="task?.photo">
         <ion-avatar>
@@ -52,8 +57,6 @@ const props = defineProps({
 <style scoped>
 .task-card {
   display: flex;
-  padding: 15px;
-  gap: 12px;
   align-items: center;
   cursor: pointer;
 }
