@@ -18,7 +18,7 @@ export function useDocList(props: any) {
   const groupBy = ref("room_type")
 
 
-alert(123)
+ 
   async function getData() {
      
     const response = await getDocList(props.docType, {

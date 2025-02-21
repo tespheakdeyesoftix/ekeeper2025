@@ -8,7 +8,7 @@
 </template>
 <script setup lang="ts">
 import { useDocList } from '@/hooks/useDocList';
-
+const emit = defineEmits()
 const props = defineProps({
     docType:String,
     filters:Object,
@@ -21,6 +21,11 @@ const props = defineProps({
  
 const {data} = useDocList(props)
 
-
+const triggerItemClicked = () => {
+    
+        alert("hell world")
+    
+};
+defineExpose({ triggerItemClicked });
 
 </script>
