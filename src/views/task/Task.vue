@@ -1,52 +1,15 @@
 <template>
   <ion-page>
 <AppBar>Task</AppBar>
-<ion-content>
-    <ion-text color="primary">
-        <h2>{{t("Today")}}</h2>
-    </ion-text>
+<button @click="childEvent">Raise Child Event</button>
 
-    <ion-grid class="grid-container">
-        <ion-row class="row-container">
-          <ion-col class="status-card ongoing ion-activatable ripple-parent">
-            <ion-icon :icon="refreshOutline" class="status-icon"></ion-icon>
-            <h2>Ongoing</h2>
-            <ion-ripple-effect></ion-ripple-effect>
-          </ion-col>
-          <ion-col class="status-card in-process ion-activatable ripple-parent">
-            <ion-icon :icon="timeOutline" class="status-icon"></ion-icon>
-            <h2>In Process</h2>
-            <ion-ripple-effect></ion-ripple-effect>
-          </ion-col>
-        </ion-row>
-        <ion-row class="row-container">
-          <ion-col class="status-card complete ion-activatable ripple-parent">
-            <ion-icon :icon="documentOutline" class="status-icon"></ion-icon>
-            <h2>Complete</h2>
-            <ion-ripple-effect></ion-ripple-effect>
-          </ion-col>
-          <ion-col class="status-card cancel ion-activatable ripple-parent">
-            <ion-icon :icon="closeOutline" class="status-icon"></ion-icon>
-            <h2>Cancel</h2>
-            <ion-ripple-effect></ion-ripple-effect>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <div class="all-task-button-container">
-        <ion-button expand="block" @click="()=>console.log('hello')">All Task</ion-button>
-      </div>
-
-      <div class="task-card-container">
-        <ComTaskCard />
-      </div>
-</ion-content>
-<!-- <button @click="childEvent">Raise Child Event</button> 
 <ion-content class="ion-pading">
-   <DocList ref="myComponentRef" docType="Employee" :fields="['name','photo']" >
+   <DocList :showSearchBar="true" ref="myComponentRef" docType="Product" :fields="['name']"  >
+     
     <template v-slot:default="{ item }">
+
             <h3>{{ item.name }}</h3>  
-            {{ item }}
+        
     </template>
    </DocList> 
 </ion-content> -->
@@ -56,16 +19,7 @@
 
 <script setup lang="ts">
     import { ref } from "vue";
-    import { useI18n } from "vue-i18n";
-    import {  IonText,IonGrid,IonRow,IonCol,IonIcon, IonRippleEffect } from '@ionic/vue';
-    import { refreshOutline, timeOutline, documentOutline, closeOutline,gitCompareOutline } from 'ionicons/icons';
-    import ComTaskCard from "./components/ComTaskCard.vue";
-
-    const props = defineProps({
-        task:Object
-    })
-
-    const { t } = useI18n() 
+ 
 
     const myComponentRef = ref();
         const childEvent = () => {

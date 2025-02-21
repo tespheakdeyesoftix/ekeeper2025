@@ -4,10 +4,15 @@ import { getApi, getDocList } from "@/services/api-service";
 import { InfiniteScrollCustomEvent, modalController } from "@ionic/vue";
 
 import { useApp } from "./useApp";
+import { filter } from "ionicons/icons";
+
 export function useDocList(props: any) {
   const { getMeta } = useApp();
   const loading = ref(true);
-  const meta = ref<any>()
+  let orFilters : any[] = [];
+  let filters : any[] = [];
+  let  meta: any ={};
+
   const canLoadMore = ref(true);
   const pageSize = ref(20);
   const data = ref<any[]>([])
@@ -24,7 +29,7 @@ export function useDocList(props: any) {
     const response = await getDocList(props.docType, {
       fields: props.fields,
       filters: props.filters,
-      orFilters: props.orFilters,
+      orFilters: orFilters,
       limit_start: startIndex.value,
       limit: pageSize.value,
     });
@@ -55,24 +60,55 @@ export function useDocList(props: any) {
     event.target.complete();
   };
  
+  const onRefresh = async (event: CustomEvent) => {
+    startIndex.value = 0;
+    await getData();
+    event.target.complete();
+  };
 
 
 
-  async function  Search  (str:string=""){
 
-    keyword.value = str;
+  async function  onSearch  (str:string=""){
+    console.log(meta)
+    if(meta){
     loading.value = true;
     canLoadMore.value = true;
     startIndex.value = 0;
+    if(str){
+      let filter:any[] = []
+      const keywordEncode = encodeURIComponent(str);
+      
+      filter.push(["name", 'like', `%${keywordEncode}%`])
+      // title field
+      if (meta.title_field) {
+        filter.push([meta.title_field, 'like', `%${keywordEncode}%`])
+      }
+      if (meta.search_fields) {
+        meta.search_fields.split(",").map((item: string) => item.trim()).forEach((f: string) => {
+          filter.push([f, 'like', `%${keywordEncode}%`])
+        });
+      }
+     
+      orFilters = filter;
+    }else {
+      orFilters = []
+    }
     data.value = await getData();
     loading.value = false;
+    }
+
+    
   }
 
   onMounted(async () => {
     
     loading.value = true
+   orFilters = props.orFilters;
     const result = await getData();
     data.value = result
+
+    meta = await getMeta(props.docType);
   })
 
 
@@ -82,8 +118,9 @@ export function useDocList(props: any) {
     loadingMoreData,
     data,
     meta,
-    Search,
+    onSearch,
     getData,
-    onLoadMore
+    onLoadMore,
+    onRefresh
   };
 }

@@ -12,7 +12,6 @@ export async function getPropertyInformation(propertyCode:string) {
 
     if (error) {
         
-        
         return { data: null, error };
     }
 

@@ -5,7 +5,7 @@ import { InfiniteScrollCustomEvent, modalController } from "@ionic/vue";
 
 import { useApp } from "./useApp";
 export function useComSelect(props: any) {
-  const { getMeta } = useApp();
+  const { getMeta,getDoctypeDefaultFields } = useApp();
   const loading = ref(true);
   const meta = ref<any>()
   const canLoadMore = ref(true);
@@ -22,19 +22,7 @@ export function useComSelect(props: any) {
   async function getData() {
     
 
-    let fields = ["name"]
-    if (meta.value.image_field) {
-      fields.push(meta.value.image_field)
-    }
-
-    if (meta.value.title_field) {
-      fields.push(meta.value.title_field)
-    }
-    if (meta.value.search_fields) {
-      fields = [...fields, ...meta.value.search_fields.split(",").map((item: string) => item.trim())];
-    }
-
-    fields = [...new Set(fields)];
+    let fields = getDoctypeDefaultFields(props.docType);
 
     let filters = []
     if (keyword.value) {
@@ -58,7 +46,9 @@ export function useComSelect(props: any) {
     if (props.selected) {
       if (!props.multiple) {
 
-        andFilter.push(["name", "not in", [props.selected[props.valueField]]])
+        andFilter.push([props.valueField, "not in", [props.selected[props.valueField]]])
+      }else {
+        andFilter.push([props.valueField, "not in", props.selected.map((r:any)=>r[props.valueField])])
       }
     }
 
@@ -125,6 +115,12 @@ export function useComSelect(props: any) {
     onSelect(data.value.filter((r: any) => r.selected));
   }
 
+  function onClearSelect() {
+
+ 
+    data.value.filter((r:any)=>r.selected).map((x:any)=>x.selected=false);
+  }
+
   const dismissModal = () => {
     data.value = [];
     modalController.dismiss(null, 'cancel')
@@ -150,6 +146,8 @@ export function useComSelect(props: any) {
     data.value = await getData();
     loading.value = false;
   }
+
+
 
   onMounted(async () => {
     // this method is use to put selcted result to the top
@@ -186,7 +184,7 @@ export function useComSelect(props: any) {
     onSelect,
     dismissModal,
     expandModal,
-    confirmSelection
-
+    confirmSelection,
+    onClearSelect
   };
 }

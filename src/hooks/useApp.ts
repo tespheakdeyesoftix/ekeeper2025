@@ -30,11 +30,11 @@ export function useApp() {
 
     
       async function getMeta(doctype:string){
-        console.log(metas.value)
+      
         const existingDoctype = metas.value.find(r=>r.name == doctype);
-        console.log(doctype)
+      
         if(existingDoctype){
-          console.log("exists")
+        
           return existingDoctype
         }
     
@@ -51,6 +51,24 @@ export function useApp() {
       }
 
 
+  async function getDoctypeDefaultFields(docType:string){
+    let fields = ["name"]
+    const meta = await getMeta(docType)
+    if (meta.image_field) {
+      fields.push(meta.image_field)
+    }
+
+    if (meta.title_field) {
+      fields.push(meta.title_field)
+    }
+    if (meta.value.search_fields) {
+      fields = [...fields, ...meta.value.search_fields.split(",").map((item: string) => item.trim())];
+    }
+
+    return [...new Set(fields)];
+
+  }
+
 
   onMounted(()=>{
       currentLanguage.value = window.storageService.getItem("lang") || "en";
@@ -63,6 +81,7 @@ export function useApp() {
     currentWorkingDate,
     currentWorkingDay,
     currentLanguage,
-    getMeta
+    getMeta,
+    getDoctypeDefaultFields
 };
 }

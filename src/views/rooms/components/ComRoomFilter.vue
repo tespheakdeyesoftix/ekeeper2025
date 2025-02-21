@@ -9,6 +9,7 @@
         @onSelected="onSelectRoomStatus"
         multiple
         docType="Room Status"
+        :selectedValues="['Vacant']"
         clear
       />
       <ComSelect
@@ -19,14 +20,27 @@
         multiple
       />
       <ComSelect
+        @onSelected="onSelectHousekeeper"
         label="Housekeeper"
         docType="Employee"
         filter=""
         :clear="false"
         multiple
       />
-      <ComSelect docType="Building" filter="" :clear="false" multiple />
-      <ComSelect docType="Floor" :filter="{}" :clear="false" multiple />
+      <ComSelect
+        @onSelected="onSelectBuilding"
+        docType="Building"
+        filter=""
+        :clear="false"
+        multiple
+      />
+      <ComSelect
+        @onSelected="onSelectFloor"
+        docType="Floor"
+        :filter="{}"
+        :clear="false"
+        multiple
+      />
     </div>
 
     <!-- Modal Date -->
@@ -39,14 +53,22 @@
         :show-default-buttons="true"
       ></ion-datetime>
     </ion-modal>
+    <!-- Group by -->
+    <ion-segment @click="onChangeGroupBy" value="room_type">
+      <ion-segment-button value="room_type">
+        <ion-label>{{ t("Room Type") }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="floor">
+        <ion-label>{{ t("Floor") }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRoom } from "@/hooks/useRoom";
-import { ref } from "vue";
- 
-const {onFilter,filter} = useRoom()
+const t = window.t;
+const { onFilter, filter, onChangeGroupBy } = useRoom();
 
 const formatOptions = {
   date: {
@@ -57,16 +79,23 @@ const formatOptions = {
 };
 
 function onSelectRoomStatus(selected: any) {
-  
-  onFilter({...filter.value,room_status:selected.map((r: any) => r.name)});
- 
-
+  onFilter({ ...filter.value, room_status: selected.map((r: any) => r.name) });
 }
 function onSelectHousekeepingStatus(selected: any) {
-
-  // onFilter({ status: selected.map((r: any) => r.name) });
+  onFilter({
+    ...filter.value,
+    housekeeping_status_code: selected.map((r: any) => r.name),
+  });
 }
- 
+function onSelectHousekeeper(selected: any) {
+  onFilter({ ...filter.value, employee: selected.map((r: any) => r.name) });
+}
+function onSelectBuilding(selected: any) {
+  onFilter({ ...filter.value, building: selected.map((r: any) => r.name) });
+}
+function onSelectFloor(selected: any) {
+  onFilter({ ...filter.value, floor: selected.map((r: any) => r.name) });
+}
 </script>
 
 <style scoped>

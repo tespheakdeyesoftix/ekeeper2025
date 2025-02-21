@@ -79,7 +79,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/reservations/ReservationDetail.vue'),
     meta: { requiresAuth: true,hideTab:true}
   },
-  
+  {
+    path: "/reports",
+    component: () => import('@/views/reports/Reports.vue'),
+    meta: { requiresAuth: true}
+  },
   {
     path: "/help",
     component: Help,
