@@ -29,9 +29,9 @@
           </ion-row>
         </ion-grid>
  
-    </div>
-    
+    </div> 
 </template>
+
 <script lang="ts" setup>
   import {  IonText,IonGrid,IonRow,IonCol,useIonRouter } from '@ionic/vue';
   import ComKPI from "@/views/components/ComKPI.vue"
