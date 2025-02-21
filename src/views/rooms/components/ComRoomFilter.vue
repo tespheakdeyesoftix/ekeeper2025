@@ -9,6 +9,7 @@
         @onSelected="onSelectRoomStatus"
         multiple
         docType="Room Status"
+        :selectedValues="['Vacant']"
         clear
       />
       <ComSelect

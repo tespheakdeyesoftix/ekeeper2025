@@ -8,10 +8,8 @@
         <ion-icon :icon="closeOutline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
     <!-- Title (Centered) -->
-    <ion-title>{{ t("Select") }} - {{ title ?? docType }} {{ loadingMoreData }}</ion-title>
-   
+    <ion-title>{{ t("Select") }} - {{ title ?? docType }}</ion-title>
     <!-- Confirm Button (Right) -->
     <ion-buttons v-if="multiple" slot="end">
       <ion-button  shape="round" fill="solid" color="primary" @click="confirmSelection" size="medium"> 
@@ -25,17 +23,11 @@
 </ion-header>
 
 <ComSearchBar @click="expandModal" @onSearch="Search" />
-
+<ion-button :disabled="data.filter(r=>r.selected).length==0" shape="round" fill="outline" color="warning" @click="onClearSelect">{{ t("Clear Selected") }}</ion-button>
     <ion-content>
-     
       <div class="spinner-container" v-if="loading">
- 
         <ion-spinner></ion-spinner>
-   
       </div>
-  
- 
-
       <template v-else>
         <ion-list>
          
@@ -74,10 +66,8 @@
     import { checkmarkOutline, closeOutline, expand } from "ionicons/icons";
     import ComSelectCard from "@/views/components/ComSelectCard.vue"
 
-    import { useI18n } from 'vue-i18n';
 import ComSearchBar from '@/views/components/ComSearchBar.vue';
-    const { t } = useI18n();
-
+const t =window.t;
 
   const props = defineProps({
     docType:String,
@@ -92,9 +82,9 @@ import ComSearchBar from '@/views/components/ComSearchBar.vue';
     }
   });
 
-  const { loadingMoreData,Search,data,meta, loading, onLoadMore,onSelect,onConfirm,dismissModal,expandModal,confirmSelection} = useComSelect(props);
+  const { onClearSelect, loadingMoreData,Search,data,meta, loading, onLoadMore,onSelect,onConfirm,dismissModal,expandModal,confirmSelection} = useComSelect(props);
  
-
+ 
   
  
  

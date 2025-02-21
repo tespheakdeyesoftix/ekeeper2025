@@ -21,10 +21,9 @@
           <ion-icon aria-hidden="true" :icon="personCircleOutline" />
           <ion-label>{{ t("Stays") }}</ion-label>
         </ion-tab-button>
-        
-        <ion-tab-button tab="Report" href="/report">
+        <ion-tab-button tab="Report" href="/reports">
           <ion-icon aria-hidden="true" :icon="barChartOutline" />
-          <ion-label>{{ t("Report") }}</ion-label>
+          <ion-label>{{ t("Reports") }}</ion-label>
         </ion-tab-button>
 
       </ion-tab-bar>

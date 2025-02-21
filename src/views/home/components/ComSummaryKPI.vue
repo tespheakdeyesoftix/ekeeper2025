@@ -10,7 +10,7 @@
               <ComKPI class="kpi-container" url="/occupy"  label="Occupy">{{ data?.total_room_occupy }}</ComKPI>
             </ion-col>
             <ion-col size="4" class="col-container">
-              <ComKPI class="kpi-container" label="Vacant Room">{{ data?.total_room_vacant }}</ComKPI>
+              <ComKPI class="kpi-container" label="Vacant Room" url="/room?room_status=Vacant">{{ data?.total_room_vacant }}</ComKPI>
             </ion-col>
             <ion-col size="4" class="col-container">
               <ComKPI class="kpi-container" url="/room" label="Total Rooms">{{ data?.total_room }}</ComKPI>
