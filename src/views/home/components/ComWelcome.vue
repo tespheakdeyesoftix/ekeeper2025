@@ -1,5 +1,5 @@
 <template>
-    <ion-card class="dashboard-card">
+    <ion-card class="dashboard-card" style="margin: 0px;">
       <ion-card-content>
         <ion-grid>
           <ion-row class="card-container">

@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container">
+  <div class="ion-margin-top chart-container"  >
     <ion-text color="primary" ><h2>{{t("Occupancy")}}</h2></ion-text>
     <v-chart class="chart" :option="option" autoresize />
   </div>
@@ -80,8 +80,6 @@ import { graphic } from 'echarts';
   background: rgba(223, 239, 248, 0.435);
   height: 285px;
   overflow-y: hidden;
-  margin-left: 10px;
-  margin-right: 10px;
   border-radius: 10px;
   padding:0 10px;
 }

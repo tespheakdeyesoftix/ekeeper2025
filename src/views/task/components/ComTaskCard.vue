@@ -15,8 +15,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <ion-card>
-    <ion-card-content class="task-card">
+  <ion-card class="ion-margin-bottom">
+    <ion-card-content class="task-card ">
       <template v-if="task?.photo">
         <ion-avatar>
           <Img :src="task.photo"  />

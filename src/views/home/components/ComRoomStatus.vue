@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 5px">
+  <div  class="ion-margin-top">
     <ion-text color="secondary">
       <h1>{{ t("Room Status") }}</h1>
     </ion-text>
@@ -50,7 +50,7 @@ const { t } = useI18n();
   white-space: nowrap;
   padding: 10px;
   background-color: #8594dc;
-  /* border-radius: 20px; */
+  border-radius: 20px;
 }
 .status-container::-webkit-scrollbar {
   display: none;
