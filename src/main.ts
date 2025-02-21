@@ -105,7 +105,7 @@ window.showWarning = (message: string) => showToast(message, "warning");
 window.showSuccess = (message: string) => showToast(message, "success");
 window.showError = (message: string) => showToast(message, "danger");
 
-window.showLoading = (message: string) => showLoading(message);
+window.showLoading = (message: string='Loading') => showLoading(message);
 
 
 const  {checkUserLogin} = useAuth(router);

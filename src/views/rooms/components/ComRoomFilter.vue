@@ -9,13 +9,13 @@
         @onSelected="onSelectRoomStatus"
         multiple
         docType="Room Status"
-        :clear="false"
+        clear
       />
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
         label="Housekeeping Status"
         docType="Housekeeping Status Code"
-        :clear="false"
+        clear
         multiple
       />
       <ComSelect
@@ -43,15 +43,10 @@
 </template>
 
 <script setup lang="ts">
+import { useRoom } from "@/hooks/useRoom";
 import { ref } from "vue";
-import { useApp } from "@/hooks/useApp";
-const emit = defineEmits()
-
-const { currentWorkingDate, currentProperty } = useApp();
-const filter = ref({
-  date: currentWorkingDate,
-  property: currentProperty.value.property_name,
-});
+ 
+const {onFilter,filter} = useRoom()
 
 const formatOptions = {
   date: {
@@ -62,14 +57,16 @@ const formatOptions = {
 };
 
 function onSelectRoomStatus(selected: any) {
-  onFilter({ room_status: selected.map((r: any) => r.name) });
+  
+  onFilter({...filter.value,room_status:selected.map((r: any) => r.name)});
+ 
+
 }
 function onSelectHousekeepingStatus(selected: any) {
-  onFilter({ status: selected.map((r: any) => r.name) });
+
+  // onFilter({ status: selected.map((r: any) => r.name) });
 }
-function onFilter(data: any) {
-  emit("onFilter", { ...filter.value, ...data });
-}
+ 
 </script>
 
 <style scoped>

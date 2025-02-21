@@ -9,10 +9,11 @@
         </ion-refresher>
 
         <ComSearchBar @onSearch="onSearch" />
-        <ComRoomFilter @onFilter="onFilter" />
+        <ComRoomFilter  />
         <ion-button @click="onChangeGroupBy">Change Group By</ion-button>
-
-        <ComRoom :data="data" />
+        <ion-button @click="Test">Get Selected</ion-button>
+ 
+        <ComRoom :data="data"   />
       </template>
     </ion-content>
   </ion-page>
@@ -26,16 +27,16 @@ import { onMounted } from "vue";
 const t = window.t;
 
 const {
-  onSearch,
-  onFilter,
-  data,
-  onRefresh,
   loading,
-  groupBy,
+  onSearch,
   getData,
   onChangeGroupBy,
+  data
 } = useRoom();
 
+function Test(){
+  alert(JSON.stringify(data?.value.filter((r:any)=>r.selected).map((x:any)=>x.name)))
+}
 onMounted(async () => {
   await getData();
 });

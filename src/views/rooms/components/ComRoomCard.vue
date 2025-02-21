@@ -2,7 +2,7 @@
   <ion-card
     v-longPress="onLongPress"
     button
-    :router-link="'/room-detail/' + data?.name"
+   @click = "onClick"
   >
     <ion-ripple-effect></ion-ripple-effect>
     <ion-card-header
@@ -22,6 +22,7 @@
           {{
             groupBy == "room_type" ? data?.floor_alias : data?.room_type_alias
           }}
+          {{ data?.selected }}
         </h5>
       </ion-card-title>
     </ion-card-header>
@@ -145,6 +146,15 @@ const { onRoomLongPress, groupBy } = useRoom();
 function onLongPress() {
   onRoomLongPress(props.data);
 }
+
+function onClick() {
+  if(props.data){
+    props.data.selected = !props.data?.selected; 
+  }
+  
+}
+
+
 </script>
 <style>
 .truncate {

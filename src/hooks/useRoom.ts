@@ -1,5 +1,5 @@
  
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import dayjs from 'dayjs';
 import {  alertController,onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { getApi, postApi } from "@/services/api-service";
@@ -7,15 +7,24 @@ import { useApp } from "./useApp";
 
 const groupBy=ref("floor");
 const data = ref()
-
+const filter = ref<any>({
+  property_name:"",
+  room_status:null
+});
+let backupData: any[] = [];
 export function useRoom() {
-  
   const {currentProperty,currentWorkingDate} = useApp()
+
+  
+  
   // State variable
   const loading =ref(true)
 
-  const filter = ref({property_name:currentProperty.value.property_name, date:currentWorkingDate})
-
+  filter.value = {
+    property_name: currentProperty.value.property_name,
+    date: currentWorkingDate.value  
+  }
+ 
   // Method
   async function getData(){
 
@@ -27,20 +36,43 @@ export function useRoom() {
     })
  
     data.value = response.data
+    backupData = response.data
 
     loading.value = false;
 
   }
 
-  function onFilter(filter:any){
-    alert("filter");
-    console.log(filter);
+  async function onFilter(f:any){
+    const l = await window.showLoading();
+   
+    let result = backupData;
+ 
+    
 
+    if(backupData){
+      
+      if(f.keyword){
+        result =backupData.filter((r:any)=>(r.room_number).toLowerCase().includes(f.keyword.toLowerCase()))
+      }
+      if(f.room_status){
+        const roomStatus  = JSON.parse(JSON.stringify(f.room_status)); 
+        result  =result.filter((r:any)=>roomStatus.includes(r.room_status))
+      }
+
+
+     
+    }
+
+    data.value = result;
+    await l.dismiss();
+    filter.value = f; 
   }
 
   function onSearch(keyword:string){
     // TO do later
-    alert("u search me " + keyword)
+    filter.value.keyword = keyword;
+    onFilter(filter.value);
+
   }
 
   const onRefresh = async (event: CustomEvent) => {
