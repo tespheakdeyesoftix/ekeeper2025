@@ -140,7 +140,7 @@ const onLogout = async () => {
   text-align: center;
   padding: 20px 10px;
   background: linear-gradient(135deg, #87CEFA, #1E90FF);
-  color: white;
+  
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   height: 175px; /* Estimated profile section height */
@@ -184,8 +184,6 @@ const onLogout = async () => {
 }
 
 ion-item {
-  --color: #333;
-  --ripple-color: lightgray;
   font-size: 16px;
   font-weight: 500;
   border-radius: 10px;
@@ -193,15 +191,13 @@ ion-item {
   transition: background 0.3s;
 }
 
-ion-item:hover {
-  background: #f1f1f1;
-}
+ 
 
 ion-icon {
-  font-size: 22px;
-  color: #1E90FF;
+ 
+  color: var(--ion-color-primary)
 }
-
+ 
 /* Bottom Section */
 .menu-bottom {
   position: absolute;

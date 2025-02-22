@@ -9,10 +9,14 @@
         </ion-toolbar>
       </ion-header>
         <ion-content>
-            <Document docType="Room Block" :docName="name" >
-              <template v-slot:default="{ item }">
-                <h1>{{ item.docs[0].name }}</h1>
-              </template>
+          <h1>hellow</h1>
+          {{ doc }}
+          
+          <hr/>
+
+          <hr>
+            <Document v-model="doc" docType="Room Block" :docName="name" >
+              
             </Document>
         </ion-content>
     </ion-page>
@@ -25,4 +29,5 @@
 const route = useRoute();
 const name = ref(route.params.name);
 const t = window.t
+const doc = ref()
 </script>
