@@ -9,7 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true" class="ion-padding">
-        
+         
         <DocList  docType="Work Order" 
       :fields="['name','work_order_type','location','description','photo','work_order_status']" 
 

@@ -35,17 +35,21 @@
       <ion-text>
         <h3>My Tasks</h3>
       </ion-text>
-      <DocList :showSearchBar="false" ref="myComponentRef" docType="Work Order"
-        :fields="['name', 'work_order_type', 'location', 'description', 'photo', 'work_order_status']">
-
+      
+      <DocList 
+      docType="Work Order"
+      :fields="['name','work_order_type','location','description','photo','work_order_status']"
+      
+      >
+      <!-- :filters="[['_assign','=',currentUser.name],['property','=',currentProperty.property_name]]" -->
         <template v-slot:default="{ item }">
-          <ComTaskCard :task="item" @onClick="onViewTaskDetail" />
+          <ComTaskCard :task="item" @onClick="onViewTaskDetail"/>
+        </template>
+        <template v-slot:empty>
+          this is my custom no data message
         </template>
       </DocList>
-
     </ion-content>
-
-
   </ion-page>
 </template>
 
@@ -54,7 +58,12 @@ import { ref } from "vue";
 import { useIonRouter } from "@ionic/vue";
 import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline } from 'ionicons/icons';
 import ComTaskCard from "./components/ComTaskCard.vue";
+import { useAuth } from "@/hooks/useAuth";
+import { useApp } from "@/hooks/useApp";
 const ionRouter = useIonRouter();
+const {currentUser} = useAuth()
+const {currentProperty} = useApp()
+
 const t = window.t;
 
 function onViewTaskDetail(task: any) {
@@ -91,25 +100,5 @@ function onViewTaskDetail(task: any) {
   margin-bottom: 8px;
 }
 
-.ongoing {
-  background-color: #8e6fb6;
-}
-
-.in-process {
-  background-color: #f5b971;
-}
-
-.complete {
-  background-color: #88c86b;
-}
-
-.cancel {
-  background-color: #f47c7c;
-}
-
-/* Ripple effect styles */
-.ripple-parent {
-  position: relative;
-  overflow: hidden;
-}
+ 
 </style>

@@ -12,7 +12,6 @@ export function useDocList(props: any) {
   let orFilters : any[] = [];
   let filters : any[] = [];
   let  meta: any ={};
-
   const canLoadMore = ref(true);
   const pageSize = ref(20);
   const data = ref<any[]>([])
@@ -54,8 +53,6 @@ export function useDocList(props: any) {
     if (result.length < pageSize.value || !result) {
       canLoadMore.value = false;
     }
-
-
     data.value.push(...result);
     event.target.complete();
   };
@@ -65,9 +62,7 @@ export function useDocList(props: any) {
     await getData();
     event.target.complete();
   };
-
-
-
+ 
 
   async function  onSearch  (str:string=""){
     console.log(meta)
