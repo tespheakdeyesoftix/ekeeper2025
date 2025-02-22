@@ -103,7 +103,7 @@
         />
         <ion-icon
           v-if="data?.has_work_order"
-          :icon="list"
+          :icon="clipboardOutline"
           class="icon"
           :style="{
             width: '20px',
@@ -120,7 +120,7 @@
 
 <script lang="ts" setup>
 import { useRoom } from "@/hooks/useRoom";
-import { bed, airplane, list } from "ionicons/icons";
+import { bed, airplane, clipboardOutline } from "ionicons/icons";
 import dayjs from "dayjs";
 const props = defineProps({
   data: Object,

@@ -1,12 +1,16 @@
 <template>
-<div class="header-container">
-        <ion-text color="secondary">
-          <h2>{{ t("Recent List") }}</h2>
-        </ion-text>
-  <ion-button size="small" class="view-all-btn" @click="() => router.push('/task')">
-    {{ t("View all Tasks") }}
-  </ion-button>
-</div>    
+  <div class="header-container">
+    <ion-text color="secondary">
+      <h2>{{ t("Recent List") }}</h2>
+    </ion-text>
+    <ion-button
+      size="small"
+      class="view-all-btn"
+      @click="() => router.push('/task')"
+    >
+      {{ t("View all Tasks") }}
+    </ion-button>
+  </div>
   <!-- Filter Chips -->
   <div class="chip-container">
     <ion-chip
@@ -25,15 +29,15 @@
   </div>
 
   <!-- My Tasks List -->
-  <div v-if="selectedTab === 'myTask'"  class="ion-no-padding ion-no-margin">
-    <div v-if="myTasks?.length" >
+  <div v-if="selectedTab === 'myTask'">
+    <div v-if="myTasks?.length">
       <RouterLink
         v-for="(task, index) in myTasks"
         :key="index"
         :to="`/task-detail/${task.name}`"
         style="text-decoration: none"
       >
-        <ComTaskCard :task="task"  class="ion-no-margin"/>
+        <ComTaskCard :task="task" />
       </RouterLink>
     </div>
     <ion-text v-else class="no-task-message">No tasks available</ion-text>
@@ -56,32 +60,10 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Img from "@/views/components/Img.vue";
-import {
-  IonChip,
-  IonIcon,
-  IonLabel,
-  IonText,
-  IonButton,
-  IonRippleEffect,
-  IonCard,
-  IonCardContent,
-} from "@ionic/vue";
-import { useI18n } from "vue-i18n";
-import {
-  list,
-  today,
-  briefcaseOutline,
-  locationOutline,
-  documentTextOutline,
-  constructOutline,
-} from "ionicons/icons";
-import { imageUrl } from "@/helpers/utils";
-import { getAvatarLetter } from "@/helpers/utils";
+import { list, today } from "ionicons/icons";
 import { RouterLink, useRouter } from "vue-router";
 import ComTaskCard from "@/views/task/components/ComTaskCard.vue";
-
-const { t } = useI18n();
+const t = window.t;
 const router = useRouter();
 
 const props = defineProps({

@@ -20,7 +20,7 @@ emit('onClick',Task);
 
 </script>
 <template>
-  <ion-card button @click="onClick">
+  <ion-card button @click="onClick" class="ion-margin-bottom ion-no-margin">
     <ion-card-content class="task-card">
       <template v-if="task?.photo">
         <ion-avatar>

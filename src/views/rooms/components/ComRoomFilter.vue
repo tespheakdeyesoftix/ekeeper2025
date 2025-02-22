@@ -15,6 +15,7 @@
       />
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
+        @onClear="onClearHousekeepingStatus"
         label="Housekeeping Status"
         docType="Housekeeping Status Code"
         clear
@@ -22,25 +23,29 @@
       />
       <ComSelect
         @onSelected="onSelectHousekeeper"
+        @onClear="onClearHousekeeper"
         label="Housekeeper"
         docType="Employee"
-        :clear="false"
+        clear
         multiple
       />
       <ComSelect
         @onSelected="onSelectBuilding"
+        @onClear="onClearBuilding"
         docType="Building"
-        :filters="[['property','=',currentProperty.property_name]]"
-        :clear="false"
+        :filters="[['property', '=', currentProperty.property_name]]"
+        clear
         multiple
       />
       <ComSelect
         @onSelected="onSelectFloor"
+        @onClear="onClearFloor"
         docType="Floor"
-         :filters="floorFilter"
-        :clear="false"
+        :filters="floorFilter"
+        clear
         multiple
       />
+      <ion-chip @click="onClearFilter">Clear</ion-chip>
     </div>
 
     <!-- Modal Date -->
@@ -69,7 +74,7 @@
 import { useRoom } from "@/hooks/useRoom";
 import { computed } from "vue";
 const t = window.t;
-const { onFilter, filter, onChangeGroupBy,currentProperty } = useRoom();
+const { onFilter, filter, onChangeGroupBy, currentProperty } = useRoom();
 
 const formatOptions = {
   date: {
@@ -79,42 +84,67 @@ const formatOptions = {
   },
 };
 
-const floorFilter=computed(()=>{
-  if(filter.value.building){
-    return [["property",'=',currentProperty.value.property_name],["building",'in',filter.value.building]]
+const floorFilter = computed(() => {
+  if (filter.value.building) {
+    return [
+      ["property", "=", currentProperty.value.property_name],
+      ["building", "in", filter.value.building],
+    ];
   }
-  return [["property",'=',currentProperty.value.property_name]];
-})
+  return [["property", "=", currentProperty.value.property_name]];
+});
 
 function onSelectRoomStatus(selected: any) {
   onFilter({ ...filter.value, room_status: selected.map((r: any) => r.name) });
 }
 function onClearRoomStatus() {
-  delete  filter.value.room_status;
-  onFilter(filter.value );
+  delete filter.value.room_status;
+  onFilter(filter.value);
 }
 
 function onSelectHousekeepingStatus(selected: any) {
   onFilter({
     ...filter.value,
-    housekeeping_status_code: selected.map((r: any) => r.name)
+    housekeeping_status_code: selected.map((r: any) => r.name),
   });
+}
+function onClearHousekeepingStatus() {
+  delete filter.value.housekeeping_status_code;
+  onFilter(filter.value);
 }
 
 function onSelectHousekeeper(selected: any) {
   onFilter({ ...filter.value, employee: selected.map((r: any) => r.name) });
 }
-
+function onClearHousekeeper() {
+  delete filter.value.employee;
+  onFilter(filter.value);
+}
 
 function onSelectBuilding(selected: any) {
   onFilter({ ...filter.value, building: selected.map((r: any) => r.name) });
+}
+function onClearBuilding() {
+  delete filter.value.building;
+  onFilter(filter.value);
 }
 
 function onSelectFloor(selected: any) {
   onFilter({ ...filter.value, floor: selected.map((r: any) => r.name) });
 }
-
-
+function onClearFloor() {
+  delete filter.value.floor;
+  onFilter(filter.value);
+}
+function onClearFilter(){
+  delete filter.value.room_status;
+  delete filter.value.housekeeping_status_code;
+  delete filter.value.employee;
+  delete filter.value.building;
+  delete filter.value.floor;
+  delete filter.value;
+  onFilter(filter.value);
+}
 </script>
 
 <style scoped>
