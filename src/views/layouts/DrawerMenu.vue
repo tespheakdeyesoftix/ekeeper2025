@@ -40,7 +40,7 @@
         </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle>
-        <ion-item router-link="/settings">
+        <ion-item router-link="/room-block">
           <ion-icon :icon="layersOutline" slot="start"></ion-icon>
           <ion-label>{{ t("Room Block") }}</ion-label>
         </ion-item>

@@ -85,6 +85,17 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true,hideTab:true}
   },
   {
+  path: "/room-block",
+    component: () => import('@/views/room-block/RoomBlock.vue'),
+    meta: { requiresAuth: true}
+  },
+  {
+  path: "/room-block-detail/:name",
+    component: () => import('@/views/room-block/RoomBlockDetail.vue'),
+    meta: { requiresAuth: true,hideTab:true}
+  },
+
+  {
     path: "/reports",
     component: () => import('@/views/reports/Reports.vue'),
     meta: { requiresAuth: true}

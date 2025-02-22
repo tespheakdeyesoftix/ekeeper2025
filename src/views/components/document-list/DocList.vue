@@ -2,15 +2,24 @@
     <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
+
+      
+    <Loading v-if="loading"/>
+    <template v-else>
         <slot name="searchBar">
             <ComSearchBar v-if="showSearchBar" @onSearch="onSearch" />
         </slot>
-
-    <div v-for="(d, index) in data" :key="index">
+ 
+    <div v-if="data && data.length>0" v-for="(d, index) in data" :key="index">
         <slot :item="d">
-            <!-- Default fallback content -->
             {{ d.name }}
         </slot>
+    </div>
+    <div v-else>
+        <slot  name="empty">
+            No Data
+        </slot>
+        
     </div>
     <div style="padding-bottom: 50px;">
       <ion-infinite-scroll 
@@ -20,6 +29,8 @@
         <ion-infinite-scroll-content loading-text="Loading more..."></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </div>
+    </template>
+        
 </template>
 <script setup lang="ts">
 import { useDocList } from '@/hooks/useDocList';
@@ -40,7 +51,7 @@ const props = defineProps({
     }
 })
  
-const {data,onRefresh,onLoadMore,onSearch} = useDocList(props)
+const {data,onRefresh,onLoadMore,onSearch,loading} = useDocList(props)
 
 const triggerItemClicked = () => {
     
