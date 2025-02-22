@@ -3,7 +3,7 @@ import { defineProps } from 'vue';
 import { IonCard, IonCardContent, IonAvatar, IonIcon, IonChip } from '@ionic/vue';
 import { constructOutline, locationOutline, documentTextOutline } from 'ionicons/icons';
 import { getAvatarLetter } from '@/helpers/utils';
-import Img from '@/views/components/Img.vue';
+ 
 import { useI18n } from 'vue-i18n';
 import Task from '../Task.vue';
 
