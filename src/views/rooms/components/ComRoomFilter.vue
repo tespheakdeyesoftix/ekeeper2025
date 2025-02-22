@@ -12,6 +12,7 @@
         docType="Room Status"
         :selectedValues="['Vacant']"
         clear
+        ref="roomStatusRef"
       />
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
@@ -36,6 +37,8 @@
         :filters="[['property', '=', currentProperty.property_name]]"
         clear
         multiple
+         
+
       />
       <ComSelect
         @onSelected="onSelectFloor"
@@ -72,9 +75,10 @@
 
 <script setup lang="ts">
 import { useRoom } from "@/hooks/useRoom";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 const t = window.t;
 const { onFilter, filter, onChangeGroupBy, currentProperty } = useRoom();
+const roomStatusRef = ref(null)
 
 const formatOptions = {
   date: {
@@ -137,13 +141,7 @@ function onClearFloor() {
   onFilter(filter.value);
 }
 function onClearFilter(){
-  delete filter.value.room_status;
-  delete filter.value.housekeeping_status_code;
-  delete filter.value.employee;
-  delete filter.value.building;
-  delete filter.value.floor;
-  delete filter.value;
-  onFilter(filter.value);
+  roomStatusRef.value.onClear();
 }
 </script>
 

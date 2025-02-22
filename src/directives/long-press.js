@@ -8,7 +8,7 @@ export default {
       pressTimer = setTimeout(async () => {
         await Haptics.impact({ style: ImpactStyle.Heavy });
         binding.value(); // Execute assigned function
-      }, 1000);
+      }, 700);
     };
 
     const cancelPress = () => {

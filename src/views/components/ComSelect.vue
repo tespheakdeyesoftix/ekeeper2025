@@ -74,7 +74,13 @@ const props = defineProps({
 
 })
 
+
 const emit = defineEmits()
+
+defineExpose({
+  onClear
+})
+
 const meta = ref()
 const selected = ref()
 const slots = useSlots();
@@ -153,6 +159,7 @@ function getLabel() {
 }
 
 function onClear() {
+
   selected.value = null;
   emit("onClear");
 }
