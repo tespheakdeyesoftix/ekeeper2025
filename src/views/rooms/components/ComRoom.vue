@@ -1,5 +1,4 @@
 <template>
-  group by = {{ groupBy }}
   <ion-accordion-group multiple
     :value="
       Array.from({ length: groupData.length }, (_, index) => index.toString())
