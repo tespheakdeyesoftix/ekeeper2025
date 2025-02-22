@@ -12,6 +12,7 @@
         docType="Room Status"
         :selectedValues="['Vacant']"
         clear
+        ref="RoomStatusRef"
       />
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
@@ -20,6 +21,7 @@
         docType="Housekeeping Status Code"
         clear
         multiple
+        ref="HousekeepingStatusRef"
       />
       <ComSelect
         @onSelected="onSelectHousekeeper"
@@ -28,6 +30,7 @@
         docType="Employee"
         clear
         multiple
+        ref="Housekeepeer"
       />
       <ComSelect
         @onSelected="onSelectBuilding"
@@ -36,6 +39,7 @@
         :filters="[['property', '=', currentProperty.property_name]]"
         clear
         multiple
+        ref="Building"
       />
       <ComSelect
         @onSelected="onSelectFloor"
@@ -44,8 +48,9 @@
         :filters="floorFilter"
         clear
         multiple
+        ref="Floor"
       />
-      <ion-chip @click="onClearFilter">Clear</ion-chip>
+      <ion-chip @click="onClearFilter" color="danger">Clear</ion-chip>
     </div>
 
     <!-- Modal Date -->
@@ -59,12 +64,12 @@
       ></ion-datetime>
     </ion-modal>
     <!-- Group by -->
-    <ion-segment @click="onChangeGroupBy" value="room_type">
-      <ion-segment-button value="room_type">
-        <ion-label>{{ t("Room Type") }}</ion-label>
-      </ion-segment-button>
+    <ion-segment @ionChange="onChangeGroupBy" value="floor">
       <ion-segment-button value="floor">
         <ion-label>{{ t("Floor") }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="room_type">
+        <ion-label>{{ t("Room Type") }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -72,10 +77,15 @@
 
 <script setup lang="ts">
 import { useRoom } from "@/hooks/useRoom";
-import { computed } from "vue";
+import { ref, computed } from "vue";
 const t = window.t;
 const { onFilter, filter, onChangeGroupBy, currentProperty } = useRoom();
 
+const RoomStatusRef = ref(null);
+const HousekeepingStatusRef = ref(null);
+const Housekeepeer = ref(null);
+const Building = ref(null);
+const Floor = ref(null);
 const formatOptions = {
   date: {
     day: "2-digit",
@@ -136,14 +146,12 @@ function onClearFloor() {
   delete filter.value.floor;
   onFilter(filter.value);
 }
-function onClearFilter(){
-  delete filter.value.room_status;
-  delete filter.value.housekeeping_status_code;
-  delete filter.value.employee;
-  delete filter.value.building;
-  delete filter.value.floor;
-  delete filter.value;
-  onFilter(filter.value);
+function onClearFilter() {
+  RoomStatusRef.value.onClear();
+  HousekeepingStatusRef.value.onClear();
+  Housekeepeer.value.onClear();
+  Building.value.onClear();
+  Floor.value.onClear();
 }
 </script>
 
