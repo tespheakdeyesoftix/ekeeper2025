@@ -2,13 +2,13 @@
   <div>
     <div class="scroll-container">
       <!-- Date -->
-      <ion-chip style="display: none;">
+      <ion-chip style="display: none">
         <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
       </ion-chip>
-      <ion-chip  @click="showModal = true">
-    <ion-icon size="small" :icon="calendar"></ion-icon>
-    <ion-label>    {{dayjs(selectedDate).format("DD-MM-YYYY") }}</ion-label>
-  </ion-chip>
+      <ion-chip @click="showModal = true">
+        <ion-icon size="small" :icon="calendar"></ion-icon>
+        <ion-label>{{ dayjs(selectedDate).format("DD-MM-YYYY") }}</ion-label>
+      </ion-chip>
       <ComSelect
         @onSelected="onSelectRoomStatus"
         @onClear="onClearRoomStatus"
@@ -58,10 +58,15 @@
     </div>
 
     <!-- Modal Date -->
-    <ion-modal :is-open="showModal" @ionModalDidDismiss="showModal = false" :keep-contents-mounted="true">
+    <ion-modal
+      :is-open="showModal"
+      @ionModalDidDismiss="showModal = false"
+      :keep-contents-mounted="true"
+    >
       <ion-datetime
         id="selectedDate"
         presentation="date"
+        @ionChange="onDateChange"
         v-model="selectedDate"
         :format-options="formatOptions"
         :show-default-buttons="true"
@@ -80,20 +85,22 @@
 </template>
 
 <script setup lang="ts">
-import { useRoom } from "@/hooks/useRoom";
 import { ref, computed } from "vue";
+import { useRoom } from "@/hooks/useRoom";
+import { useApp } from "@/hooks/useApp";
+import { calendar } from "ionicons/icons";
+import dayjs from "dayjs";
+const {currentWorkingDate} = useApp()
+const { onFilter, filter, onChangeGroupBy, currentProperty,onDateChange } = useRoom();
 const t = window.t;
-const { onFilter, filter, onChangeGroupBy, currentProperty } = useRoom();
-const roomStatusRef = ref(null)
-import { ellipsisVertical, logoIonic , calendar } from 'ionicons/icons';
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
 const Housekeepeer = ref(null);
 const Building = ref(null);
 const Floor = ref(null);
-const showModal = ref(false)
-const selectedDate = ref()
-import dayjs from 'dayjs';
+const showModal = ref(false);
+const selectedDate = ref(currentWorkingDate);
+
 const formatOptions = {
   date: {
     day: "2-digit",

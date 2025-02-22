@@ -3,31 +3,38 @@
     <AppBar>{{ t("Task") }}</AppBar>
 
     <ion-content class="ion-padding">
-      <ion-grid>
-        <ion-row class="row-container">
-          <ion-col class="status-card ongoing ion-activatable ripple-parent">
-            <ion-icon :icon="refreshOutline" class="status-icon"></ion-icon>
-            <h2>Ongoing</h2>
 
-          </ion-col>
-          <ion-col class="status-card in-process ion-activatable ripple-parent">
-            <ion-icon :icon="timeOutline" class="status-icon"></ion-icon>
-            <h2>In Process</h2>
+<ion-grid>
+  <ion-row class="row-container">
+    <ion-col style="background-color: var(--ion-color-primary);" class="status-card ion-activatable ripple-parent">
+      <div class="number-top-left">1</div>
+      <ion-icon :icon="refreshOutline" class="status-icon icon-top-right"></ion-icon>
+      <h2 class="bottom-left">Ongoing</h2>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-col>
+    <ion-col style="background-color: var(--ion-color-warning);" class="status-card ion-activatable ripple-parent">
+      <div class="number-top-left">2</div>
+      <ion-icon :icon="timeOutline" class="status-icon icon-top-right"></ion-icon>
+      <h2 class="bottom-left">In Process</h2>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-col>
+  </ion-row>
+  <ion-row class="row-container">
+    <ion-col style="background-color: var(--ion-color-success);" class="status-card ion-activatable ripple-parent">
+      <div class="number-top-left">3</div>
+      <ion-icon :icon="documentOutline" class="status-icon icon-top-right"></ion-icon>
+      <h2 class="bottom-left">Complete</h2>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-col>
+    <ion-col style="background-color: var(--ion-color-danger);" class="status-card cancel ion-activatable ripple-parent">
+      <div class="number-top-left">4</div>
+      <ion-icon :icon="closeOutline" class="status-icon icon-top-right"></ion-icon>
+      <h2 class="bottom-left">Cancel</h2>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
-          </ion-col>
-        </ion-row>
-        <ion-row class="row-container">
-          <ion-col class="status-card complete ion-activatable ripple-parent">
-            <ion-icon :icon="documentOutline" class="status-icon"></ion-icon>
-            <h2>Complete</h2>
-          </ion-col>
-          <ion-col class="status-card cancel ion-activatable ripple-parent">
-            <ion-icon :icon="closeOutline" class="status-icon"></ion-icon>
-            <h2>Cancel</h2>
-
-          </ion-col>
-        </ion-row>
-      </ion-grid>
 
 
       <ion-button expand="block" router-link="/all-task">All Task</ion-button>
@@ -39,7 +46,7 @@
       <DocList 
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
-      
+      :showSearchBar="false"
       >
       <!-- :filters="[['_assign','=',currentUser.name],['property','=',currentProperty.property_name]]" -->
         <template v-slot:default="{ item }">
@@ -85,7 +92,7 @@ function onViewTaskDetail(task: any) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 110px;
+  height: 100px;
   border-radius: 16px;
   color: white;
   font-weight: bold;
@@ -98,7 +105,36 @@ function onViewTaskDetail(task: any) {
 .status-icon {
   font-size: 26px;
   margin-bottom: 8px;
+} 
+
+/* Ripple effect styles */
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+.number-top-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;  /* Change the text color if needed */
 }
 
+.icon-top-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;  /* Adjust the size of the icon if necessary */
+  color: white;  /* Change the icon color if needed */
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 18px;
+  color: white;  /* Change the text color if needed */
+}
  
 </style>
