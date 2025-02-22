@@ -73,9 +73,7 @@ const props = defineProps({
   selected:Object // Array of object eg. [{name:'123', label:'Label 1'}]
 
 })
-defineExpose({
-  onClear
-})
+ 
 const emit = defineEmits()
 
 defineExpose({

@@ -94,6 +94,7 @@ import { showToast,showLoading } from '@/helpers/utils';
 import longPress from '@/directives/long-press';
 import ComSelect from '@/views/components/ComSelect.vue';
 import DocList from '@/views/components/document-list/DocList.vue';
+import Document from '@/views/components/document-list/Document.vue';
 
 // attach service to window easy to call it later
 
@@ -170,6 +171,7 @@ async function init() {
 
   app.component('Img',Img)
   app.component('DocList',DocList)
+  app.component('Document',Document)
 
  
   app.directive('longPress', longPress);

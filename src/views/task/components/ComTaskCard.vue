@@ -15,7 +15,7 @@ const props = defineProps({
 });
 
 function onClick(){
-emit('onClick',Task);
+emit('onClick',props.task);
 }
 
 </script>

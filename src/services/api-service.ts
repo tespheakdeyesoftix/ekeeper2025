@@ -59,7 +59,13 @@ export function getApi(api_url: string, param: any = null) {
     }
     const call = frappe.call();
       return call.get(api_url,param)
-      .then((r: any) => ({ data: r.message, error: null }))
+      .then((r: any) => {
+        if(r.message){
+            return { data: r.message, error: null }
+        }else {
+            return { data: r, error: null }
+        }
+      })
       .catch((error) => {
         handleErrorMessage(error);
         return { data: null, error }

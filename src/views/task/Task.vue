@@ -58,15 +58,10 @@ const ionRouter = useIonRouter();
 const t = window.t;
 
 function onViewTaskDetail(task: any) {
+ 
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
 }
 
-const myComponentRef = ref();
-const childEvent = () => {
-  if (myComponentRef.value) {
-    myComponentRef.value.triggerItemClicked();
-  }
-};
 </script>
 <style scoped>
 .row-container {
