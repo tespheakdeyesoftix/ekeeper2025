@@ -2,9 +2,13 @@
   <div>
     <div class="scroll-container">
       <!-- Date -->
-      <ion-chip style="padding: 0">
+      <ion-chip style="display: none;">
         <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
       </ion-chip>
+      <ion-chip  @click="showModal = true">
+    <ion-icon size="small" :icon="calendar"></ion-icon>
+    <ion-label>    {{dayjs(selectedDate).format("DD-MM-YYYY") }}</ion-label>
+  </ion-chip>
       <ComSelect
         @onSelected="onSelectRoomStatus"
         @onClear="onClearRoomStatus"
@@ -54,7 +58,7 @@
     </div>
 
     <!-- Modal Date -->
-    <ion-modal :keep-contents-mounted="true">
+    <ion-modal :is-open="showModal" @ionModalDidDismiss="showModal = false" :keep-contents-mounted="true">
       <ion-datetime
         id="selectedDate"
         presentation="date"
@@ -81,12 +85,15 @@ import { ref, computed } from "vue";
 const t = window.t;
 const { onFilter, filter, onChangeGroupBy, currentProperty } = useRoom();
 const roomStatusRef = ref(null)
-
+import { ellipsisVertical, logoIonic , calendar } from 'ionicons/icons';
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
 const Housekeepeer = ref(null);
 const Building = ref(null);
 const Floor = ref(null);
+const showModal = ref(false)
+const selectedDate = ref()
+import dayjs from 'dayjs';
 const formatOptions = {
   date: {
     day: "2-digit",
