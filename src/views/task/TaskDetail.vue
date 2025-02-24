@@ -9,8 +9,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-          <Document v-if="name" docType="Work Order" :docName="name" >
-          </Document>
+        
+        <Document v-model="doc" v-if="name" docType="Work Order" :docName="name" v-model:docInfo="docInfo"  >
+        </Document>
       </ion-content>
     </ion-page>
   </template>
@@ -22,6 +23,8 @@
 const route = useRoute();
 const name = ref(route.params.name);
  const t = window.t;
+ const doc = ref()
+ const docInfo = ref()
  
   </script>
    

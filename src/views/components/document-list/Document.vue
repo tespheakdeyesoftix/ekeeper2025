@@ -22,8 +22,9 @@ const props = defineProps({
     docType:String,
     docName:String
 })
-const modelValue = defineModel();
-const {data,onRefresh,loading} = useDocument(props,modelValue)
+const doc = defineModel("doc");
+const docInfo = defineModel('docInfo')
+const {data,onRefresh,loading} = useDocument(props,doc,docInfo)
 
  
 
