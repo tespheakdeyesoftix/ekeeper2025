@@ -1,16 +1,17 @@
 <template>
     <ion-page>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
-          <ion-title>{{t("Task Detail")}}</ion-title>
-        </ion-toolbar>
-      </ion-header>
+       <ToolBar>{{t("Task Detail")}}</ToolBar>
       <ion-content class="ion-padding">
-          <Document v-if="name" docType="Work Order" :docName="name" >
-          </Document>
+      
+        <Document  
+         v-if="name" 
+         docType="Work Order" 
+         :docName="name"
+         v-model:doc = "doc"
+         v-model:docInfo = "docInfo"
+         >
+         {{ doc.description }}
+        </Document>
       </ion-content>
     </ion-page>
   </template>
@@ -23,5 +24,7 @@ const route = useRoute();
 const name = ref(route.params.name);
  const t = window.t;
  
+ const doc = ref()
+ const docInfo = ref()
   </script>
    

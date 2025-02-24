@@ -14,9 +14,8 @@
                 ...(s.housekeeping_status_code ? { housekeeping_status_code: s.housekeeping_status_code } : {})
               }
             }"
-            style="
-              width: 160px;
-              padding: 0px;
+            style="  
+              padding: 2px;
               margin: 0px;
               background-color: #8fa5ee;
               color: white;
@@ -63,7 +62,6 @@ const t = window.t;
 .status-inline {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  align-items: center;  
 }
 </style>

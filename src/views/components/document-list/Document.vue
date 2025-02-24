@@ -1,5 +1,7 @@
 <template>
-    <ion-content>
+ 
+      <Loading v-if="loading"></Loading>
+      <template v-else>
         <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
@@ -7,15 +9,25 @@
           {{ data }}
              
         </slot>
+      </template>
+       
     
-    </ion-content>
+    
 </template>
 <script setup lang="ts">
 import { useDocument } from '@/hooks/useDocument';
-
+import {defineModel} from "vue"
 const props = defineProps({
     docType:String,
-    docName:String
+    docName:String,
+    showActivity:{
+      type:Boolean,
+      default:true
+    }
 })
-const {data,onRefresh} = useDocument(props)
+const doc = defineModel("doc");
+const docInfo = defineModel('docInfo')
+const {data,onRefresh,loading} = useDocument(props,doc,docInfo)
+
+
 </script>
