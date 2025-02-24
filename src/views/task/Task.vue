@@ -47,6 +47,7 @@
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
       :showSearchBar="false"
+      @onRefresh="onRefresh"
       >
       <!-- :filters="[['_assign','=',currentUser.name],['property','=',currentProperty.property_name]]" -->
         <template v-slot:default="{ item }">
@@ -76,6 +77,10 @@ const t = window.t;
 function onViewTaskDetail(task: any) {
  
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
+}
+
+function onRefresh(){
+  alert("refresh")
 }
 
 </script>

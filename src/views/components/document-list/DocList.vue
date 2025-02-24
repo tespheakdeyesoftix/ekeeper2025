@@ -1,5 +1,5 @@
 <template>
-    <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
+    <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
 
@@ -52,12 +52,11 @@ const props = defineProps({
 })
  
 const {data,onRefresh,onLoadMore,onSearch,loading} = useDocList(props)
-
-const triggerItemClicked = () => {
-    
-        alert("hell world")
-    
-};
-defineExpose({ triggerItemClicked });
+const onRefreshData = async (event: CustomEvent) => {
+    await onRefresh(event)
+    event.target.complete();
+    emit("onRefresh")
+  };
+ 
 
 </script>
