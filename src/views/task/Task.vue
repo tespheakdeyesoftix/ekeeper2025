@@ -1,46 +1,14 @@
 <template>
   <ion-page>
     <AppBar>{{ t("Task") }}</AppBar>
-
     <ion-content class="ion-padding">
 
-<ion-grid>
-  <ion-row class="row-container">
-    <ion-col style="background-color: var(--ion-color-primary);" class="status-card ion-activatable ripple-parent">
-      <div class="number-top-left">1</div>
-      <ion-icon :icon="refreshOutline" class="status-icon icon-top-right"></ion-icon>
-      <h2 class="bottom-left">Ongoing</h2>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-col>
-    <ion-col style="background-color: var(--ion-color-warning);" class="status-card ion-activatable ripple-parent">
-      <div class="number-top-left">2</div>
-      <ion-icon :icon="timeOutline" class="status-icon icon-top-right"></ion-icon>
-      <h2 class="bottom-left">In Process</h2>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-col>
-  </ion-row>
-  <ion-row class="row-container">
-    <ion-col style="background-color: var(--ion-color-success);" class="status-card ion-activatable ripple-parent">
-      <div class="number-top-left">3</div>
-      <ion-icon :icon="documentOutline" class="status-icon icon-top-right"></ion-icon>
-      <h2 class="bottom-left">Complete</h2>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-col>
-    <ion-col style="background-color: var(--ion-color-danger);" class="status-card cancel ion-activatable ripple-parent">
-      <div class="number-top-left">4</div>
-      <ion-icon :icon="closeOutline" class="status-icon icon-top-right"></ion-icon>
-      <h2 class="bottom-left">Cancel</h2>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+      <TaskSummaryKpi />  
 
-
-
-      <ion-button expand="block" router-link="/all-task">All Task</ion-button>
+      <ion-button expand="block" router-link="/all-task">{{t("All Task")}}</ion-button>
 
       <ion-text>
-        <h3>My Tasks</h3>
+        <h3>{{t("My Task")}}</h3>
       </ion-text>
       
       <DocList 
@@ -57,7 +25,7 @@
         </template>
       </DocList>
     </ion-content>
-  </ion-page>
+  </ion-page> 
 </template>
 
 <script setup lang="ts">
@@ -67,6 +35,9 @@ import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareO
 import ComTaskCard from "./components/ComTaskCard.vue";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
+import TaskSummaryKpi from "./TaskSummaryKpi.vue";
+
+
 const ionRouter = useIonRouter();
 const {currentUser} = useAuth()
 const {currentProperty} = useApp()
@@ -77,6 +48,7 @@ function onViewTaskDetail(task: any) {
  
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
 }
+ 
 
 </script>
 <style scoped>
@@ -126,7 +98,7 @@ function onViewTaskDetail(task: any) {
   top: 10px;
   right: 10px;
   font-size: 24px;  /* Adjust the size of the icon if necessary */
-  color: white;  /* Change the icon color if needed */
+  color: white; 
 }
 
 .bottom-left {
@@ -134,7 +106,7 @@ function onViewTaskDetail(task: any) {
   bottom: 10px;
   left: 10px;
   font-size: 18px;
-  color: white;  /* Change the text color if needed */
+  color: white;   
 }
  
 </style>
