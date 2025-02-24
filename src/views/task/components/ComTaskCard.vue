@@ -2,10 +2,13 @@
 import { defineProps } from 'vue';
 import { IonCard, IonCardContent, IonAvatar, IonIcon, IonChip } from '@ionic/vue';
 import { constructOutline, locationOutline, documentTextOutline } from 'ionicons/icons';
-import { getAvatarLetter } from '@/helpers/utils';
+import { getAvatarLetter,getRandomColor } from '@/helpers/utils';
  
 import { useI18n } from 'vue-i18n';
 import Task from '../Task.vue';
+import Img from '@/views/components/Img.vue'; 
+import { color } from 'echarts';
+import { Style } from '@capacitor/status-bar';
 
 const emit = defineEmits()
 
@@ -17,20 +20,21 @@ const props = defineProps({
 function onClick(){
 emit('onClick',props.task);
 }
-
+   
 </script>
-<template>
+<template>   
   <ion-card button @click="onClick" class="ion-margin-bottom ion-no-margin">
     <ion-card-content class="task-card">
+      <div>
       <template v-if="task?.photo">
-        <ion-avatar>
+        <ion-avatar style="width: 60px; height: 60px;">
           <Img :src="task.photo"  />
         </ion-avatar>
       </template>
       <template v-else>
-        <ion-avatar class="avatar-placeholder">{{ getAvatarLetter(task?.work_order_type) }}</ion-avatar>
+        <ion-avatar class="avatar-placeholder" :style="{ backgroundColor: getRandomColor() }">{{ getAvatarLetter(task?.work_order_type) }}</ion-avatar>
       </template>
-
+    </div> 
       <div class="task-details">
         <div>
           <h3 class="task-title">
@@ -87,12 +91,10 @@ emit('onClick',props.task);
 .avatar-placeholder {
   width: 60px;
   height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #0bd3a7;
-  color: #333;
-  font-size: large;
+  color: white;
+  text-align: center;
+  align-content: center;
+  font-size: 20px;
   font-weight: bold;
   border-radius: 50%;
   flex-shrink: 0;

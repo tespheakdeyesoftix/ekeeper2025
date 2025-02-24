@@ -1,12 +1,11 @@
 <template>
- 
-    <ion-card class="ion-text-center" color="secondary" button @click="openUrl">
-      <ion-card-header>
-        <ion-card-title class="text-xl font-bold"><slot></slot></ion-card-title>
-        <ion-card-subtitle class="text-gray-500">{{ t(label) }}</ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
- 
+   
+  <ion-card class="ion-text-center ion-no-margin" color="primary" button @click="openUrl">
+    <ion-card-header>
+      <ion-card-title class="text-xl font-bold"><slot></slot></ion-card-title>
+      <ion-card-subtitle class="text-gray-500">{{ t(label) }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>  
 
 
 
