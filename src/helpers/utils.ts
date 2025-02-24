@@ -49,7 +49,7 @@ export function getAvatarLetter(name: string): string {
 }
 
 export function stripHtmlTags(text:string) {
-    return text.replace(/<[^>]*>/g, '');
+    return text?.replace(/<[^>]*>/g, '');
 }
 
 export const getRandomColor = () => {

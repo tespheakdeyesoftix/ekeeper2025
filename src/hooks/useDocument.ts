@@ -6,12 +6,12 @@ import {  modalController } from "@ionic/vue";
 import { useApp } from "./useApp";
 
 
-export function useDocument(props: any) {
+export function useDocument(props: any,modelValue :any = null) {
   const { getMeta } = useApp();
   const loading = ref(true);
   let  meta: any ={};
 
-  const data = ref<any[]>([])
+  const data = ref<any>()
 
 
 
@@ -23,6 +23,8 @@ export function useDocument(props: any) {
     });
     if(!response.error){
         data.value = response.data
+        modelValue.value = data.value.docs[0];
+        
     }
 
      loading.value = false;
@@ -40,8 +42,11 @@ export function useDocument(props: any) {
 
  
 
+
   onMounted(async () => {
     await getData();
+
+ 
   })
 
 

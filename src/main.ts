@@ -86,6 +86,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import AppBar from '@/views/layouts/AppBar.vue';
+import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
 
@@ -126,6 +127,7 @@ async function init() {
   app.use(router);
   app.use(i18n);
   app.component('AppBar', AppBar)
+  app.component('ToolBar', ToolBar)
   app.component('ComSelect', ComSelect)
   app.component('ion-footer', IonFooter)
   app.component('Loading', Loading)
@@ -168,6 +170,7 @@ async function init() {
   app.component('ion-datetime-button',IonDatetimeButton)
   app.component('ion-accordion-group',IonAccordionGroup)
   app.component('ion-accordion',IonAccordion)
+  
 
   app.component('Img',Img)
   app.component('DocList',DocList)
