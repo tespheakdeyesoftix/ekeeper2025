@@ -11,7 +11,6 @@
         <ion-content>
           <h1>hellow</h1>
           {{ doc }}
-          
           <hr/>
 
           <hr>

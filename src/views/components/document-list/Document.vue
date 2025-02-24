@@ -5,7 +5,6 @@
         <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
- 
         <slot :item="data">
           {{ data }}
              
@@ -20,11 +19,15 @@ import { useDocument } from '@/hooks/useDocument';
 import {defineModel} from "vue"
 const props = defineProps({
     docType:String,
-    docName:String
+    docName:String,
+    showActivity:{
+      type:Boolean,
+      default:true
+    }
 })
-const modelValue = defineModel();
-const {data,onRefresh,loading} = useDocument(props,modelValue)
+const doc = defineModel("doc");
+const docInfo = defineModel('docInfo')
+const {data,onRefresh,loading} = useDocument(props,doc,docInfo)
 
- 
 
 </script>

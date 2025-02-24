@@ -31,7 +31,7 @@
           <ion-icon :icon="bed"></ion-icon>
           <h6>{{ data?.adult }}/{{ data?.child }}</h6>
         </div>
-        <h6 v-if="data.reservation_color_code">
+        <h6 v-if="data.reservation_color_code" class="truncate">
           {{ data?.reservation_color_code }}
         </h6>
       </div>
