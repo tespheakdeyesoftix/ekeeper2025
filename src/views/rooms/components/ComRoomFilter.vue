@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ roomStatus }}{{ housekeepingStatusCode }}
+    {{ roomStatus }}{{ housekeepingStatusCode }}|{{ selectedDate }}
     <div class="scroll-container">
       <!-- Date -->
       <ion-chip style="display: none">
@@ -10,6 +10,7 @@
         <ion-icon size="small" :icon="calendar"></ion-icon>
         <ion-label>{{ dayjs(selectedDate).format("DD-MM-YYYY") }}</ion-label>
       </ion-chip>
+
       <ComSelect
         @onSelected="onSelectRoomStatus"
         @onClear="onClearRoomStatus"
@@ -87,17 +88,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch  } from "vue";
-import { useRoute, useRouter } from 'vue-router';
+import { ref, computed, onMounted, watch, defineProps } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useRoom } from "@/hooks/useRoom";
 import { useApp } from "@/hooks/useApp";
 import { calendar } from "ionicons/icons";
 import dayjs from "dayjs";
-const {currentWorkingDate} = useApp()
-const { onFilter, filter, onChangeGroupBy, currentProperty,onDateChange } = useRoom();
+const { currentWorkingDate } = useApp();
+const props = defineProps({
+  roomStatus: String,
+  housekeepingStatusCode: String,
+});
+
+const { onFilter, filter, onChangeGroupBy, currentProperty, onDateChange } =
+  useRoom();
 const t = window.t;
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
 const Housekeepeer = ref(null);
@@ -105,8 +112,8 @@ const Building = ref(null);
 const Floor = ref(null);
 const showModal = ref(false);
 const selectedDate = ref("");
-const roomStatus = ref(route.query.room_status ? route.query.room_status.replace("_", " ") : '')
-const housekeepingStatusCode = ref(route.query.housekeeping_status_code);
+// const roomStatus = ref(route.query.room_status ? route.query.room_status.replace("_", " ") : '')
+// const housekeepingStatusCode = ref(route.query.housekeeping_status_code);
 
 const floorFilter = computed(() => {
   if (filter.value.building) {
@@ -166,24 +173,24 @@ function onClearFilter() {
   Housekeepeer.value.onClear();
   Building.value.onClear();
   Floor.value.onClear();
-  router.replace({ path: '/room' });
+  router.replace({ path: "/room" });
 }
 
-
-onMounted(()=>{
-  window.localStorage.setItem("currentWorkingDate",currentWorkingDate.value)
-  selectedDate.value = window.localStorage.getItem("currentWorkingDate")
-})
+onMounted(() => {
+  window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
+  selectedDate.value = window.localStorage.getItem("currentWorkingDate");
+});
 watch(
-  () => route.query,
-  (newQuery) => {
-    roomStatus.value = newQuery.room_status ? newQuery.room_status.replace("_", " ") : ''
-    housekeepingStatusCode.value = newQuery.housekeeping_status_code;
+  () => props.roomStatus,
+  (newRoomStatus) => {
+    if (newRoomStatus) {
+      selectedDate.value = window.localStorage.getItem("currentWorkingDate");
+      console.log(selectedDate);
+      // onDateChange(selectedDate);
+    }
   },
   { immediate: true }
 );
-
-
 </script>
 
 <style scoped>
