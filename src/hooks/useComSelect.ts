@@ -28,8 +28,9 @@ export function useComSelect(props: any) {
       if (meta.value.title_field) {
         filters.push([meta.value.title_field, 'like', `%${keywordEncode}%`])
       }
-      if (meta.value.search_fields) {
-        meta.value.search_fields.split(",").map((item: string) => item.trim()).forEach((f: string) => {
+      if (meta.value) {
+       
+        meta.value.search_fields?.split(",").map((item: string) => item.trim()).forEach((f: string) => {
           filters.push([f, 'like', `%${keywordEncode}%`])
         });
       }

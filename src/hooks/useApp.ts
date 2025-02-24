@@ -61,8 +61,9 @@ export function useApp() {
     if (meta.title_field) {
       fields.push(meta.title_field)
     }
+    
     if (meta.search_fields) {
-      fields = [...fields, ...meta.value.search_fields.split(",").map((item: string) => item.trim())];
+      fields = [...fields, ...meta.search_fields.split(",").map((item: string) => item.trim())];
     }
 
     return [...new Set(fields)];
