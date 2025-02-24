@@ -54,7 +54,7 @@ const { t  } = useI18n();
 .kpi-container{
   width: 100%;
   height: 100%;
-  border-radius: 10%;
+  border-radius: 10px;
 }
 
 </style>
