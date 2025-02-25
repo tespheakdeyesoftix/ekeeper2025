@@ -15,7 +15,7 @@
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
       :showSearchBar="false"
-      @onRefresh="onRefresh"
+      @onRefresh="onRefresh()"
       >
       <!-- :filters="[['_assign','=',currentUser.name],['property','=',currentProperty.property_name]]" -->
         <template v-slot:default="{ item }">
@@ -52,10 +52,9 @@ function onViewTaskDetail(task: any) {
  
 
 function onRefresh(){
-  alert("refresh")
-  console.log("Hello World"); 
+  alert("refresh")  
   
-}
+} 
 
 </script>
 <style scoped> 

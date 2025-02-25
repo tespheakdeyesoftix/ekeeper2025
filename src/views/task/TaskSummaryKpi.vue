@@ -29,7 +29,7 @@ const {currentProperty,currentWorkingDate} = useApp()
 const {currentUser} = useAuth()
 const taskList = ref<any[]>([]);
 const t = window.t
-// Function to fetch data from the API
+
 const response = async () => {
   const { data, error } = await getApi(
     'edoor.mobile_api.task.get_user_task_summary',
@@ -90,12 +90,13 @@ const getIcon = (status: string) => {
 <style scoped>
 .card-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+  grid-template-columns: repeat(2, 1fr);  
+  margin-bottom: 10px;
 }
 
 .status-card {
   position: relative;
-  height: 100px; /* Fixed height for each card */
+  height: 100px; 
   border-radius: 20px;
   gap: 10px;
   margin: 5px;
