@@ -1,5 +1,5 @@
 <template> 
-  <div class="card-container">
+  <div class="card-container"> 
     <ion-card
       v-for="(task, index) in taskList"
       :key="index"
@@ -18,10 +18,15 @@
 </template>
 
 <script setup lang="ts">
+import { useApp } from '@/hooks/useApp';
+import { useAuth } from '@/hooks/useAuth';
 import { getApi } from '@/services/api-service';
 import { refreshOutline, checkmarkCircleOutline, timeOutline, closeCircleOutline } from 'ionicons/icons';
 import { ref, onMounted } from 'vue';
 
+
+const {currentProperty,currentWorkingDate} = useApp()
+const {currentUser} = useAuth()
 const taskList = ref<any[]>([]);
 const t = window.t
 // Function to fetch data from the API
@@ -29,9 +34,9 @@ const response = async () => {
   const { data, error } = await getApi(
     'edoor.mobile_api.task.get_user_task_summary',
     {
-      property: 'ESTC Hotel',
-      user: 'emp@mail.com',
-      date: '2025-01-27'
+      property: currentProperty.value.property_name,
+      user: currentUser.value.name,
+      date: currentWorkingDate.value
     }
   );
 

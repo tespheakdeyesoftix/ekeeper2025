@@ -53,65 +53,11 @@ function onViewTaskDetail(task: any) {
 
 function onRefresh(){
   alert("refresh")
+  console.log("Hello World"); 
+  
 }
 
 </script>
-<style scoped>
-.row-container {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.status-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  border-radius: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.status-icon {
-  font-size: 26px;
-  margin-bottom: 8px;
-} 
-
-/* Ripple effect styles */
-.ripple-parent {
-  position: relative;
-  overflow: hidden;
-}
-.number-top-left {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  color: white;  /* Change the text color if needed */
-}
-
-.icon-top-right {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;  /* Adjust the size of the icon if necessary */
-  color: white; 
-}
-
-.bottom-left {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-size: 18px;
-  color: white;   
-}
+<style scoped> 
  
 </style>
