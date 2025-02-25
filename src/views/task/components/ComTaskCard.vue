@@ -51,7 +51,7 @@ emit('onClick',props.task);
           </h3>
         </div>
         <h3>
-          <ion-chip>{{ task?.work_order_status }}</ion-chip>
+          <ion-chip color="success" style="font-size: 12px;">{{ task?.work_order_status }}</ion-chip>
         </h3>
       </div>
     </ion-card-content>
@@ -99,4 +99,5 @@ emit('onClick',props.task);
   border-radius: 50%;
   flex-shrink: 0;
 }
+
 </style>

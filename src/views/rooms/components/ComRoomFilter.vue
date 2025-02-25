@@ -181,17 +181,7 @@ onMounted(() => {
   window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
   selectedDate.value = window.localStorage.getItem("currentWorkingDate");
 });
-watch(
-  () => props.roomStatus,
-  (newRoomStatus) => {
-    if (newRoomStatus) {
-      selectedDate.value = window.localStorage.getItem("currentWorkingDate");
-      console.log(selectedDate);
-      // onDateChange(selectedDate);
-    }
-  },
-  { immediate: true }
-);
+
 </script>
 
 <style scoped>
