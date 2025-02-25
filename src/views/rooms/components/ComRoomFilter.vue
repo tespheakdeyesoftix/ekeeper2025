@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ roomStatus }}{{ housekeepingStatusCode }}|{{ selectedDate }}
+ {{ filter }}
     <div class="scroll-container">
       <!-- Date -->
       <ion-chip style="display: none">
