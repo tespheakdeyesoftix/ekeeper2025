@@ -8,17 +8,20 @@
       <ion-button expand="block" router-link="/all-task">{{t("All Task")}}</ion-button>
 
       <ion-text>
-        <h3>{{t("My Task")}}</h3>
+        <h3>{{t("My Task")}}</h3>  
       </ion-text>
+      {{ currentWorkingDate }}
       
       <DocList 
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
-      :showSearchBar="false"
-      @onRefresh="onRefresh()"
-      >
-      <!-- :filters="[['_assign','=',currentUser.name],['property','=',currentProperty.property_name]]" -->
-        <template v-slot:default="{ item }">
+      :filters="[['_assign', 'like', '%' + currentUser.name + '%'],['property','like', '%' + currentProperty.property_name + '%'],['workorder_date','<=', currentWorkingDate],['due_date','>=', currentWorkingDate]]"
+      :showSearchBar="false" 
+      @onRefresh="onRefresh"
+      > 
+
+
+        <template v-slot:default="{ item }">  
           <ComTaskCard :task="item" @onClick="onViewTaskDetail"/>
         </template>
         <template v-slot:empty>
@@ -41,7 +44,7 @@ import TaskSummaryKpi from "./TaskSummaryKpi.vue";
 
 const ionRouter = useIonRouter();
 const {currentUser} = useAuth()
-const {currentProperty} = useApp()
+const {currentProperty,currentWorkingDate} = useApp()
 
 const t = window.t;
 
