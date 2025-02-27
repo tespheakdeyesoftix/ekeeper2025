@@ -24,9 +24,7 @@ import ComSearchBar from "@/views/components/ComSearchBar.vue";
 import { useRoom } from "@/hooks/useRoom";
 import ComRoom from "@/views/rooms/components/ComRoom.vue";
 import { ref, onMounted, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useApp } from "@/hooks/useApp";
-const { currentWorkingDate } = useApp();
+import { useRoute } from "vue-router";
 const route = useRoute();
 const t = window.t;
 const roomStatus = ref(
@@ -59,7 +57,6 @@ onIonViewDidEnter(async () => {
   const newRoomStatus = roomStatus.value;
   const newHousekeepingStatusCode = housekeepingStatusCode.value;
 
-  // Only re-fetch data if roomStatus or housekeepingStatusCode have changed
   if (
     newRoomStatus !== initialRoomStatus.value ||
     newHousekeepingStatusCode !== initialHousekeepingStatusCode.value

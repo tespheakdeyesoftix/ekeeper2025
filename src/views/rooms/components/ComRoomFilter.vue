@@ -89,7 +89,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, defineProps } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useRoom } from "@/hooks/useRoom";
 import { useApp } from "@/hooks/useApp";
 import { calendar } from "ionicons/icons";
@@ -102,7 +102,6 @@ const props = defineProps({
 const { onFilter, filter, onChangeGroupBy, currentProperty, onDateChange } =
   useRoom();
 const t = window.t;
-const route = useRoute();
 const router = useRouter();
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
@@ -111,9 +110,6 @@ const Building = ref(null);
 const Floor = ref(null);
 const showModal = ref(false);
 const selectedDate = ref("");
-// const roomStatus = ref(route.query.room_status ? route.query.room_status.replace("_", " ") : '')
-// const housekeepingStatusCode = ref(route.query.housekeeping_status_code);
-
 const floorFilter = computed(() => {
   if (filter.value.building) {
     return [
