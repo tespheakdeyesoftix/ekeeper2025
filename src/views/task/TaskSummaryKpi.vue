@@ -37,9 +37,9 @@ const response = async () => {
       property: currentProperty.value.property_name,
       user: currentUser.value.name,
       date: currentWorkingDate.value
-    }
+    } 
   );
-
+ 
   if (data) {
     console.log('API Response:', data);
     taskList.value = [
