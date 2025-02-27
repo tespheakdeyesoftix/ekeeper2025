@@ -9,8 +9,8 @@
         </ion-refresher>
 
         <ComSearchBar @onSearch="onSearch" />
-        <ComRoomFilter :roomStatus="roomStatus" :housekeepingStatusCode="housekeepingStatusCode" />
-        <ion-button @click="Test">Get Selected</ion-button>
+        <ComRoomFilter :roomStatus="roomStatus" :housekeepingStatusCode="housekeepingStatusCode"/>
+        <ion-button router-link="/room-detail/RM-0001">Get Selected</ion-button>
  
         <ComRoom :data="data"   />
       </template>
@@ -26,6 +26,7 @@ import ComRoom from "@/views/rooms/components/ComRoom.vue";
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from 'vue-router';
 import { useApp } from "@/hooks/useApp";
+import { filter } from "ionicons/icons";
 const { currentWorkingDate } = useApp();
 const route = useRoute();
 const t = window.t;
@@ -41,14 +42,13 @@ const {
   data
 } = useRoom();
 
-function Test(){
-  alert(JSON.stringify(data?.value.filter((r:any)=>r.selected).map((x:any)=>x.name)))
-}
-
+ 
 // Watch route query changes and update roomStatus and housekeepingStatusCode only if they actually change
 watch(
   () => route.query,
   (newQuery) => {
+     
+   
     roomStatus.value = newQuery.room_status ? newQuery.room_status.replace("_", " ") : ''
     housekeepingStatusCode.value = newQuery.housekeeping_status_code;
   },
@@ -63,18 +63,20 @@ onMounted(async () => {
 
 // Fetch data when the view is entered, but only if roomStatus or housekeepingStatusCode have changed
 onIonViewDidEnter(async () => {
-  const newRoomStatus = roomStatus.value;
-  const newHousekeepingStatusCode = housekeepingStatusCode.value;
+alert(154)
+console.log(filter)
+  // const newRoomStatus = roomStatus.value;
+  // const newHousekeepingStatusCode = housekeepingStatusCode.value;
 
-  // Only re-fetch data if roomStatus or housekeepingStatusCode have changed
-  if (
-    newRoomStatus !== initialRoomStatus.value ||
-    newHousekeepingStatusCode !== initialHousekeepingStatusCode.value
-  ) {
-    await getData();
-    initialRoomStatus.value = newRoomStatus;
-    initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
-    console.log("OnIonViewDidEnter");
-  }
+  // // Only re-fetch data if roomStatus or housekeepingStatusCode have changed
+  // if (
+  //   newRoomStatus !== initialRoomStatus.value ||
+  //   newHousekeepingStatusCode !== initialHousekeepingStatusCode.value
+  // ) {
+  //   await getData();
+  //   initialRoomStatus.value = newRoomStatus;
+  //   initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
+  //   console.log("OnIonViewDidEnter");
+  // }
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div @click="openSheetModal" style="display: inline;">
-  
+  {{ selectedValue }}
     <!-- Display select as chip control -->
     <template v-if="mode == 'chip'">
       <ion-chip :color="isSelected ? selectedColor : color">

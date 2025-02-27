@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ roomStatus }}{{ housekeepingStatusCode }}|{{ selectedDate }}
+ {{ filter }}
     <div class="scroll-container">
       <!-- Date -->
       <ion-chip style="display: none">
@@ -175,6 +175,7 @@ function onClearFilter() {
   Floor.value.onClear();
   router.replace({ path: "/room" });
 }
+
 
 onMounted(() => {
   window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
