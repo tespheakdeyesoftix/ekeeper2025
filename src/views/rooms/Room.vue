@@ -9,7 +9,7 @@
         </ion-refresher>
 
         <ComSearchBar @onSearch="onSearch" />
-        <ComRoomFilter :roomStatus="roomStatus" :housekeepingStatusCode="housekeepingStatusCode" :WorkingDate="currentWorkingDate" />
+        <ComRoomFilter :roomStatus="roomStatus" :housekeepingStatusCode="housekeepingStatusCode" />
         <ion-button @click="Test">Get Selected</ion-button>
  
         <ComRoom :data="data"   />
