@@ -1,27 +1,20 @@
 <template>
-    <ion-page>
-        <ion-header>
-        <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title>Room Detail - 101</ion-title>
-    </ion-toolbar>
-      </ion-header>
-  
-      <ion-content :fullscreen="true">
-        Room Detail
-      </ion-content>
-    </ion-page>
-  </template>
-  
-  <script setup lang="ts">
-import { IonPage, IonContent,  
-   IonHeader, IonToolbar, IonButtons, IonTitle,
-     IonBackButton,IonButton,IonText,onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
-    
+  <ion-page>
+    <ToolBar>{{ t("Room Detail") }} - {{ name }}</ToolBar>
+    <ion-content class="ion-padding" :fullscreen="true">
+      <h2 class="ion-no-margin">{{ t("Room Detail") }}</h2>
+      <ComRoomDetail />
+      <ComRoomDetailCard />
+    </ion-content>
+  </ion-page>
+</template>
 
- 
-
-  </script>
-  
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+import ComRoomDetail from "@/views/rooms/components/ComRoomDetail.vue";
+import ComRoomDetailCard from "@/views/rooms/components/ComRoomDetailCard.vue";
+const t = window.t;
+const route = useRoute();
+const name = ref(route.params.name);
+</script>
