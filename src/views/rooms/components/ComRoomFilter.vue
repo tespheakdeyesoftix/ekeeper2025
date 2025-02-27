@@ -1,6 +1,6 @@
 <template>
   <div>
- {{ filter }}
+    {{ filter }}
     <div class="scroll-container">
       <!-- Date -->
       <ion-chip style="display: none">
@@ -16,7 +16,7 @@
         @onClear="onClearRoomStatus"
         multiple
         docType="Room Status"
-        :selectedValues="roomStatus"
+        :selectedValue="status.roomStatus"
         :filters="[['property', '=', currentProperty.property_name]]"
         clear
         ref="RoomStatusRef"
@@ -24,7 +24,7 @@
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
         @onClear="onClearHousekeepingStatus"
-        :selectedValues="housekeepingStatusCode"
+        :selectedValue="status.housekeepingStatusCode"
         label="Housekeeping Status"
         docType="Housekeeping Status Code"
         clear
@@ -96,8 +96,7 @@ import { calendar } from "ionicons/icons";
 import dayjs from "dayjs";
 const { currentWorkingDate } = useApp();
 const props = defineProps({
-  roomStatus: String,
-  housekeepingStatusCode: String,
+  status: Object,
 });
 
 const { onFilter, filter, onChangeGroupBy, currentProperty, onDateChange } =
@@ -176,12 +175,31 @@ function onClearFilter() {
   router.replace({ path: "/room" });
 }
 
-
 onMounted(() => {
   window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
   selectedDate.value = window.localStorage.getItem("currentWorkingDate");
 });
-
+const previousStatus = ref(null);
+watch(
+  () => props.status,
+  (newStatus) => {
+    const isRoomPage = window.location.pathname.startsWith("/room");
+    const hasRoomStatusParam = window.location.search.includes("room_status=");
+    if (isRoomPage && hasRoomStatusParam) {
+      if (JSON.stringify(newStatus) !== JSON.stringify(previousStatus.value)) {
+        previousStatus.value = newStatus;
+        selectedDate.value = window.localStorage.getItem("currentWorkingDate");
+        onFilter({
+          ...filter.value,
+          room_status: previousStatus.value.roomStatus,
+          housekeeping_status_code: previousStatus.value.housekeepingStatusCode,
+          date: selectedDate.value,
+        });
+      }
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
