@@ -114,7 +114,9 @@ function onChangeGroupBy(){
 const onDateChange = async (event) => {
 const loading = await window.showLoading("Loading")
 filter.value.date = dayjs(event.detail.value).format("YYYY-MM-DD")
+ const storefilter = filter.value
  await getData();
+onFilter(storefilter)
  await loading.dismiss()
 };
 

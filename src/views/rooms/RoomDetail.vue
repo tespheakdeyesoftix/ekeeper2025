@@ -18,3 +18,4 @@ const t = window.t;
 const route = useRoute();
 const name = ref(route.params.name);
 </script>
+  
