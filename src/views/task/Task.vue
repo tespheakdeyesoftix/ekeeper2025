@@ -38,14 +38,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useIonRouter } from "@ionic/vue";
-import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline } from 'ionicons/icons';
+import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline, key } from 'ionicons/icons';
 import ComTaskCard from "./components/ComTaskCard.vue";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
+import { useHome } from "@/hooks/useHome";
 import TaskSummaryKpi from "./TaskSummaryKpi.vue";
 import DocList from "../components/document-list/DocList.vue";
 import ComTaskKpiCard from "@/views/task/components/ComTaskKpiCard.vue"
 import { getApi } from "@/services/api-service";
+
 
 const ionRouter = useIonRouter();
 const {currentUser} = useAuth()
@@ -54,7 +56,6 @@ const {currentProperty,currentWorkingDate} = useApp()
 const t = window.t;
 const summaryData=ref()
 function onViewTaskDetail(task: any) {
- 
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
 }
  
