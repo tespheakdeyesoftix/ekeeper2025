@@ -3,7 +3,7 @@
     <AppBar>{{ t("Task") }}</AppBar>
     <ion-content class="ion-padding">
 
-      <TaskSummaryKpi :key="refreshKey"/>  
+      <TaskSummaryKpi    />  
 
       <ion-button expand="block" router-link="/all-task">{{t("All Task")}}</ion-button>
 
@@ -11,8 +11,7 @@
         <h3>{{t("My Task")}} - {{ currentWorkingDate }}</h3>  
       </ion-text>
       
-      <DocList 
-      :key="refreshKey"
+      <DocList   
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
       :filters="[['_assign', 'like', `%${currentUser.name}%`],['property','like',  `%${currentProperty.property_name}%`],['workorder_date','<=', currentWorkingDate],['due_date','>=', currentWorkingDate]]"
@@ -35,12 +34,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useIonRouter } from "@ionic/vue";
-import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline } from 'ionicons/icons';
+import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline, key } from 'ionicons/icons';
 import ComTaskCard from "./components/ComTaskCard.vue";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
+import { useHome } from "@/hooks/useHome";
 import TaskSummaryKpi from "./TaskSummaryKpi.vue";
 import DocList from "../components/document-list/DocList.vue";
+
 
 
 const ionRouter = useIonRouter();
@@ -52,17 +53,13 @@ const t = window.t;
 function onViewTaskDetail(task: any) {
  
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
-}
- 
-const refreshKey = ref(0); 
+}  
+  
 
-function onRefresh() {  
-    console.log("Refreshing task data", refreshKey.value);
-    refreshKey.value++;
- 
+function onRefresh(){   
+  
 }
 
-</script>
-<style scoped> 
- 
-</style>
+  
+
+</script> 

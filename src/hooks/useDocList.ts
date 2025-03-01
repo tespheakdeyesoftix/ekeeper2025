@@ -58,9 +58,9 @@ export function useDocList(props: any) {
   };
  
   const onRefresh = async (event: CustomEvent) => {
-    startIndex.value = 0;
-    await getData();
-   
+    startIndex.value = 0; 
+    const result = await getData();
+    data.value= [...result]
    
   };
  
