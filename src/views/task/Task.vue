@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <AppBar>{{ t("Task") }}</AppBar>
+    <AppBar>{{ t("Task") }} - {{ t(formatDate) }}</AppBar>
     <ion-content class="ion-padding">
     <ion-grid>
       <ion-row>
@@ -24,7 +24,7 @@
       <ion-button expand="block" router-link="/all-task">{{t("All Task")}}</ion-button>
 
       <ion-text>
-        <h3>{{t("My Task")}} - {{ currentWorkingDate }}</h3>  
+        <h3>{{t("My Task")}}</h3>  
       </ion-text>
       
       <DocList 
@@ -68,6 +68,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
 import ComTaskKpiCard from "@/views/task/components/ComTaskKpiCard.vue"
 import { getApi } from "@/services/api-service";
+import dayjs from 'dayjs';
 
 
 const ionRouter = useIonRouter();
@@ -75,6 +76,8 @@ const {currentUser} = useAuth()
 const {currentProperty,currentWorkingDate} = useApp()
 
 const t = window.t;
+
+const formatDate = dayjs(currentWorkingDate.value).format('MMM DD, YYYY')
 
 function handleFabClick() {
   alert(123)

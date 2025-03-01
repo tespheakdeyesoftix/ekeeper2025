@@ -55,13 +55,13 @@ const t = window.t;
 }
 
 .kpi-card:hover {
-  transform: translateY(-5px);
+  /* transform: translateY(-5px); */
   transition: all 0.3s ease;
   cursor:pointer
 }
 
-.kpi-card:active {
+/* .kpi-card:active {
   transform: translateY(2px);
   box-shadow: var(--ion-box-shadow);
-}
+} */
 </style>
