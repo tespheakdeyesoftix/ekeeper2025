@@ -9,7 +9,7 @@
         <slot name="searchBar">
             <ComSearchBar v-if="showSearchBar" @onSearch="onSearch" />
         </slot>
- {{ data }}
+ 
     <div v-if="data && data.length>0" v-for="(d, index) in data" :key="index">
         <slot :item="d">
             {{ d.name }}
@@ -33,8 +33,13 @@
         
 </template>
 <script setup lang="ts">
+import {useAttrs } from "vue"
+
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
+ 
+const attrs = useAttrs();
+ 
 const emit = defineEmits()
 const props = defineProps({
     docType:String,
@@ -48,18 +53,26 @@ const props = defineProps({
     fields:{
         type:Object,
         default:["name"]
-    }
+    },
+
 })
+
  
 const {data,onRefresh,onLoadMore,onSearch,loading} = useDocList(props)
 
 
 const onRefreshData = async (event: CustomEvent) => {
     await onRefresh(event)
-    emit("onRefresh")
+    if(attrs.onOnRefresh){
+        emit("onRefresh",event)
+    }else {
+        event.target.complete();
+    }
+  
 
-    // event.target.complete();
+     
   };
+ 
  
  
 

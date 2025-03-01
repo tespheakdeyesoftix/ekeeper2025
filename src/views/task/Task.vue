@@ -42,9 +42,6 @@ import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareO
 import ComTaskCard from "./components/ComTaskCard.vue";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
-import { useHome } from "@/hooks/useHome";
-import TaskSummaryKpi from "./TaskSummaryKpi.vue";
-import DocList from "../components/document-list/DocList.vue";
 import ComTaskKpiCard from "@/views/task/components/ComTaskKpiCard.vue"
 import { getApi } from "@/services/api-service";
 
@@ -75,10 +72,10 @@ async function getTaskSummaryData(){
  
 }
 
-async function onRefresh() {  
+async function onRefresh(event) {  
   await getTaskSummaryData()
+  event.target.complete();
 }
-
 onMounted(async ()=>{
   await getTaskSummaryData()
 })
