@@ -9,7 +9,7 @@
         <slot name="searchBar">
             <ComSearchBar v-if="showSearchBar" @onSearch="onSearch" />
         </slot>
- 
+ {{ data }}
     <div v-if="data && data.length>0" v-for="(d, index) in data" :key="index">
         <slot :item="d">
             {{ d.name }}
@@ -52,11 +52,15 @@ const props = defineProps({
 })
  
 const {data,onRefresh,onLoadMore,onSearch,loading} = useDocList(props)
+
+
 const onRefreshData = async (event: CustomEvent) => {
     await onRefresh(event)
-    event.target.complete();
     emit("onRefresh")
+
+    // event.target.complete();
   };
+ 
  
 
 </script>

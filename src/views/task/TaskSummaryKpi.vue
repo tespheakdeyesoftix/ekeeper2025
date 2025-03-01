@@ -1,19 +1,6 @@
 <template> 
   <div class="card-container"> 
-    <ion-card
-      v-for="(task, index) in taskList"
-      :key="index"
-      :style="{ backgroundColor: getCardColor(task.status) }"  
-      class="status-card ion-activatable ripple-parent"
-    >
-
-      <div class="number-top-left">{{ task.ongoing }}</div>
-      
-      <ion-icon :icon="getIcon(task.status)" class="status-icon icon-top-right"></ion-icon>
- 
-      <h3 class="bottom-left">{{ t(task.status) }}</h3>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-card>
+    
   </div>
 </template>
 

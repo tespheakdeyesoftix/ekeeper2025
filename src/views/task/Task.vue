@@ -3,7 +3,10 @@
     <AppBar>{{ t("Task") }}</AppBar>
     <ion-content class="ion-padding">
 
-      <TaskSummaryKpi :key="refreshKey"/>  
+     <ComTaskKpiCard :label="t('Ongoing')" color="primary" :icon="timeOutline">{{ summaryData?.ongoing }}</ComTaskKpiCard>
+     <ComTaskKpiCard :label="t('Complete')" color="success" :icon="timeOutline">{{ summaryData?.complete }}</ComTaskKpiCard>
+     <ComTaskKpiCard :label="t('In Progress')" color="warning" :icon="timeOutline">{{ summaryData?.in_progress }}</ComTaskKpiCard>
+     <ComTaskKpiCard :label="t('Cancelled')" color="danger" :icon="timeOutline">{{ summaryData?.cancelled }}</ComTaskKpiCard>
 
       <ion-button expand="block" router-link="/all-task">{{t("All Task")}}</ion-button>
 
@@ -12,7 +15,7 @@
       </ion-text>
       
       <DocList 
-      :key="refreshKey"
+      
       docType="Work Order"
       :fields="['name','work_order_type','location','description','photo','work_order_status']"
       :filters="[['_assign', 'like', `%${currentUser.name}%`],['property','like',  `%${currentProperty.property_name}%`],['workorder_date','<=', currentWorkingDate],['due_date','>=', currentWorkingDate]]"
@@ -33,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useIonRouter } from "@ionic/vue";
 import { refreshOutline, timeOutline, documentOutline, closeOutline, gitCompareOutline } from 'ionicons/icons';
 import ComTaskCard from "./components/ComTaskCard.vue";
@@ -41,26 +44,45 @@ import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
 import TaskSummaryKpi from "./TaskSummaryKpi.vue";
 import DocList from "../components/document-list/DocList.vue";
-
+import ComTaskKpiCard from "@/views/task/components/ComTaskKpiCard.vue"
+import { getApi } from "@/services/api-service";
 
 const ionRouter = useIonRouter();
 const {currentUser} = useAuth()
 const {currentProperty,currentWorkingDate} = useApp()
 
 const t = window.t;
-
+const summaryData=ref()
 function onViewTaskDetail(task: any) {
  
   ionRouter.navigate('/task-detail/' + task.name, 'forward', 'push');
 }
  
-const refreshKey = ref(0); 
-
-function onRefresh() {  
-    console.log("Refreshing task data", refreshKey.value);
-    refreshKey.value++;
+ 
+async function getTaskSummaryData(){
+  const { data, error } = await getApi(
+    'edoor.mobile_api.task.get_user_task_summary',
+    {
+      property: currentProperty.value.property_name,
+      user: currentUser.value.name,
+      date: currentWorkingDate.value
+    } 
+  );
+  if(data){
+    summaryData.value = data
+  }
  
 }
+
+async function onRefresh() {  
+  await getTaskSummaryData()
+}
+
+onMounted(async ()=>{
+  await getTaskSummaryData()
+})
+
+
 
 </script>
 <style scoped> 
