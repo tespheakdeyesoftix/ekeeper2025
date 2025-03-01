@@ -48,7 +48,8 @@ import {
   IonDatetime,
   IonDatetimeButton,
   IonAccordionGroup,
-  IonAccordion
+  IonAccordion,
+  IonText
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -170,6 +171,7 @@ async function init() {
   app.component('ion-datetime-button',IonDatetimeButton)
   app.component('ion-accordion-group',IonAccordionGroup)
   app.component('ion-accordion',IonAccordion)
+  app.component('ion-text',IonText)
   
 
   app.component('Img',Img)

@@ -1,6 +1,6 @@
 <template>
   <div>
- {{ filter }}
+    {{ filter }}
     <div class="scroll-container">
       <!-- Date -->
       <ion-chip style="display: none">
@@ -16,7 +16,7 @@
         @onClear="onClearRoomStatus"
         multiple
         docType="Room Status"
-        :selectedValues="roomStatus"
+        :selectedValue="status.roomStatus"
         :filters="[['property', '=', currentProperty.property_name]]"
         clear
         ref="RoomStatusRef"
@@ -24,7 +24,7 @@
       <ComSelect
         @onSelected="onSelectHousekeepingStatus"
         @onClear="onClearHousekeepingStatus"
-        :selectedValues="housekeepingStatusCode"
+        :selectedValue="status.housekeepingStatusCode"
         label="Housekeeping Status"
         docType="Housekeeping Status Code"
         clear
@@ -89,21 +89,19 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, defineProps } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useRoom } from "@/hooks/useRoom";
 import { useApp } from "@/hooks/useApp";
 import { calendar } from "ionicons/icons";
 import dayjs from "dayjs";
 const { currentWorkingDate } = useApp();
 const props = defineProps({
-  roomStatus: String,
-  housekeepingStatusCode: String,
+  status: Object,
 });
 
 const { onFilter, filter, onChangeGroupBy, currentProperty, onDateChange } =
   useRoom();
 const t = window.t;
-const route = useRoute();
 const router = useRouter();
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
@@ -112,9 +110,6 @@ const Building = ref(null);
 const Floor = ref(null);
 const showModal = ref(false);
 const selectedDate = ref("");
-// const roomStatus = ref(route.query.room_status ? route.query.room_status.replace("_", " ") : '')
-// const housekeepingStatusCode = ref(route.query.housekeeping_status_code);
-
 const floorFilter = computed(() => {
   if (filter.value.building) {
     return [
@@ -176,12 +171,31 @@ function onClearFilter() {
   router.replace({ path: "/room" });
 }
 
-
 onMounted(() => {
   window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
   selectedDate.value = window.localStorage.getItem("currentWorkingDate");
 });
-
+const previousStatus = ref(null);
+watch(
+  () => props.status,
+  (newStatus) => {
+    const isRoomPage = window.location.pathname.startsWith("/room");
+    const hasRoomStatusParam = window.location.search.includes("room_status=");
+    if (isRoomPage && hasRoomStatusParam) {
+      if (JSON.stringify(newStatus) !== JSON.stringify(previousStatus.value)) {
+        previousStatus.value = newStatus;
+        selectedDate.value = window.localStorage.getItem("currentWorkingDate");
+        onFilter({
+          ...filter.value,
+          room_status: previousStatus.value.roomStatus,
+          housekeeping_status_code: previousStatus.value.housekeepingStatusCode,
+          date: selectedDate.value,
+        });
+      }
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>

@@ -19,27 +19,21 @@
         </div>
       </div>
     </ion-card-header>
-    <ion-card-content>
-      <div
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        "
-      >
-        <div>
-          <h6>{{ t("Room Name") }}</h6>
-          <h1>A 100</h1>
-        </div>
-        <div>
-          <h6>{{ t("Floor") }}</h6>
-          <h1>First</h1>
-        </div>
-        <div>
-          <h6>{{ t("Group Type") }}</h6>
-          <h1>First</h1>
-        </div>
-      </div>
+    <ion-card-content
+      style="display: flex; align-items: center; justify-content: space-between"
+    >
+      <ion-text>
+        <h6>{{ t("Room Name") }}</h6>
+        <h2>A 100</h2>
+      </ion-text>
+      <ion-text>
+        <h6>{{ t("Floor") }}</h6>
+        <h2>First</h2>
+      </ion-text>
+      <ion-text>
+        <h6>{{ t("Group Type") }}</h6>
+        <h2>First</h2>
+      </ion-text>
     </ion-card-content>
   </ion-card>
 </template>

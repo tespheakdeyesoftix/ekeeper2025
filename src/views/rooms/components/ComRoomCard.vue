@@ -23,7 +23,7 @@
       >
         <ion-card-title style="text-align: center">
           <ion-text>
-            <h5 style="padding: 0px; margin: 0px">
+            <h6 style="padding: 0px; margin: 0px">
               {{ data?.room_number }} -
               {{
                 groupBy == "room_type"
@@ -31,7 +31,7 @@
                   : data?.room_type_alias
               }}
               {{ data?.selected }}
-            </h5>
+            </h6>
           </ion-text>
         </ion-card-title>
       </ion-card-header>
@@ -71,7 +71,7 @@
             <h6>
               {{ dayjs(data.block_end_date).format("DD-MM-YYYY") }}
             </h6>
-            <h5 style="font-weight: bold">Room Block</h5>
+            <h6 style="font-weight: bold">Room Block</h6>
           </ion-text>
         </div>
         <!-- Room Vacant -->
@@ -86,7 +86,7 @@
           "
         >
           <ion-text color="medium">
-            <h5 style="font-weight: bold">Vacant</h5>
+            <h6 style="font-weight: bold">Vacant</h6>
           </ion-text>
         </div>
         <!-- icon -->
