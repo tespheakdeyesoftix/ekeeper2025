@@ -1,7 +1,7 @@
 <template>
   <div>
     {{ filter }}
-    <div class="scroll-container">
+    <div class="scroll-container  ion-margin-vertical">
       <!-- Date -->
       <ion-chip style="display: none">
         <ion-datetime-button datetime="selectedDate"></ion-datetime-button>
@@ -202,7 +202,6 @@ watch(
 .scroll-container {
   overflow-x: auto;
   white-space: nowrap;
-  padding: 10px;
 }
 
 .scroll-container::-webkit-scrollbar {
