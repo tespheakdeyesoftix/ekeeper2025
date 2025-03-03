@@ -104,8 +104,8 @@
             :icon="airplane"
             class="icon"
             :style="{
-              width: '20px',
-              height: '20px',
+              width: '17px',
+              height: '17px',
               padding: '4.5px',
               color: '#ffffff',
               backgroundColor: data?.is_arrival ? '#0800ff' : '#3d3d3d',
@@ -116,9 +116,9 @@
             v-html="data?.housekeeping_icon"
             class="icon"
             :style="{
-              width: '30px',
-              height: '30px',
-              padding: '0',
+              width: '28px',
+              height: '28px',
+              padding: '4.5px',
               backgroundColor: data?.color,
             }"
           />
@@ -127,8 +127,8 @@
             :icon="clipboardOutline"
             class="icon"
             :style="{
-              width: '20px',
-              height: '20px',
+              width: '17px',
+              height: '17px',
               padding: '4.5px',
               color: '#ffffff',
               backgroundColor: '#fc6161',

@@ -1,6 +1,7 @@
 <template>
   
     <ion-searchbar 
+    class="ion-no-padding"
       :placeholder="t('Search')" 
       @click="expandModal" 
       v-model="keyword"

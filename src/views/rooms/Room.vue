@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <AppBar>{{ t("Room") }}</AppBar>
-    <ion-content :fullscreen="true" class="ion-pading">
+    <ion-content :fullscreen="true" class="ion-padding ion-no-margi">
       <Loading v-if="loading" />
       <template v-else>
         <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
