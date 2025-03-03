@@ -52,17 +52,13 @@ watch(
 onMounted(async () => {
   await getData();
   console.log("OnMounted");
-  if (roomStatus.value && housekeepingStatusCode.value) {
-    onFilter({
+  if (roomStatus.value || housekeepingStatusCode.value) {
+    const filterParams = {
       ...filter.value,
-      room_status: [roomStatus.value],
-      housekeeping_status_code: [housekeepingStatusCode.value],
-    });
-  } else if (roomStatus.value) {
-    onFilter({
-      ...filter.value,
-      room_status: [roomStatus.value],
-    });
+      room_status: roomStatus.value ? [roomStatus.value] : undefined,
+      housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
+    };
+  onFilter(filterParams);
   }
 });
 
@@ -79,20 +75,16 @@ onIonViewDidEnter(async () => {
     await getData();
     initialRoomStatus.value = newRoomStatus;
     initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
-    if (newRoomStatus && newHousekeepingStatusCode) {
-      onFilter({
+    if (newRoomStatus || newHousekeepingStatusCode) {
+      const filterParams = {
         ...filter.value,
-        room_status: [newRoomStatus],
-        housekeeping_status_code: [newHousekeepingStatusCode],
-      });
-    } else if (newRoomStatus) {
-      onFilter({
-        ...filter.value,
-        room_status: [newRoomStatus],
-      });
+        room_status: roomStatus.value ? [roomStatus.value] : undefined,
+        housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
+      };
+      onFilter(filterParams);
     }
     console.log("OnIonViewDidEnter");
-    await l.dismiss();
+    await l.dismiss();  
   }
 });
 </script>
