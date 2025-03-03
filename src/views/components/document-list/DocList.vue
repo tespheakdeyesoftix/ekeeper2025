@@ -33,8 +33,13 @@
         
 </template>
 <script setup lang="ts">
+import {useAttrs } from "vue"
+
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
+ 
+const attrs = useAttrs();
+ 
 const emit = defineEmits()
 const props = defineProps({
     docType:String,
@@ -48,15 +53,27 @@ const props = defineProps({
     fields:{
         type:Object,
         default:["name"]
-    }
+    },
+
 })
+
  
 const {data,onRefresh,onLoadMore,onSearch,loading} = useDocList(props)
+
+
 const onRefreshData = async (event: CustomEvent) => {
     await onRefresh(event)
-    event.target.complete();
-    emit("onRefresh")
+    if(attrs.onOnRefresh){
+        emit("onRefresh",event)
+    }else {
+        event.target.complete();
+    }
+  
+
+     
   };
+ 
+ 
  
 
 </script>

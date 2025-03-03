@@ -54,19 +54,24 @@ export function useDocList(props: any) {
       canLoadMore.value = false;
     }
     data.value.push(...result);
+    
     event.target.complete();
   };
  
   const onRefresh = async (event: CustomEvent) => {
     startIndex.value = 0;
-    await getData();
-   
+    const result = await getData();
+    
+    data.value = result;
+
+
+
    
   };
  
 
   async function  onSearch  (str:string=""){
-    console.log(meta)
+ 
     if(meta){
     loading.value = true;
     canLoadMore.value = true;
@@ -98,7 +103,7 @@ export function useDocList(props: any) {
   }
 
   onMounted(async () => {
-    
+   
     loading.value = true
    orFilters = props.orFilters;
     const result = await getData();

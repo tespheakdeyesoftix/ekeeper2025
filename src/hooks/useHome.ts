@@ -33,7 +33,7 @@ export function useHome() {
   
   const onRefresh = async (event: CustomEvent) => {
     
-    await getData();
+    await getData(); 
     event.target.complete();
   };
 
