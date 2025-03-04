@@ -24,16 +24,17 @@ import ComSearchBar from "@/views/components/ComSearchBar.vue";
 import { useRoom } from "@/hooks/useRoom";
 import ComRoom from "@/views/rooms/components/ComRoom.vue";
 import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute } from "vue-router";  
 const route = useRoute();
 const t = window.t;
 const roomStatus = ref(
   route.query.room_status ? route.query.room_status.replace("_", " ") : ""
 );
 const housekeepingStatusCode = ref(route.query.housekeeping_status_code);
-const initialRoomStatus = ref(roomStatus.value);
-const initialHousekeepingStatusCode = ref(housekeepingStatusCode.value);
-const { loading, onSearch, getData, onRefresh, data } = useRoom();
+const initialRoomStatus = ref(roomStatus.value || null);
+const initialHousekeepingStatusCode = ref(housekeepingStatusCode.value || null);
+const { loading, onSearch, getData, onRefresh, data, onFilter, filter } =
+  useRoom();
 
 watch(
   () => route.query,
@@ -51,20 +52,39 @@ watch(
 onMounted(async () => {
   await getData();
   console.log("OnMounted");
+  if (roomStatus.value || housekeepingStatusCode.value) {
+    const filterParams = {
+      ...filter.value,
+      room_status: roomStatus.value ? [roomStatus.value] : undefined,
+      housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
+    };
+  onFilter(filterParams);
+  }
 });
 
 onIonViewDidEnter(async () => {
   const newRoomStatus = roomStatus.value;
   const newHousekeepingStatusCode = housekeepingStatusCode.value;
-
   if (
     newRoomStatus !== initialRoomStatus.value ||
     newHousekeepingStatusCode !== initialHousekeepingStatusCode.value
   ) {
-    // await getData();
+    const l = await window.showLoading();
+    const date = window.localStorage.getItem("currentWorkingDate");
+    filter.value.date = date;
+    await getData();
     initialRoomStatus.value = newRoomStatus;
     initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
+    if (newRoomStatus || newHousekeepingStatusCode) {
+      const filterParams = {
+        ...filter.value,
+        room_status: roomStatus.value ? [roomStatus.value] : undefined,
+        housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
+      };
+      onFilter(filterParams);
+    }
     console.log("OnIonViewDidEnter");
+    await l.dismiss();  
   }
 });
 </script>

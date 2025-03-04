@@ -109,7 +109,7 @@ const Housekeepeer = ref(null);
 const Building = ref(null);
 const Floor = ref(null);
 const showModal = ref(false);
-const selectedDate = ref("");
+const selectedDate = ref(filter.value.date);
 const floorFilter = computed(() => {
   if (filter.value.building) {
     return [
@@ -173,28 +173,12 @@ function onClearFilter() {
 
 onMounted(() => {
   window.localStorage.setItem("currentWorkingDate", currentWorkingDate.value);
-  selectedDate.value = window.localStorage.getItem("currentWorkingDate");
 });
-const previousStatus = ref(null);
 watch(
-  () => props.status,
-  (newStatus) => {
-    const isRoomPage = window.location.pathname.startsWith("/room");
-    const hasRoomStatusParam = window.location.search.includes("room_status=");
-    if (isRoomPage && hasRoomStatusParam) {
-      if (JSON.stringify(newStatus) !== JSON.stringify(previousStatus.value)) {
-        previousStatus.value = newStatus;
-        selectedDate.value = window.localStorage.getItem("currentWorkingDate");
-        onFilter({
-          ...filter.value,
-          room_status: previousStatus.value.roomStatus,
-          housekeeping_status_code: previousStatus.value.housekeepingStatusCode,
-          date: selectedDate.value,
-        });
-      }
-    }
-  },
-  { immediate: true }
+  () => filter.value.date, 
+  (newDate) => {
+    selectedDate.value = newDate; 
+  }
 );
 </script>
 
