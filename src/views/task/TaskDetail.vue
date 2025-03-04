@@ -8,9 +8,18 @@
         :docName="name"
         v-model:doc="doc"
         v-model:docInfo="docInfo"
-      >
-      {{ docInfo.user_info }}
-        <ion-card class="task-detail-card ion-no-margin">
+      > 
+      <p v-for="(us , index) in doc.assign_employee" :key="index">
+
+        <!-- {{ docInfo.user_info[us.user]?.image }}  -->
+        <!-- {{ docInfo.user_info[us.user] }} -->
+        <!-- {{ us.user }}    -->
+        {{ docInfo.user_info[us.user]?.image || 'No matching user image' }}
+      </p>
+      <!-- {{ doc.assign_employee }} -->
+      <!-- {{ docInfo.user_info }} -->
+
+        <ion-card class="task-detail-card ">
           <ion-card-header class="task-header">
             <ion-card-title>{{ doc.name }}</ion-card-title>
             <ion-chip class="status-chip">
@@ -55,10 +64,10 @@
               </ion-item>
             </ion-list>
           </ion-card-content>
-        </ion-card>
+        </ion-card> 
 
         <!-- Assigned Employees Card -->
-        <ion-card class="employee-card ion-no-margin" v-if="doc.assign_employee && doc.assign_employee.length">
+        <ion-card class="employee-card " v-if="doc.assign_employee && doc.assign_employee.length">
           <ion-card-header class="employee-header">
             <ion-card-title>
               {{ t("Assigned Employees") }}
@@ -70,10 +79,9 @@
             <ion-list class="employee-list">
               <ion-item v-for="(employee, index) in doc.assign_employee" :key="index" button>
                 <ion-avatar class="employee-avatar" slot="start"> 
-                  <Img :src="docInfo.user_info.Administrator.image" />
-                  <!-- <ion-icon color="primary" :icon="personCircleOutline" style="width: 50px; height: 50px;"/> -->
+                  <Img :src="docInfo.user_info[employee.user]?.image" height="150" width="150" />
                 </ion-avatar>
-                <ion-label>
+                <ion-label> 
                   <h3 class="employee-name">{{ employee.employee_name }}</h3>
                   <p class="employee-role">{{ employee.user }}</p>
                   <p class="employee-note">{{ employee.note }}</p>
@@ -98,15 +106,13 @@
   </ion-card-header>
 
   <ion-card-content>
-    <ion-row>
-      <!-- Action Buttons on the left -->
+    <ion-row> 
       <ion-col size="6" class="ion-gap-2">
         <ion-button expand="full" @click="addPic">{{ t("Add Pic") }}</ion-button>
         <ion-button expand="full" @click="uploadPic">{{ t("Upload Pic") }}</ion-button>
         <ion-button expand="full" @click="deletePic">{{ t("Delete Pic") }}</ion-button>
       </ion-col>
-
-      <!-- Image on the right -->
+ 
       <ion-col size="6" class="ion-text-center">
         <Img :src="doc.photo" width="150" height="150" style="border-radius: 50%;"/>
       </ion-col>
