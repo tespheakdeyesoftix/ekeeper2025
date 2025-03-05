@@ -52,7 +52,6 @@ const getImage = async () => {
   } else if( 
     (isPlatform("android") && isPlatform("mobile")) ||
     (isPlatform("iphone") && isPlatform("ios") && isPlatform("mobile"))
-
     )
   {
     

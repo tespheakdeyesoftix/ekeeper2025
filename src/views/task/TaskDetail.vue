@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ToolBar>{{ t("Task Detail") }}</ToolBar>
-    <ion-content class="ion-no-padding"> 
+    <ion-content class="ion-padding"> 
       <Document
         v-if="name"
         docType="Work Order"
@@ -9,6 +9,17 @@
         v-model:doc="doc"
         v-model:docInfo="docInfo"
       > 
+     
+        <ion-text color="primary">
+      <h1>{{ t(doc.work_order_type) }}</h1>
+      </ion-text>
+      <p>
+        <ion-text>
+          {{ doc.description }}
+        </ion-text>
+      </p>
+   
+      
       <p v-for="(us , index) in doc.assign_employee" :key="index">
 
         <!-- {{ docInfo.user_info[us.user]?.image }}  -->
@@ -19,7 +30,7 @@
       {{ doc.photo }}
       <!-- {{ docInfo.user_info }} -->
 
-        <ion-card class="task-detail-card ion-padding">
+        <ion-card class="task-detail-card ion-padding ion-no-margin">
           <ion-card-header class="task-header">
             <ion-card-title>{{ doc.name }}</ion-card-title>
             <ion-chip class="status-chip">
