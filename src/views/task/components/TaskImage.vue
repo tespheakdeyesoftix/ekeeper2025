@@ -1,5 +1,5 @@
 <template>
-    <ion-card>
+    <ion-card class="ion-no-margin ion-margin-top">
       <Img :src="imgData"  />
       <ion-button @click="handleuploadImage">Upload pic</ion-button> 
     </ion-card>
