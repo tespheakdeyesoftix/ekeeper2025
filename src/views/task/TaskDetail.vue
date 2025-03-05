@@ -13,13 +13,13 @@
 
         <!-- {{ docInfo.user_info[us.user]?.image }}  -->
         <!-- {{ docInfo.user_info[us.user] }} -->
-        <!-- {{ us.user }}    -->
-        {{ docInfo.user_info[us.user]?.image || 'No matching user image' }}
+        <!-- {{ us.employee_name }}   
+        {{ docInfo.user_info[us.user]?.image || 'No matching user image' }} -->
       </p>
-      <!-- {{ doc.assign_employee }} -->
+      {{ doc.photo }}
       <!-- {{ docInfo.user_info }} -->
 
-        <ion-card class="task-detail-card ">
+        <ion-card class="task-detail-card ion-padding">
           <ion-card-header class="task-header">
             <ion-card-title>{{ doc.name }}</ion-card-title>
             <ion-chip class="status-chip">
@@ -28,8 +28,8 @@
             </ion-chip>              
           </ion-card-header>
 
-          <ion-card-content>
-            <ion-list class="task-list">
+          <ion-card-content class="ion-no-padding">
+            <ion-list>
               <ion-item>
                 <ion-icon :icon="locationOutline" class="item-icon" color="success" />
                 <ion-label>{{ t("Location") }}</ion-label>
@@ -67,7 +67,7 @@
         </ion-card> 
 
         <!-- Assigned Employees Card -->
-        <ion-card class="employee-card " v-if="doc.assign_employee && doc.assign_employee.length">
+        <ion-card class="task-detail-card ion-margin-top" v-if="doc.assign_employee && doc.assign_employee.length">
           <ion-card-header class="employee-header">
             <ion-card-title>
               {{ t("Assigned Employees") }}
@@ -78,9 +78,14 @@
           <ion-card-content>
             <ion-list class="employee-list">
               <ion-item v-for="(employee, index) in doc.assign_employee" :key="index" button>
-                <ion-avatar class="employee-avatar" slot="start"> 
-                  <Img :src="docInfo.user_info[employee.user]?.image" height="150" width="150" />
-                </ion-avatar>
+                <template v-if="docInfo.user_info[employee.user]?.image">
+                  <ion-avatar class="employee-avatar" slot="start"> 
+                    <Img :src="docInfo.user_info[employee.user]?.image" />
+                  </ion-avatar>
+                </template>
+                <template v-else>
+                  <ion-avatar slot="start" class="avatar-placeholder " :style="{ backgroundColor: getRandomColor()}">{{ getAvatarLetter(employee?.employee_name) }}</ion-avatar>
+                </template>
                 <ion-label> 
                   <h3 class="employee-name">{{ employee.employee_name }}</h3>
                   <p class="employee-role">{{ employee.user }}</p>
@@ -98,29 +103,12 @@
             </ion-list>
             
           </ion-card-content>
-        </ion-card> 
+        </ion-card>  
 
-        <ion-card class="employee-card">
-  <ion-card-header class="employee-header">
-    <ion-card-title>{{ t("Task Image") }}</ion-card-title>
-  </ion-card-header>
 
-  <ion-card-content>
-    <ion-row> 
-      <ion-col size="6" class="ion-gap-2">
-        <ion-button expand="full" @click="addPic">{{ t("Add Pic") }}</ion-button>
-        <ion-button expand="full" @click="uploadPic">{{ t("Upload Pic") }}</ion-button>
-        <ion-button expand="full" @click="deletePic">{{ t("Delete Pic") }}</ion-button>
-      </ion-col>
+        <TaskImage :doc="doc" @update:doc="doc = $event"  />
  
-      <ion-col size="6" class="ion-text-center">
-        <Img :src="doc.photo" width="150" height="150" style="border-radius: 50%;"/>
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
-</ion-card>
 
-        
 
       </Document>
     </ion-content>
@@ -130,20 +118,11 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { 
-  locationOutline, 
-  alertCircleOutline, 
-  checkmarkCircleOutline, 
-  constructOutline, 
-  documentTextOutline, 
-  calendarOutline ,
-  personCircleOutline,
-  peopleOutline,
-  personAddOutline ,
-  pencil,
-  key
-} from "ionicons/icons";
+import { locationOutline, alertCircleOutline, checkmarkCircleOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline, pencil, key } from "ionicons/icons";
 import Img from "../components/Img.vue";
+import TaskImage from "./components/TaskImage.vue";
+import { uploadFile } from "@/services/api-service";
+import { getAvatarLetter, getRandomColor } from "@/helpers/utils";
 
 const route = useRoute();
 const name = ref(route.params.name);
@@ -156,9 +135,8 @@ const docInfo = ref();
 // const userImage = computed(()=>{
 //     user = Object.entries(docInfo.value).filter(([key,value]) => value.name === email.value)
 //     return user.length > 0 ? user[0][1].image : null
-// })
+// }) 
  
-
 
 
 </script>
@@ -166,9 +144,7 @@ const docInfo = ref();
 <style scoped> 
 .task-detail-card {
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  background: white;
-  padding: 15px;
+  box-shadow: 0 4px 10px rgba(63, 38, 38, 0.12);  
 } 
 .task-header { 
   align-items: center;
@@ -199,6 +175,9 @@ const docInfo = ref();
   --inner-padding-start: 0px;
   --inner-padding-end: 0px;  
 } 
+ion-card-content{
+  display: content;
+}
 .item-icon {
   font-size: 1.2rem;
   margin-right: 5px; 
@@ -208,18 +187,7 @@ const docInfo = ref();
   font-weight: 600;
   background: #fff4e5;
   color: #d35400; 
-}
-
-
-
-/* Employee Card */
-.employee-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  background: white;
-  padding: 10px;
-  margin-top: 20px;
-}
+} 
 
 .employee-header ion-card-title {
   font-size: 1.2rem;
@@ -228,8 +196,8 @@ const docInfo = ref();
 } 
 
 .employee-avatar {
-  width: 50px !important;
-  height: 50px !important; 
+  width: 60px !important;
+  height: 60px !important; 
 } 
 
 .employee-name {
@@ -251,5 +219,13 @@ ion-fab-button {
   --box-shadow: none;
   --background: var(--ion-color-success); 
 } 
-
+.avatar-placeholder{
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #FFF;
+}
 </style>

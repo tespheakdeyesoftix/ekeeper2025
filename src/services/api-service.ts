@@ -137,8 +137,10 @@ export async function uploadFile(
         )
         .then(async (result:any) =>{
             await loading.dismiss()
+            // Log to See Structure
+            console.log(result.data.message.file_url);
             window.showSuccess(window.t("Upload file successfully"));
-            return { data: result.message, error: null };
+            return { data: result.data.message.file_url, error: null };
         })
         .catch(async(e) => {
             await loading.dismiss()
