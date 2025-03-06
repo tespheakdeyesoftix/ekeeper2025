@@ -41,8 +41,8 @@
         <!-- {{ docInfo.user_info }} -->
 
         <ion-card class="task-detail-card ion-padding ion-no-margin">
-          <ion-card-header class="task-header"> 
-            <ion-card-title>{{ doc.name }}</ion-card-title>
+          <ion-card-header class="ion-text-center" > 
+            <ion-card-title style="font-weight: bold;">{{ doc.name }}</ion-card-title>
             <!-- <ion-chip class="status-chip">
               <ion-icon :icon="checkmarkCircleOutline" class="chip-icon status-icon" />
               {{ doc.work_order_status }}
@@ -218,8 +218,8 @@ const deleteEmployee = (employee, index) => {
 }
 
 .task-header {
-  align-items: center;
-  padding: 10px;
+  /* align-items: center; */
+  /* padding: 10px; */
 }
 
 .task-header ion-card-title {
