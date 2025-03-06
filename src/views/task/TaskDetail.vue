@@ -1,73 +1,90 @@
 <template>
   <ion-page>
     <ToolBar>{{ t("Task Detail") }}</ToolBar>
-    <ion-content class="ion-no-padding"> 
-      <Document
-        v-if="name"
-        docType="Work Order"
-        :docName="name"
-        v-model:doc="doc"
-        v-model:docInfo="docInfo"
-      > 
-      <p v-for="(us , index) in doc.assign_employee" :key="index">
+    <ion-content class="ion-padding">
+      <Document v-if="name" docType="Work Order" :docName="name" v-model:doc="doc" v-model:docInfo="docInfo">
+        <div>
 
-        <!-- {{ docInfo.user_info[us.user]?.image }}  -->
-        <!-- {{ docInfo.user_info[us.user] }} -->
-        <!-- {{ us.user }}    -->
-        {{ docInfo.user_info[us.user]?.image || 'No matching user image' }}
-      </p>
-      <!-- {{ doc.assign_employee }} -->
-      <!-- {{ docInfo.user_info }} -->
+          <ion-text color="primary">
+            <h1 class="ion-no-margin">{{ t(doc.work_order_type) }}</h1>
+          </ion-text>
 
-        <ion-card class="task-detail-card ">
+          <!-- Status Chips -->
+          <ion-chip color="success">
+            <ion-icon :icon="checkmarkCircleOutline" class="ion-margin-right" />
+            <ion-label>{{ t(doc.work_order_status) }}</ion-label>
+          </ion-chip>
+          <ion-chip color="warning">
+            <ion-icon :icon="alertCircleOutline" class="ion-margin-right" />
+            <ion-label>{{ t(doc.priority) }}</ion-label>
+          </ion-chip>
+
+          <!-- Description Section -->
+          <ion-text color="medium">
+            <h3 class="ion-margin-bottom">Description</h3>
+            <p>{{ doc.description }}</p>
+          </ion-text>
+        </div>
+
+
+
+
+
+        <p v-for="(us, index) in doc.assign_employee" :key="index">
+
+          <!-- {{ docInfo.user_info[us.user]?.image }}  -->
+          <!-- {{ docInfo.user_info[us.user] }} -->
+          <!-- {{ us.employee_name }}   
+        {{ docInfo.user_info[us.user]?.image || 'No matching user image' }} -->
+        </p>
+        <!-- {{ doc }} -->
+        <!-- {{ docInfo.user_info }} -->
+
+        <ion-card class="task-detail-card ion-padding ion-no-margin">
           <ion-card-header class="task-header">
             <ion-card-title>{{ doc.name }}</ion-card-title>
-            <ion-chip class="status-chip">
+            <!-- <ion-chip class="status-chip">
               <ion-icon :icon="checkmarkCircleOutline" class="chip-icon status-icon" />
               {{ doc.work_order_status }}
-            </ion-chip>              
+            </ion-chip>               -->
           </ion-card-header>
 
-          <ion-card-content>
-            <ion-list class="task-list">
+          <ion-card-content class="ion-no-padding">
+            <ion-list>
               <ion-item>
-                <ion-icon :icon="locationOutline" class="item-icon" color="success" />
+                <ion-icon :icon="createOutline" class="item-icon" color="success" />
+                <ion-label>{{ t("Modifier") }}</ion-label>
+                <ion-text>{{ doc.modified_by }}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-icon :icon="timeOutline" class="item-icon" />
+                <ion-label>{{ t("Creation") }}</ion-label>
+                <ion-text>{{ formatDate(doc.creation) }}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-icon :icon="locationOutline" class="item-icon" color="danger" />
                 <ion-label>{{ t("Location") }}</ion-label>
                 <ion-text>{{ doc.location }}</ion-text>
               </ion-item>
 
               <ion-item>
-                <ion-icon :icon="alertCircleOutline" style color="warning" />
-                <ion-label>{{ t("Priority") }}</ion-label>
-                <ion-chip color="warning" class="priority-chip">
-                  <ion-icon :icon="alertCircleOutline" style="margin-right: 5px;" />
-                  {{ doc.priority }}
-                </ion-chip>
+                <ion-icon :icon="hourglassOutline" class="item-icon" color="warning" />
+                <ion-label>{{ t("Posting Date") }}</ion-label>
+                <ion-text>{{ formatDate(doc.posting_date) }}</ion-text>
               </ion-item>
-
-              <ion-item>
-                <ion-icon :icon="constructOutline" class="item-icon" color="medium"/>
-                <ion-label>{{ t("Work Order Type") }}</ion-label>
-                <ion-text>{{ doc.work_order_type }}</ion-text>
-              </ion-item>
-
-              <ion-item>
-                <ion-icon :icon="documentTextOutline" class="item-icon" />
-                <ion-label>{{ t("Description") }}</ion-label>
-                <ion-text>{{ doc.description }}</ion-text>
-              </ion-item>
-
-              <ion-item>
-                <ion-icon :icon="calendarOutline" class="item-icon calendar-icon" color="primary"/>
+              <ion-item style="--border-style:none;">
+                <ion-icon :icon="calendarOutline" class="item-icon calendar-icon" color="primary" />
                 <ion-label>{{ t("Due Date") }}</ion-label>
-                <ion-text>{{ doc.due_date }}</ion-text>
+                <ion-text>{{ formatDate(doc.due_date) }}</ion-text>
               </ion-item>
             </ion-list>
           </ion-card-content>
-        </ion-card> 
+        </ion-card>
 
         <!-- Assigned Employees Card -->
-        <ion-card class="employee-card " v-if="doc.assign_employee && doc.assign_employee.length">
+        <ion-card class="task-detail-card ion-margin-top ion-no-margin"
+          v-if="doc.assign_employee && doc.assign_employee.length">
+
           <ion-card-header class="employee-header">
             <ion-card-title>
               {{ t("Assigned Employees") }}
@@ -75,52 +92,61 @@
             </ion-card-title>
           </ion-card-header>
 
-          <ion-card-content>
+          <ion-card-content class="ion-no-padding">
             <ion-list class="employee-list">
-              <ion-item v-for="(employee, index) in doc.assign_employee" :key="index" button>
-                <ion-avatar class="employee-avatar" slot="start"> 
-                  <Img :src="docInfo.user_info[employee.user]?.image" height="150" width="150" />
-                </ion-avatar>
-                <ion-label> 
+              <ion-item v-for="(employee, index) in doc.assign_employee" :key="employee.idx">
+                <template v-if="docInfo.user_info[employee.user]?.image">
+                  <ion-avatar class="employee-avatar" slot="start">
+                    <Img :src="docInfo.user_info[employee.user]?.image" />
+                  </ion-avatar>
+                </template>
+                <template v-else>
+                  <ion-avatar slot="start" class="avatar-placeholder " :style="{ backgroundColor: getRandomColor() }">{{
+                    getAvatarLetter(employee?.employee_name) }}</ion-avatar>
+                </template>
+                <ion-label>
                   <h3 class="employee-name">{{ employee.employee_name }}</h3>
                   <p class="employee-role">{{ employee.user }}</p>
                   <p class="employee-note">{{ employee.note }}</p>
                 </ion-label>
-              </ion-item> 
-                <!-- FAB inside an ion-item -->
-                <ion-item lines="none" class="fab-item"> 
-                  <ion-fab  horizontal="end">
-                    <ion-fab-button size="small">
-                      <ion-icon :icon="personAddOutline "/>
-                    </ion-fab-button>
-                  </ion-fab>  
-                </ion-item>
+
+                <ion-icon :id="'menuTrigger' + index" :icon="menu" @click="openPopover($event, index)"
+                  class="menu-icon" />
+
+                <!-- Popover for the Menu -->
+                <ion-popover :is-open="popoverStates[index]?.open" :event="popoverStates[index]?.event"
+                  @didDismiss="popoverStates[index].open = false">
+                  <ion-content>
+                    <ion-list>
+                      <!-- Action item inside the Popover -->
+                      <ion-item button detail="false" @click="deleteEmployee(employee, index)"
+                      style="--border-style:none;">
+                      <ion-icon :icon="personRemoveOutline" slot="start" />
+                        Unassign Employee 
+                        
+                      </ion-item>
+                    </ion-list>
+                  </ion-content>
+                </ion-popover>
+
+              </ion-item>
+              <!-- FAB inside an ion-item -->
+              <ion-item lines="none" class="fab-item">
+                <ion-fab horizontal="end">
+                  <ion-fab-button size="small">
+                    <ion-icon :icon="personAddOutline" />
+                  </ion-fab-button>
+                </ion-fab>
+              </ion-item>
             </ion-list>
-            
+
           </ion-card-content>
-        </ion-card> 
+        </ion-card>
 
-        <ion-card class="employee-card">
-  <ion-card-header class="employee-header">
-    <ion-card-title>{{ t("Task Image") }}</ion-card-title>
-  </ion-card-header>
 
-  <ion-card-content>
-    <ion-row> 
-      <ion-col size="6" class="ion-gap-2">
-        <ion-button expand="full" @click="addPic">{{ t("Add Pic") }}</ion-button>
-        <ion-button expand="full" @click="uploadPic">{{ t("Upload Pic") }}</ion-button>
-        <ion-button expand="full" @click="deletePic">{{ t("Delete Pic") }}</ion-button>
-      </ion-col>
- 
-      <ion-col size="6" class="ion-text-center">
-        <Img :src="doc.photo" width="150" height="150" style="border-radius: 50%;"/>
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
-</ion-card>
+        <TaskImage :doc="doc" @update:doc="doc = $event" />
 
-        
+
 
       </Document>
     </ion-content>
@@ -130,20 +156,12 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { 
-  locationOutline, 
-  alertCircleOutline, 
-  checkmarkCircleOutline, 
-  constructOutline, 
-  documentTextOutline, 
-  calendarOutline ,
-  personCircleOutline,
-  peopleOutline,
-  personAddOutline ,
-  pencil,
-  key
-} from "ionicons/icons";
+import { locationOutline, alertCircleOutline, menu, checkmarkCircleOutline, createOutline, timeOutline, hourglassOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline,personRemoveOutline, pencil, key } from "ionicons/icons";
 import Img from "../components/Img.vue";
+import TaskImage from "./components/TaskImage.vue";
+import { getAvatarLetter, getRandomColor } from "@/helpers/utils";
+import dayjs from 'dayjs';
+
 
 const route = useRoute();
 const name = ref(route.params.name);
@@ -152,25 +170,48 @@ const t = window.t;
 const doc = ref();
 const docInfo = ref();
 
-// const email = ref('Administrator')
-// const userImage = computed(()=>{
-//     user = Object.entries(docInfo.value).filter(([key,value]) => value.name === email.value)
-//     return user.length > 0 ? user[0][1].image : null
-// })
- 
+
+const formatDate = (dateString) => {
+  return dayjs(dateString).format('MMM DD, YYYY')
+}
+const popoverStates = ref({}); // Object to store popover states by index
+
+// Open Popover
+const openPopover = (event, index) => {
+  if (!popoverStates.value[index]) {
+    popoverStates.value[index] = { open: false, event: null };
+  }
+  popoverStates.value[index].event = event;
+  popoverStates.value[index].open = true;
+};
+
+// Close Popover manually (if necessary)
+const closePopover = (index) => {
+  popoverStates.value[index].open = false;
+};
+
+// Delete Employee Action (Example)
+const deleteEmployee = (employee, index) => {
+  console.log("Employee Deleted:", employee);
+
+  // Your deletion logic here...
+
+  // After the action, close the popover
+  closePopover(index);
+};
+
 
 
 
 </script>
 
-<style scoped> 
+<style scoped>
 .task-detail-card {
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  background: white;
-  padding: 15px;
-} 
-.task-header { 
+  box-shadow: 0 4px 10px rgba(63, 38, 38, 0.12);
+}
+
+.task-header {
   align-items: center;
   padding: 10px;
 }
@@ -179,7 +220,8 @@ const docInfo = ref();
   font-size: 1.4rem;
   font-weight: bold;
   color: #333;
-} 
+}
+
 .status-chip {
   font-size: 0.9rem;
   font-weight: 600;
@@ -189,48 +231,44 @@ const docInfo = ref();
   display: flex;
   align-items: center;
   padding: 6px 12px;
-} 
+}
+
 .status-icon {
   color: #007bff;
   font-size: 1rem;
   margin-right: 5px;
-} 
- ion-item { 
+}
+
+/* ion-item { 
   --inner-padding-start: 0px;
   --inner-padding-end: 0px;  
-} 
+}  */
+ion-card-content {
+  display: content;
+}
+
 .item-icon {
   font-size: 1.2rem;
-  margin-right: 5px; 
-}  
+  margin-right: 5px;
+}
+
 .priority-chip {
   font-size: 0.9rem;
   font-weight: 600;
   background: #fff4e5;
-  color: #d35400; 
-}
-
-
-
-/* Employee Card */
-.employee-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-  background: white;
-  padding: 10px;
-  margin-top: 20px;
+  color: #d35400;
 }
 
 .employee-header ion-card-title {
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
-} 
+}
 
 .employee-avatar {
-  width: 50px !important;
-  height: 50px !important; 
-} 
+  width: 60px !important;
+  height: 60px !important;
+}
 
 .employee-name {
   font-size: 1.1rem;
@@ -245,11 +283,21 @@ const docInfo = ref();
 .employee-note {
   font-size: 0.85rem;
   color: #999;
-} 
+}
+
 ion-fab-button {
   box-shadow: none !important;
   --box-shadow: none;
-  --background: var(--ion-color-success); 
-} 
+  --background: var(--ion-color-success);
+}
 
+.avatar-placeholder {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #FFF;
+}
 </style>
