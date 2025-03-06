@@ -46,9 +46,12 @@ export function useRoom() {
 
   }
 
-  async function onFilter(f:any){
-    const l = await window.showLoading();
-   
+  async function onFilter(f:any, loading:boolean = true){
+    let l;
+    if (loading) {
+      l = await window.showLoading();
+    }
+    
     let result = backupData;
  
     
@@ -81,7 +84,9 @@ export function useRoom() {
     }
 
     data.value = result;
-    await l.dismiss();
+    if (loading) {
+      await l.dismiss();
+    }
     filter.value = f; 
   }
 

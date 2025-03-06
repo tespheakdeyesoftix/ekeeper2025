@@ -81,7 +81,8 @@ onIonViewDidEnter(async () => {
         room_status: roomStatus.value ? [roomStatus.value] : undefined,
         housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
       };
-      onFilter(filterParams);
+      const loading = false;  
+      onFilter(filterParams,loading);
     }
     console.log("OnIonViewDidEnter");
     await l.dismiss();  
