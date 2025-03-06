@@ -37,12 +37,12 @@
           <!-- {{ us.employee_name }}   
         {{ docInfo.user_info[us.user]?.image || 'No matching user image' }} -->
         </p>
-        <!-- {{ doc }} -->
+        <!-- {{ doc.assign_employee }} -->
         <!-- {{ docInfo.user_info }} -->
 
         <ion-card class="task-detail-card ion-padding ion-no-margin">
-          <ion-card-header class="task-header">
-            <ion-card-title>{{ doc.name }}</ion-card-title>
+          <ion-card-header class="ion-text-center" > 
+            <ion-card-title style="font-weight: bold;">{{ doc.name }}</ion-card-title>
             <!-- <ion-chip class="status-chip">
               <ion-icon :icon="checkmarkCircleOutline" class="chip-icon status-icon" />
               {{ doc.work_order_status }}
@@ -110,18 +110,18 @@
                   <p class="employee-note">{{ employee.note }}</p>
                 </ion-label>
 
-                <ion-icon :id="'menuTrigger' + index" :icon="menu" @click="openPopover($event, index)"
-                  class="menu-icon" />
+                <ion-icon :id="'menuTrigger' + index" :icon="ellipsisVerticalOutline" @click="openPopover($event, index)"
+                  class="menu-icon" button/>
 
                 <!-- Popover for the Menu -->
                 <ion-popover :is-open="popoverStates[index]?.open" :event="popoverStates[index]?.event"
                   @didDismiss="popoverStates[index].open = false">
                   <ion-content>
-                    <ion-list>
+                    <ion-list> 
                       <!-- Action item inside the Popover -->
                       <ion-item button detail="false" @click="deleteEmployee(employee, index)"
                       style="--border-style:none;">
-                      <ion-icon :icon="personRemoveOutline" slot="start" />
+                      <ion-icon :icon="personRemoveOutline" slot="start" color="danger"/>
                         Unassign Employee 
                         
                       </ion-item>
@@ -143,6 +143,7 @@
           </ion-card-content>
         </ion-card>
 
+        <TaskFile/>
 
         <TaskImage :doc="doc" @update:doc="doc = $event" />
 
@@ -156,9 +157,11 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { locationOutline, alertCircleOutline, menu, checkmarkCircleOutline, createOutline, timeOutline, hourglassOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline,personRemoveOutline, pencil, key } from "ionicons/icons";
+import { locationOutline, alertCircleOutline, menu, checkmarkCircleOutline,ellipsisVerticalOutline
+  , createOutline, timeOutline, hourglassOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline,personRemoveOutline, pencil, key } from "ionicons/icons";
 import Img from "../components/Img.vue";
 import TaskImage from "./components/TaskImage.vue";
+import TaskFile from "./components/TaskFile.vue";
 import { getAvatarLetter, getRandomColor } from "@/helpers/utils";
 import dayjs from 'dayjs';
 
@@ -174,30 +177,33 @@ const docInfo = ref();
 const formatDate = (dateString) => {
   return dayjs(dateString).format('MMM DD, YYYY')
 }
-const popoverStates = ref({}); // Object to store popover states by index
+
+const popoverStates = ref({}); 
 
 // Open Popover
 const openPopover = (event, index) => {
   if (!popoverStates.value[index]) {
     popoverStates.value[index] = { open: false, event: null };
+    console.log(popoverStates.value[index]);
   }
   popoverStates.value[index].event = event;
   popoverStates.value[index].open = true;
 };
-
-// Close Popover manually (if necessary)
+ 
 const closePopover = (index) => {
-  popoverStates.value[index].open = false;
+  if (popoverStates.value[index]) {
+    popoverStates.value[index].open = false;
+  }
 };
 
-// Delete Employee Action (Example)
+
 const deleteEmployee = (employee, index) => {
-  console.log("Employee Deleted:", employee);
-
-  // Your deletion logic here...
-
-  // After the action, close the popover
-  closePopover(index);
+  console.log("Employee Deleted:", doc.value);   
+  alert(employee.employee_name)
+    // doc.value.assign_employee.splice(index, 1)
+    closePopover(index);
+    
+ 
 };
 
 
@@ -212,8 +218,8 @@ const deleteEmployee = (employee, index) => {
 }
 
 .task-header {
-  align-items: center;
-  padding: 10px;
+  /* align-items: center; */
+  /* padding: 10px; */
 }
 
 .task-header ion-card-title {
