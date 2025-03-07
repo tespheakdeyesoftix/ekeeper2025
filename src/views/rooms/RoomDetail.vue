@@ -2,7 +2,6 @@
   <ion-page>
     <ToolBar>{{ t("Room Detail") }} - {{ name }}</ToolBar>
     <ion-content class="ion-padding" :fullscreen="true">
-      <h2 class="ion-no-margin">{{ t("Room Detail") }}</h2>
       <ComRoomDetail />
       <ComRoomDetailCard />
     </ion-content>
