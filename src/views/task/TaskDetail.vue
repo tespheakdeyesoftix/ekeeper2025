@@ -37,8 +37,8 @@
           <!-- {{ us.employee_name }}   
         {{ docInfo.user_info[us.user]?.image || 'No matching user image' }} -->
         </p>
-        <!-- {{ doc.assign_employee }} -->
-        <!-- {{ docInfo.user_info }} -->
+        <!-- {{ doc }} -->
+        <!-- {{ docInfo.attachment_logs }} -->
 
         <ion-card class="task-detail-card ion-padding ion-no-margin">
           <ion-card-header class="ion-text-center" > 
@@ -143,7 +143,7 @@
           </ion-card-content>
         </ion-card>
 
-        <TaskFile/>
+        <TaskFile :docInfo="docInfo"/>
 
         <TaskImage :doc="doc" @update:doc="doc = $event" />
 

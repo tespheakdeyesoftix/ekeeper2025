@@ -100,11 +100,7 @@ export function getDoc(DocType: string,DocName:string) {
 }
 
 export async function uploadFile(
-    docType:string, 
-    docname:string,
-    fieldname:string, 
-    fileData:any,otherOption:any
-) {
+docType: string, docname: string, fieldname: string, fileData: any, otherOption: any, p0: (completedBytes: any, totalBytes: any) => void) {
     if (!frappe) {
         return { data: null, error: "Frappe is not defined" };
     }
