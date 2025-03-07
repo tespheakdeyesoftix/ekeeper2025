@@ -38,7 +38,7 @@
         docType="Employee"
         clear
         multiple
-        ref="Housekeepeer"
+        ref="HousekeepeerRef"
       />
       <ComSelect
         @onSelected="onSelectBuilding"
@@ -47,7 +47,7 @@
         :filters="[['property', '=', currentProperty.property_name]]"
         clear
         multiple
-        ref="Building"
+        ref="BuildingRef"
       />
       <ComSelect
         @onSelected="onSelectFloor"
@@ -56,7 +56,7 @@
         :filters="floorFilter"
         clear
         multiple
-        ref="Floor"
+        ref="FloorRef"
       />
       <ion-chip @click="onClearFilter" color="danger">Clear</ion-chip>
     </div>
@@ -105,9 +105,9 @@ const t = window.t;
 const router = useRouter();
 const RoomStatusRef = ref(null);
 const HousekeepingStatusRef = ref(null);
-const Housekeepeer = ref(null);
-const Building = ref(null);
-const Floor = ref(null);
+const HousekeepeerRef = ref(null);
+const BuildingRef = ref(null);
+const FloorRef = ref(null);
 const showModal = ref(false);
 const selectedDate = ref(filter.value.date);
 const floorFilter = computed(() => {
@@ -165,9 +165,9 @@ function onClearFloor() {
 function onClearFilter() {
   RoomStatusRef.value.onClear();
   HousekeepingStatusRef.value.onClear();
-  Housekeepeer.value.onClear();
-  Building.value.onClear();
-  Floor.value.onClear();
+  HousekeepeerRef.value.onClear();
+  BuildingRef.value.onClear();
+  FloorRef.value.onClear();
   router.replace({ path: "/room" });
 }
 

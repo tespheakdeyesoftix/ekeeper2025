@@ -71,18 +71,22 @@ onIonViewDidEnter(async () => {
   ) {
     const l = await window.showLoading();
     const date = window.localStorage.getItem("currentWorkingDate");
-    filter.value.date = date;
-    await getData();
     initialRoomStatus.value = newRoomStatus;
     initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
+    if (filter.value && filter.value.date !== date) {
+      filter.value.date = date;
+      await getData();
+    }
     if (newRoomStatus || newHousekeepingStatusCode) {
       const filterParams = {
         ...filter.value,
         room_status: roomStatus.value ? [roomStatus.value] : undefined,
         housekeeping_status_code: housekeepingStatusCode.value ? [housekeepingStatusCode.value] : undefined,
+        employee: undefined,
+        building: undefined,
+        floor: undefined,
       };
-      const loading = false;  
-      onFilter(filterParams,loading);
+      onFilter(filterParams,false );
     }
     console.log("OnIonViewDidEnter");
     await l.dismiss();  
