@@ -58,7 +58,7 @@
         multiple
         ref="FloorRef"
       />
-      <ion-chip @click="onClearFilter" color="danger">Clear</ion-chip>
+      <ion-chip @click="onClearFilterRoom" color="danger">Clear</ion-chip>
     </div>
 
     <!-- Modal Date -->
@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, defineProps } from "vue";
+import { ref, computed, onMounted, watch, defineProps, defineExpose } from "vue";
 import { useRouter } from "vue-router";
 import { useRoom } from "@/hooks/useRoom";
 import { useApp } from "@/hooks/useApp";
@@ -98,7 +98,9 @@ const { currentWorkingDate } = useApp();
 const props = defineProps({
   status: Object,
 });
-
+defineExpose({
+  onClearFilterRoom,
+});
 const { onFilter, filter, onChangeGroupBy, currentProperty, onDateChange } =
   useRoom();
 const t = window.t;
@@ -162,13 +164,13 @@ function onClearFloor() {
   delete filter.value.floor;
   onFilter(filter.value);
 }
-function onClearFilter() {
+function onClearFilterRoom() {
   RoomStatusRef.value.onClear();
   HousekeepingStatusRef.value.onClear();
   HousekeepeerRef.value.onClear();
   BuildingRef.value.onClear();
   FloorRef.value.onClear();
-  router.replace({ path: "/room" });
+  // router.replace({ path: "/room" });
 }
 
 onMounted(() => {
