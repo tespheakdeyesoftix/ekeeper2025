@@ -148,6 +148,30 @@ docType: string, docname: string, fieldname: string, fileData: any, otherOption:
        
 }
 
+export async function removeAttachment(docType: string, docname: string, file_url: string) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+
+    try {
+        const response = await frappe.call({
+            method: "frappe.desk.form.utils.remove_attach",
+            args: {
+                doctype: docType,
+                docname: docname,
+                file_url: file_url
+            }
+        });
+
+        window.showSuccess(window.t("File removed successfully"));
+        return { data: response, error: null };
+    } catch (error) {
+        console.error("Error removing file:", error);
+        return { data: null, error };
+    }
+}
+
+
 
 
 

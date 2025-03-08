@@ -1,5 +1,5 @@
 <template>
-  {{ docInfo?.name }} 
+  <!-- {{ docInfo }}  -->
   <ion-card class="ion-no-margin ion-margin-top ion-padding" style="border-radius:12px; box-shadow: 0 4px 10px rgba(63, 38, 38, 0.12);">
     
     <ion-card-header>
@@ -21,8 +21,10 @@
 
     <!-- Uploaded Files -->
     <ion-card-content class="ion-no-padding ion-margin-top" v-if="attachments.length">
+      <div class="uploaded-header">
       <p style="font-weight: bold; font-size: 16px;">Uploaded files</p>
-      
+        <ion-button fill="clear" color="danger" @click="clearAllFiles">Clear</ion-button>
+      </div>
       <ion-card v-for="(file, index) in attachments" :key="index" class="ion-no-margin file-item"> 
         <ion-item lines="none" class="ion-no-padding">
           <ion-icon :icon="documentTextOutline" class="file-icon" slot="start" />
@@ -33,7 +35,7 @@
           </ion-label>
 
           <ion-button fill="clear" slot="end" @click="removeFile(file)">
-            <ion-icon :icon="closeOutline" class="remove-icon" color="danger" />
+            <ion-icon :icon="closeOutline" class="remove-icon" color="medium" />
           </ion-button>
         </ion-item>
       </ion-card>
@@ -45,21 +47,18 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { cloudUploadOutline, closeOutline, documentOutline,documentTextOutline } from "ionicons/icons";
-import { uploadFile } from "@/services/api-service";
+import { removeAttachment, uploadFile } from "@/services/api-service";
 
 // Prop from parent
 const t = window.t
 const props = defineProps({
-  docInfo: Object,
-  doc: Object
-});
-console.log("docInfo:", props.docInfo);
-console.log("doc:", props.doc);
+  docInfo: Object, 
+}); 
 
 
 // Reactive array to hold file attachments
-const attachments = ref(props.docInfo?.attachments);
-console.log('attachments',attachments);
+const attachments = ref(props.docInfo?.attachments || []);
+console.log('attachments',attachments.value);
 
  
 const fileInput = ref(null);   
@@ -80,27 +79,21 @@ const handleFileUpload = async (event) => {
     console.log('newFile', newFile);
     attachments.value.push(newFile); 
 
-    try {
-      const docType = "Work Order";  
-      const docname = props.docInfo?.name;  // ✅ Corrected
-      const fieldname = "attachments"; 
+    try { 
       const otherOptions = {
         file_url: newFile.file_url,  
-      }; 
-      
-      console.log("Uploading file for docname:", docname); // ✅ Debugging
-
-      const result = await uploadFile(docType, docname, fieldname, file, otherOptions, (completedBytes, totalBytes) => {
+      };  
+      const result = await uploadFile("Work Order", props.docInfo?.name, "", file, otherOptions, (completedBytes, totalBytes) => {
         console.log('file',file);
         
-        const progress = Math.round((completedBytes / totalBytes) * 100); 
+        const progressResult = Math.round((completedBytes / totalBytes) * 100); 
         const uploadedFile = attachments.value.find(f => f.name === file.name);
         if (uploadedFile) {
-          uploadedFile.progress = progress; 
+          uploadedFile.progress = progressResult; 
         }
       });
 
-      console.log('Upload response:', result.data); 
+      console.log('Upload response:', result); 
 
       if (result.data) {
         const uploadedFile = attachments.value.find(f => f.name === file.name);
@@ -112,8 +105,7 @@ const handleFileUpload = async (event) => {
       console.error('Error uploading file:', error);
     }
   }
-};
-    
+}; 
 
 //     // Simulate the upload progress
 //     let progressInterval = setInterval(() => {
@@ -128,16 +120,44 @@ const handleFileUpload = async (event) => {
 //   }
 // };
 
-// Remove file from the list
-const removeFile = (file) => {
-  attachments.value = attachments.value.filter(f => f.name !== file.name);
+// Remove single file from the list
+const removeFile = async (file) => {
+    const docType = "Work Order";  
+    const docname = props.docInfo?.name;  
+
+    try {
+        const result = await removeAttachment(docType, docname, file.file_url);
+        console.log('result',result.data);
+        
+        if (result.data) {
+            attachments.value = attachments.value.filter(f => f.file_url !== file.file_url);
+        }
+    } catch (error) {
+        console.error("Failed to remove file:", error);
+    }
 };
+
+
+
+const clearAllFiles = () =>{
+  attachments.value = []
+}
+
+
 </script>
 
 <style scoped>
 /* ion-progress-bar {
   width: 100%;
 } */
+
+
+.uploaded-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 ion-item{
   --inner-padding-end: 0px;  
 }
