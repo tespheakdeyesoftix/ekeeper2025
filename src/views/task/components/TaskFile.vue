@@ -81,9 +81,9 @@ const handleFileUpload = async (event) => {
     attachments.value.push(newFile); 
 
     try {
-      const docType = "";  
-      const docname = "";  // ✅ Corrected
-      const fieldname = ""; 
+      const docType = "Work Order";  
+      const docname = props.docInfo?.name;  // ✅ Corrected
+      const fieldname = "attachments"; 
       const otherOptions = {
         file_url: newFile.file_url,  
       }; 
@@ -91,6 +91,8 @@ const handleFileUpload = async (event) => {
       console.log("Uploading file for docname:", docname); // ✅ Debugging
 
       const result = await uploadFile(docType, docname, fieldname, file, otherOptions, (completedBytes, totalBytes) => {
+        console.log('file',file);
+        
         const progress = Math.round((completedBytes / totalBytes) * 100); 
         const uploadedFile = attachments.value.find(f => f.name === file.name);
         if (uploadedFile) {
