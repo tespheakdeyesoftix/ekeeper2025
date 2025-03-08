@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <AppBar>{{ t("Room") }}</AppBar>
-    <ion-content :fullscreen="true" class="ion-padding ion-no-margi">
+    <ion-content :fullscreen="true" class="ion-padding ion-no-margin">
       <Loading v-if="loading" />
       <template v-else>
         <ion-refresher slot="fixed" @ionRefresh="onRefresh($event)">
@@ -9,7 +9,7 @@
         </ion-refresher>
 
         <ComSearchBar @onSearch="onSearch" />
-        <ComRoomFilter :status="{ roomStatus, housekeepingStatusCode }" />
+        <ComRoomFilter :status="{ roomStatus, housekeepingStatusCode }" ref="FilterRef"  />
         <ion-button router-link="/room-detail/RM-0001">Get Selected</ion-button>
 
         <ComRoom :data="data" />
@@ -35,7 +35,7 @@ const initialRoomStatus = ref(roomStatus.value || null);
 const initialHousekeepingStatusCode = ref(housekeepingStatusCode.value || null);
 const { loading, onSearch, getData, onRefresh, data, onFilter, filter } =
   useRoom();
-
+  const FilterRef = ref(null);
 watch(
   () => route.query,
   (newQuery) => {
@@ -73,6 +73,7 @@ onIonViewDidEnter(async () => {
     const date = window.localStorage.getItem("currentWorkingDate");
     initialRoomStatus.value = newRoomStatus;
     initialHousekeepingStatusCode.value = newHousekeepingStatusCode;
+    // await FilterRef.value.onClearFilterRoom()
     if (filter.value && filter.value.date !== date) {
       filter.value.date = date;
       await getData();

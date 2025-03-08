@@ -1,5 +1,5 @@
 <template>
-  <ion-card class="ion-no-margin ion-margin-bottom">
+  <ion-card class="ion-no-margin ion-margin-bottom" style="border-radius: 10px">
     <ion-card-header>
       <div
         style="
