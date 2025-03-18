@@ -16,7 +16,7 @@
         <div style="display: flex; align-items: center">
           <ion-card-subtitle
             style="
-              background-color: green;
+              background-color: var(--ion-color-success);
               color: #ffffff;
               border-radius: 20px;
               padding: 5px 10px;
@@ -24,14 +24,22 @@
             "
             >{{ t("In-House") }}</ion-card-subtitle
           >
-          <ion-icon :icon="brush" class="icon" style="background-color: var(--ion-color-light-shade); padding: 5px; border-radius: 100%;" />
+          <ion-icon
+            :icon="brush"
+            class="icon"
+            style="
+              background-color: var(--ion-color-light-shade);
+              padding: 5px;
+              border-radius: 100%;
+            "
+          />
         </div>
       </div>
     </ion-card-header>
     <ion-card-content class="ion-padding">
       <ion-grid class="ion-no-padding">
         <ion-row class="ion-justify-content-start">
-          <ion-col size="6" >
+          <ion-col size="6">
             <h6>{{ t("Room #") }}</h6>
             <h6>{{ t("Room Type") }}</h6>
             <h6>{{ t("Floor") }}</h6>
@@ -45,18 +53,47 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <h3 style="font-weight: bold;">{{ t("Room Amenities") }}</h3>
-      <div style="background-color: var(--ion-color-light-shade); border-radius: 10px; padding: 10px;">
-        <div style="display: flex; justify-content: space-between;">
-          <h6>{{ t("Note") }}</h6>
-          <ion-icon :icon="create" class="icon" />
-        </div>
-        <div style="background-color: var(--ion-color-light); border-radius: 10px; padding: 5px; min-height: 70px;">
+      <h3 style="font-weight: bold">{{ t("Room Amenities") }}</h3>
+      <div
+        style="
+          background-color: var(--ion-color-light-shade);
+          border-radius: 10px;
+          padding: 10px;
+        "
+      >
+        <ion-text
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h6 style="font-weight: bold">{{ t("Note") }}</h6>
+          <ion-button
+            v-if="!note"
+            shape="round"
+            size="small"
+            color="success"
+            class="ion-no-margin"
+            >Add New Note</ion-button
+          >
+          <ion-icon v-else :icon="create" class="icon" />
+        </ion-text>
+        <div
+          v-if="note"
+          style="
+            background-color: var(--ion-color-light);
+            border-radius: 10px;
+            padding: 5px;
+            margin-top: 10px;
+            min-height: 70px;
+          "
+        >
           <h6></h6>
         </div>
       </div>
     </ion-card-content>
-  </ion-card> 
+  </ion-card>
 </template>
 
 <script setup lang="ts">
