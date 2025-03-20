@@ -81,10 +81,7 @@
           </ion-card-content>
         </ion-card>
 
-        <!-- Assigned Employees Card -->
-        <ion-card class="task-detail-card ion-margin-top ion-no-margin"
-          v-if="doc.assign_employee && doc.assign_employee.length">
-
+        <ion-card class="task-detail-card ion-margin-top ion-no-margin">
           <ion-card-header class="employee-header">
             <ion-card-title>
               {{ t("Assigned Employees") }}
@@ -93,55 +90,71 @@
           </ion-card-header>
 
           <ion-card-content class="ion-no-padding">
-            <ion-list class="employee-list">
-              <ion-item v-for="(employee, index) in doc.assign_employee" :key="employee.idx">
-                <template v-if="docInfo.user_info[employee.user]?.image">
-                  <ion-avatar class="employee-avatar" slot="start">
-                    <Img :src="docInfo.user_info[employee.user]?.image" />
-                  </ion-avatar>
-                </template>
-                <template v-else>
-                  <ion-avatar slot="start" class="avatar-placeholder " :style="{ backgroundColor: getRandomColor() }">{{
-                    getAvatarLetter(employee?.employee_name) }}</ion-avatar>
-                </template>
-                <ion-label>
-                  <h3 class="employee-name">{{ employee.employee_name }}</h3>
-                  <p class="employee-role">{{ employee.user }}</p>
-                  <p class="employee-note">{{ employee.note }}</p>
-                </ion-label>
+            <!-- Employees List -->
+            <template v-if="doc.assign_employee?.length">
+              <ion-list class="employee-list">
+                <ion-item v-for="(employee, index) in doc.assign_employee" :key="employee.idx">
+                  <!-- Avatar -->
+                  <template v-if="docInfo.user_info[employee.user]?.image">
+                    <ion-avatar class="employee-avatar" slot="start">
+                      <Img :src="docInfo.user_info[employee.user]?.image" />
+                    </ion-avatar>
+                  </template>
+                  <template v-else>
+                    <ion-avatar slot="start" class="avatar-placeholder" :style="{ backgroundColor: getRandomColor() }">
+                      {{ getAvatarLetter(employee?.employee_name) }}
+                    </ion-avatar>
+                  </template>
 
-                <ion-icon :id="'menuTrigger' + index" :icon="ellipsisVerticalOutline" @click="openPopover($event, index)"
-                  class="menu-icon" button/>
+                  <!-- Employee Details -->
+                  <ion-label>
+                    <h3 class="employee-name">{{ employee.employee_name }}</h3>
+                    <p class="employee-role">{{ employee.user }}</p>
+                    <p v-if="employee.note" class="employee-note">{{ employee.note }}</p>
+                  </ion-label>
 
-                <!-- Popover for the Menu -->
-                <ion-popover :is-open="popoverStates[index]?.open" :event="popoverStates[index]?.event"
-                  @didDismiss="popoverStates[index].open = false">
-                  <ion-content>
-                    <ion-list> 
-                      <!-- Action item inside the Popover -->
-                      <ion-item button detail="false" @click="deleteEmployee(employee, index)"
-                      style="--border-style:none;">
-                      <ion-icon :icon="personRemoveOutline" slot="start" color="danger"/>
-                        Unassign Employee 
-                        
-                      </ion-item>
-                    </ion-list>
-                  </ion-content>
-                </ion-popover>
+                  <!-- Options Menu -->
+                  <ion-icon :id="'menuTrigger' + index" :icon="ellipsisVerticalOutline" 
+                    @click="openPopover($event, index)" class="menu-icon" button />
 
-              </ion-item>
-              <!-- FAB inside an ion-item -->
-              <ion-item lines="none" class="fab-item">
-                <ion-fab horizontal="end">
-                  <ion-fab-button size="small">
-                    <ion-icon :icon="personAddOutline" />
-                  </ion-fab-button>
-                </ion-fab>
-              </ion-item>
-            </ion-list>
+                  <ion-popover :is-open="popoverStates[index]?.open" :event="popoverStates[index]?.event"
+                    @didDismiss="popoverStates[index].open = false">
+                    <ion-content>
+                      <ion-list>
+                        <ion-item button detail="false" @click="deleteEmployee(employee, index)" style="--border-style:none;">
+                          <ion-icon :icon="personRemoveOutline" slot="start" color="danger" />
+                          Unassign Employee
+                        </ion-item>
+                      </ion-list>
+                    </ion-content>
+                  </ion-popover>
+                </ion-item>
+              </ion-list>
 
+               <!-- Add Employee Button -->
+            <ion-item lines="none" class="fab-item">
+              <ion-fab horizontal="end">
+                <ion-fab-button size="small" @click="openAddEmployeeModal">
+                  <ion-icon :icon="personAddOutline" />
+                </ion-fab-button>
+              </ion-fab>
+            </ion-item>
+
+            </template>
+
+            <!-- No Employees Message -->
+            <template v-else>
+              <div style="display: flex;flex-direction: column ;justify-content: center; align-items: center;margin-bottom: 10px;">
+                <ion-icon :icon="personOutline" style="font-size: 3rem; color: white; margin-bottom: 10px;background-color: gray;border-radius: 50%;padding: 10px;"></ion-icon>
+                <p style="color: gray; font-size: 1rem;">No Employees Assigned Yet</p>
+                <ion-button color="success" style="--border-radius: 28px;">Assign Employee</ion-button>
+              </div>
+            </template>
+
+           
           </ion-card-content>
         </ion-card>
+
 
         <TaskFile :docInfo="docInfo"/>
 
@@ -158,7 +171,7 @@
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { locationOutline, alertCircleOutline, menu, checkmarkCircleOutline,ellipsisVerticalOutline
-  , createOutline, timeOutline, hourglassOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline,personRemoveOutline, pencil, key } from "ionicons/icons";
+  , createOutline, timeOutline, hourglassOutline,personOutline, constructOutline, documentTextOutline, calendarOutline, peopleOutline, personAddOutline,personRemoveOutline, pencil, key } from "ionicons/icons";
 import Img from "../components/Img.vue";
 import TaskImage from "./components/TaskImage.vue";
 import TaskFile from "./components/TaskFile.vue";
