@@ -46,9 +46,15 @@
         <template v-slot:default="{ item }">  
           <ComTaskCard :task="item" @onClick="onViewTaskDetail"/>
         </template>
+        
         <template v-slot:empty>
-          this is my custom no data message
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 300px; text-align: center; color: gray;">
+            <ion-icon :icon="clipboardOutline" style="font-size: 3rem; margin-bottom: 10px;"></ion-icon>
+            <p style="font-size: 1.1rem; font-weight: 500; margin: 0;">No tasks available</p>
+          </div>
         </template>
+
+
       </DocList>
     </ion-content>
     <ion-fab vertical="bottom" horizontal="end" @click="handleFabClick">
@@ -62,7 +68,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useIonRouter } from "@ionic/vue";
-import { refreshOutline, timeOutline, closeCircleOutline, checkmarkCircleOutline, gitCompareOutline, key,add } from 'ionicons/icons';
+import { refreshOutline, timeOutline, closeCircleOutline, checkmarkCircleOutline,clipboardOutline, gitCompareOutline, key,add } from 'ionicons/icons';
 import ComTaskCard from "./components/ComTaskCard.vue";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
