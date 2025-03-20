@@ -5,7 +5,14 @@
     </ion-card-header>
     <ion-card-content class="ion-no-padding">
       <ion-list class="ion-no-padding">
-        <ComRoomDetailCard  v-for="(item, index) in data" :key="index" :data="item" />
+        <RouterLink
+          v-for="(item, index) in data"
+          :key="index"
+          :to="`/reservation-detail/${item.guest_name}`"
+          style="text-decoration: none"
+        >
+          <ComRoomDetailCard :data="item" />
+        </RouterLink>
       </ion-list>
     </ion-card-content>
   </ion-card>

@@ -8,7 +8,7 @@
     <ion-ripple-effect></ion-ripple-effect>
     <RouterLink
       :to="`/room-detail/${data.room_number}`"
-      style="text-decoration: none; background-color: red"
+      style="text-decoration: none;"
     >
       <ion-card-header
         color="primary"
@@ -30,7 +30,7 @@
                   ? data?.floor_alias
                   : data?.room_type_alias
               }}
-              {{ data?.selected }}
+              <!-- {{ data?.selected }} -->
             </h6>
           </ion-text>
         </ion-card-title>

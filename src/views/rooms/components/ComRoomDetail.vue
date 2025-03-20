@@ -80,7 +80,7 @@
           <ion-icon v-else :icon="create" class="icon" />
         </ion-text>
         <div
-          v-if="note"
+          v-if="!note"
           style="
             background-color: var(--ion-color-light);
             border-radius: 10px;

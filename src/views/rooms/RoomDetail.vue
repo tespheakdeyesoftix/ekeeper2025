@@ -29,6 +29,7 @@ const Guest_Information = ref([
     child: 1,
     arrival_date: "2025-03-10 15:29:39.220776",
     departure_date: "2025-03-12 15:29:39.220776",
+    photo: "//files/avatar-cartoon.png"
   },
   {
     guest_name: "Heng",
