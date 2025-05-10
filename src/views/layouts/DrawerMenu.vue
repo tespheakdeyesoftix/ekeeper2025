@@ -22,56 +22,11 @@
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item router-link="/room">
+          <ion-item router-link="/Product List">
           <ion-icon :icon="bedOutline" slot="start"></ion-icon>
-          <ion-label>{{t("Room")}}</ion-label>
+          <ion-label>{{t("Product List")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
-        <ion-menu-toggle>
-        <ion-item router-link="/task">
-          <ion-icon :icon="clipboardOutline" slot="start"></ion-icon>
-          <ion-label>{{t("Task")}}</ion-label>
-        </ion-item>
-        </ion-menu-toggle>
-        <ion-menu-toggle>
-        <ion-item router-link="/account">
-          <ion-icon :icon="calendarOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("reservation_menu") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
-        <ion-item router-link="/room-block">
-          <ion-icon :icon="layersOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Room Block") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
-
-        <ion-item router-link="/lost-and-found+">
-          <ion-icon :icon="archiveOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Lost and Found") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
-
-        <ion-item router-link="/sop">
-          <ion-icon :icon="brushOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Housekeeping SOP") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
-        <ion-item router-link="/report">
-          <ion-icon :icon="barChartOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Reports") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
-
-        <ion-item router-link="/settings">
-          <ion-icon :icon="settingsOutline" slot="start"></ion-icon>
-          <ion-label>{{ t("Settings") }}</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
        
       </ion-list>
 
@@ -138,12 +93,11 @@ const onLogout = async () => {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 20px 10px;
+ 
   background: linear-gradient(135deg, #87CEFA, #1E90FF);
-  
+  margin:-20px -13px 0px -14px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  height: 175px; /* Estimated profile section height */
 }
 
 /* Center Avatar */
@@ -167,6 +121,7 @@ const onLogout = async () => {
   font-weight: bold;
   border-radius: 50%;
   text-transform: uppercase;
+
 }
 /* Profile Name */
 .profile-name {

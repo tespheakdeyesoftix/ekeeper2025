@@ -107,14 +107,13 @@ window.t = i18n.global.t;
 window.showWarning = (message: string) => showToast(message, "warning");
 window.showSuccess = (message: string) => showToast(message, "success");
 window.showError = (message: string) => showToast(message, "danger");
-
 window.showLoading = (message: string='Loading') => showLoading(message);
 
 
 const  {checkUserLogin} = useAuth(router);
 const app = createApp(App)
-
 .use(IonicVue)
+
 
 async function init() {
   

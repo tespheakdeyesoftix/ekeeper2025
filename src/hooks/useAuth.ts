@@ -23,7 +23,7 @@ export function  useAuth(router:any = null) {
      
     try {
       const options = {
-        url: data.api_url + "api/method/edoor.mobile_api.api.login",
+        url: data.api_url + "api/method/epos_restaurant_2023.api.auth.login",
         headers: { "Content-Type": "application/json" }, 
         data: {
           property: data.property_name,
@@ -40,8 +40,6 @@ export function  useAuth(router:any = null) {
 
       currentUser.value =  response.data.message;
       isAuthenticated.value = true;
-      appCtrl.currentWorkingDate.value =  response.data.message.working_day.date_working_day;
-      appCtrl.currentWorkingDay.value =  response.data.message.working_day;
       window.storageService.setItem("current_user",JSON.stringify(currentUser.value));
 
       return { data: response.data.message, error: null };  // Return data if successful
@@ -75,7 +73,7 @@ export function  useAuth(router:any = null) {
  
   try {
     const options = {
-      url: api_url + "api/method/edoor.mobile_api.api.check_api_url?property_code=" + property_code,
+      url: api_url + "api/method/epos_restaurant_2023.api.auth.check_api_url?property_code=" + property_code,
     };
 
     const response: HttpResponse = await CapacitorHttp.get(options);
@@ -138,8 +136,6 @@ export function  useAuth(router:any = null) {
           
          if(checkResponse.data){
           isAuthenticated.value = true;
-          appCtrl.currentWorkingDate.value = checkResponse.data.working_day.date_working_day;
-          appCtrl.currentWorkingDay.value = checkResponse.data.working_day;
           appCtrl.currentProperty.value = property;
           setFrappeAppUrl(property.api_url);
           
