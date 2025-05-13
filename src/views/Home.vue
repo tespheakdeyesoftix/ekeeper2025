@@ -2,7 +2,8 @@
   <ion-page>
     <AppBar>{{ t("Home") }}</AppBar>
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-button>Product List</ion-button>
+      <ion-button routerLink="/product-list">Product List</ion-button>
+      <ion-button routerLink="/add-product">Add Product</ion-button>
     </ion-content>
   </ion-page>
 </template>

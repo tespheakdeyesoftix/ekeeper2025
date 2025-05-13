@@ -1,5 +1,5 @@
 
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref,watch } from "vue";
 import { getApi, getDocList } from "@/services/api-service";
 import { InfiniteScrollCustomEvent, modalController } from "@ionic/vue";
 
@@ -9,8 +9,6 @@ import { filter } from "ionicons/icons";
 export function useDocList(props: any) {
   const { getMeta } = useApp();
   const loading = ref(true);
-  let orFilters : any[] = [];
-  let filters : any[] = [];
   let  meta: any ={};
   const canLoadMore = ref(true);
   const pageSize = ref(20);
@@ -18,19 +16,31 @@ export function useDocList(props: any) {
   const keyword = ref<string>(''); // Declare keyword type as string
   const startIndex = ref(0);
   const loadingMoreData = ref(false)
+  let options = ref(props.options)
+  
+  const orderBy  = ref({
+      field: "modified",
+      order: "asc",
+  })
 
-  const groupBy = ref("room_type")
+
+
+
+  if(options.value.orderBy){
+    orderBy.value = options.value.orderBy
+  }
 
 
  
   async function getData() {
      
     const response = await getDocList(props.docType, {
-      fields: props.fields,
-      filters: props.filters,
-      orFilters: orFilters,
+      fields: options.value.fields,
+      filters: options.value.filters,
+      orFilters: options.value?.orFilters || [],
       limit_start: startIndex.value,
-      limit: pageSize.value,
+      limit: options.value.limit || pageSize.value,
+      orderBy: orderBy.value
     });
     loading.value = false;
     loadingMoreData.value = false
@@ -59,6 +69,8 @@ export function useDocList(props: any) {
   };
  
   const onRefresh = async (event: CustomEvent) => {
+    canLoadMore.value = true
+
     startIndex.value = 0;
     const result = await getData();
     
@@ -86,7 +98,7 @@ export function useDocList(props: any) {
         filter.push([meta.title_field, 'like', `%${keywordEncode}%`])
       }
       if (meta.search_fields) {
-        meta.search_fields.split(",").map((item: string) => item.trim()).forEach((f: string) => {
+        meta.search_fields.split(",").filter((x:any)=>x!='posting_date').map((item: string) => item.trim()).forEach((f: string) => {
           filter.push([f, 'like', `%${keywordEncode}%`])
         });
       }
@@ -102,10 +114,33 @@ export function useDocList(props: any) {
     
   }
 
+  function getAligment(fieldtype:string=""){
+ 
+    if(["Int",'Float','Date',].includes(fieldtype)){
+      return "text-center"
+    }
+    
+    if(["Currency"].includes(fieldtype)){
+      return "text-right"
+    }
+
+    return "text-left"
+
+    
+  }
+
+  function onSort(event) {
+   orderBy.value.field = event.sortField
+   orderBy.value.order = event.sortOrder ==1?"asc":"desc"
+   onRefresh()
+
+
+}
+
   onMounted(async () => {
    
+    
     loading.value = true
-   orFilters = props.orFilters;
     const result = await getData();
     data.value = result
 
@@ -114,14 +149,19 @@ export function useDocList(props: any) {
 
 
 
+
   return {
     loading,
     loadingMoreData,
     data,
     meta,
+    orderBy,
+    options,
     onSearch,
     getData,
     onLoadMore,
-    onRefresh
+    onRefresh,
+    getAligment,
+    onSort
   };
 }

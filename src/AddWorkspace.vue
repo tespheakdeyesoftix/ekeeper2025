@@ -24,7 +24,7 @@
             :placeholder="t('Property Code')"
             class="ion-margin-bottom"
           ></ion-input>
-  
+ 
           <ion-input
             v-model="formData.username"
             :label="t('Username')"

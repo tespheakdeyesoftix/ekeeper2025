@@ -10,7 +10,7 @@ declare global {
       showSuccess(message: string): void;
       showError(message: string): void;
       showLoading(message: string): void;
-      
+      openModal(props:object): void;
     }
   }
   

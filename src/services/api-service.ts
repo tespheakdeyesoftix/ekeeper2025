@@ -99,6 +99,37 @@ export function getDoc(DocType: string,DocName:string) {
   });
 }
 
+
+export function createDoc(DocType: string,params:any) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+
+    return db.createDoc(DocType, params)
+  .then((doc) =>({ data: doc, error: null }))
+  .catch((error) => {
+    handleErrorMessage(error);
+    return { data: null, error }
+  });
+}
+
+export function updateDoc(DocType: string,name:string,params:any) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+
+    return db.updateDoc(DocType,name, params)
+  .then((doc) =>({ data: doc, error: null }))
+  .catch((error) => {
+    handleErrorMessage(error);
+    return { data: null, error }
+  });
+}
+
+
+
 export async function uploadFile(
 docType: string, docname: string, fieldname: string, fileData: any, otherOption: any, p0: (completedBytes: any, totalBytes: any) => void) {
     if (!frappe) {
@@ -119,27 +150,27 @@ docType: string, docname: string, fieldname: string, fileData: any, otherOption:
             /** Field in the document **/
             "fieldname": fieldname
           }
-          const loading = await window.showLoading("Uploading...");
+        
         return file.uploadFile(
             fileData,
             fileArgs,
-            undefined,
-            // (completedBytes, totalBytes) => {
-            //     if(totalBytes){
-            //         console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
-            //     }
-            // },
+           
+            (completedBytes, totalBytes) => {
+                if(totalBytes){
+                    console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
+                }
+            },
             "edoor.api.upload.upload_file"
         )
         .then(async (result:any) =>{
-            await loading.dismiss()
+            
             // Log to See Structure
             console.log(result.data.message.file_url);
-            window.showSuccess(window.t("Upload file successfully"));
+             
             return { data: result.data.message.file_url, error: null };
         })
         .catch(async(e) => {
-            await loading.dismiss()
+           
             handleErrorMessage(e);
             return { data: null, e }
         })

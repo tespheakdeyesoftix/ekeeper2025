@@ -34,7 +34,21 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     meta: { requiresAuth: true }
   },
-    
+  {
+    path: "/product-list",
+    component: () => import('@/views/products/ProductList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/add-product",
+    component: () => import('@/views/products/AddProduct.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/add-product/:name",
+    component: () => import('@/views/products/AddProduct.vue'),
+    meta: { requiresAuth: true }
+  },
   {
     path: "/help",
     component: Help,

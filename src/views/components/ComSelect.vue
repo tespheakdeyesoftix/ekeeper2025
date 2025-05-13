@@ -1,34 +1,23 @@
 <template>
-  <div @click="openSheetModal" style="display: inline;">
-  {{ selectedValue }}
-    <!-- Display select as chip control -->
-    <template v-if="mode == 'chip'">
-      <ion-chip :color="isSelected ? selectedColor : color">
-        <ion-label v-if="!isSelected">{{ labelPrefix }} {{ label ?? docType }}</ion-label>
-        <ion-label v-else>
-          <!-- Show Value -->
-          {{ getLabel() }}
-        
-        </ion-label>
-
-        <ion-icon v-if="clear && isSelected" :icon="close" @click.stop="onClear"></ion-icon>
-      </ion-chip>
-    </template>
-    <!-- end display select as chip control -->
-
-
-
-    <slot v-if="hasDefaultSlot"></slot>
-
+  <div @click="openSheetModal" style="display: inline;" v-if="!loading">
+    <ion-chip>
+    <ion-label v-if="model">{{ model  }}</ion-label>
+    <ion-label v-else>{{ t("Select") }}   {{(label || docType)}}</ion-label>
+    <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear"></ion-icon>
+  </ion-chip>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, ref, useSlots } from "vue"
-import { modalController, IonButton } from '@ionic/vue';
+import { modalController } from '@ionic/vue';
 import ComSelectSheetModal from '@/views/components/ComSelectSheetModal.vue';
-import { close } from 'ionicons/icons';
+
 import { useApp } from "@/hooks/useApp";
+import { close} from 'ionicons/icons';
+const t = window.t;
+const loading = ref(true)
+
 const props = defineProps({
   docType: String,
   label: String,
@@ -83,7 +72,7 @@ defineExpose({
 const meta = ref()
 const selected = ref()
 const slots = useSlots();
-
+const model= defineModel()
 const { getMeta } = useApp(props)
 
 const hasDefaultSlot = ref(slots.default);
@@ -121,14 +110,15 @@ const openSheetModal = async () => {
   if (role === 'confirm') {
     
     selected.value = data;
-     
+    model.value = data.name;
     emit("onSelected", data)
   }
 };
 
 function getLabel() {
+ 
   if (!props.multiple) {
-  
+ 
     if (meta.value.title_field) {
       return selected.value[meta.value.title_field];
     } else if (props.labelField) {
@@ -160,10 +150,14 @@ function getLabel() {
 function onClear() {
 
   selected.value = null;
+  model.value = null
   emit("onClear");
 }
 onMounted(async () => {
+
+  loading.value = true
   meta.value = await getMeta(props.docType)
+  loading.value = false
 
 })
 </script>

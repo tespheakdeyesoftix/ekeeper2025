@@ -25,7 +25,8 @@ export function useComSelect(props: any) {
       const keywordEncode = encodeURIComponent(keyword.value);
       filters.push(["name", 'like', `%${keywordEncode}%`])
       // title field
-      if (meta.value.title_field) {
+ 
+      if (meta.value?.title_field) {
         filters.push([meta.value.title_field, 'like', `%${keywordEncode}%`])
       }
       if (meta.value) {
@@ -66,7 +67,7 @@ export function useComSelect(props: any) {
   }
 
   const onLoadMore = async (event: InfiniteScrollCustomEvent) => {
-    loadingMoreData.value = true
+ 
     if (!canLoadMore.value) return event.target.complete();
 
     startIndex.value += pageSize.value;
@@ -82,6 +83,7 @@ export function useComSelect(props: any) {
 
     data.value.push(...result);
     event.target.complete();
+    loadingMoreData.value = false
   };
 
   function onSelect(selected: any) {

@@ -1,4 +1,4 @@
-import {  toastController,loadingController } from '@ionic/vue';
+import {modalController,  toastController,loadingController } from '@ionic/vue';
  
 
 export function imageUrl(imageUrl:string,baseUrl:string = ""){
@@ -79,3 +79,28 @@ export async function showLoading(message: string="Loading") {
   await loading.present();  
   return loading;  
 }
+
+
+
+export async function openModal(props:any) {
+    if(!props.title){
+      props.title = "Select"
+    }
+    
+    if(!props.cssClass){
+      props.cssClass= "desktop-modal"
+    }
+  
+   
+    const modal = await modalController.create({...props
+    });
+  
+    modal.present();
+    const { data, role } = await modal.onWillDismiss();
+  
+    if (role === 'confirm') {
+      return data
+    }
+    return false 
+  }
+  

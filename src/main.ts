@@ -3,8 +3,13 @@ import App from './App.vue'
 import router from './router';
 import { storageService } from '@/services/storage-service';
 import { useAuth } from '@/hooks/useAuth';
+import "@/helpers/global-function.js"
+import PrimeVue from 'primevue/config';
+import Tooltip from 'primevue/tooltip';
 
 
+import Aura from '@primeuix/themes/aura';
+import "/node_modules/primeflex/primeflex.css"
 
 import { 
   IonLabel, 
@@ -49,7 +54,10 @@ import {
   IonDatetimeButton,
   IonAccordionGroup,
   IonAccordion,
-  IonText
+  IonText,
+  IonInput,
+  IonSelect,
+  IonSelectOption
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -90,13 +98,24 @@ import AppBar from '@/views/layouts/AppBar.vue';
 import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
-
+import ComCurrency from '@/views/components/public/ComCurrency.vue';
+import ComStatus from '@/views/components/public/ComStatus.vue';
+import BaseModal from '@/views/components/BaseModal.vue';
 import i18n from '../i18n'; // Import i18n config
-import { showToast,showLoading } from '@/helpers/utils';
+import { showToast,showLoading, openModal } from '@/helpers/utils';
 import longPress from '@/directives/long-press';
+
 import ComSelect from '@/views/components/ComSelect.vue';
 import DocList from '@/views/components/document-list/DocList.vue';
 import Document from '@/views/components/document-list/Document.vue';
+import ComInput from '@/views/components/public/ComInput.vue';
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/km' // import Khmer locale
+let currentLang = storageService.getItem("lang") || 'km'
+dayjs.locale(currentLang) 
+dayjs.extend(relativeTime)
 
 // attach service to window easy to call it later
 
@@ -108,11 +127,12 @@ window.showWarning = (message: string) => showToast(message, "warning");
 window.showSuccess = (message: string) => showToast(message, "success");
 window.showError = (message: string) => showToast(message, "danger");
 window.showLoading = (message: string='Loading') => showLoading(message);
-
+window.openModal = ( props:object) =>openModal(props);
 
 const  {checkUserLogin} = useAuth(router);
 const app = createApp(App)
 .use(IonicVue)
+
 
 
 async function init() {
@@ -126,6 +146,12 @@ async function init() {
  
   app.use(router);
   app.use(i18n);
+  app.use(PrimeVue, {
+    theme: {
+        preset: Aura
+    }
+});
+
   app.component('AppBar', AppBar)
   app.component('ToolBar', ToolBar)
   app.component('ComSelect', ComSelect)
@@ -171,15 +197,21 @@ async function init() {
   app.component('ion-accordion-group',IonAccordionGroup)
   app.component('ion-accordion',IonAccordion)
   app.component('ion-text',IonText)
+  app.component('ion-input',IonInput)
+  app.component('ion-select',IonSelect)
+  app.component('ion-select-option',IonSelectOption)
   
 
   app.component('Img',Img)
+  app.component('ComCurrency',ComCurrency)
   app.component('DocList',DocList)
   app.component('Document',Document)
+  app.component('ComStatus',ComStatus)
+  app.component('ComInput',ComInput)
 
- 
+  app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);
-
+  app.directive('tooltip', Tooltip);
 
   await router.isReady();
   
